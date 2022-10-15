@@ -18,6 +18,7 @@ public class LoadMovies {
         List<Movie> movies= new ArrayList<>();
         getMovies("nowshowing.aspx", movies);
         getMovies("comingsoon.aspx", movies);
+        movies.sort((x, y)->x.getTitle().compareTo(y.getTitle()));
         serialize(movies);
     }
 
