@@ -10,18 +10,36 @@ import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 import models.Movie;
+import models.Movie.MovieStatus;
 
 public class LoadMovies {
 
     public static void main(String[] args) {
+        List<Movie> movies= new ArrayList<>();
+        getMovies("nowshowing.aspx", movies);
+        getMovies("comingsoon.aspx", movies);
+        serialize(movies);
+    }
+
+    public static void getMovies(String domain, List<Movie> movies) {
         try {
             final WebClient client = new WebClient();
             client.getOptions().setCssEnabled(false);
             client.getOptions().setJavaScriptEnabled(false);
-            final HtmlPage page = client.getPage("https://www.cinemaonline.sg/movies/nowshowing.aspx");
-            final HtmlDivision div = (HtmlDivision)page.getFirstByXPath("//div[@class='NowShowingMov']");
+            String className;
+            Movie.MovieStatus movieStatus;
+            if(domain.equals("nowshowing.aspx")) {
+                className = "'NowShowingMov'";
+                movieStatus = MovieStatus.NOWSHOWING;
+            }
+            else {
+                className = "'ComingSoonMov'";
+                movieStatus = MovieStatus.COMINGSOON;
+            }
+            final HtmlPage page = client.getPage("https://www.cinemaonline.sg/movies/" + domain);
+            final HtmlDivision div = (HtmlDivision)page.getFirstByXPath("//div[@class=" + className + "]");
             final List<HtmlDivision> moviesList = div.getByXPath("//li/div/div[@class='mov-lg']");
-            List<Movie> movies = new ArrayList<>();
+            int count = 0;
             for (HtmlDivision movie : moviesList) {
                 final HtmlAnchor anchor = (HtmlAnchor)movie.getFirstByXPath("a");
                 final HtmlPage moviePage = client.getPage("https://www.cinemaonline.sg" + anchor.getHrefAttribute());
@@ -30,11 +48,12 @@ public class LoadMovies {
                 String title = movieDetailsArr[0];
                 String sypnosis = movieDetailsArr[1];
                 String rating = movieDetailsArr[5].split(": ")[1].trim();
-                String[] cast = movieDetailsArr[10].split(": ")[1].split(", ");
-                String director = movieDetailsArr[11].split(": ")[1];
-                movies.add(new Movie(title, rating, Movie.MovieStatus.NOWSHOWING, sypnosis, director, cast));
+                String cast = movieDetailsArr[10].substring(6);
+                String director = movieDetailsArr[11].substring(10);
+                movies.add(new Movie(title, rating, movieStatus, sypnosis, director, cast));
+                if (++count == 15)
+                    return;
             }
-            serialize(movies);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -52,4 +71,6 @@ public class LoadMovies {
             i.printStackTrace();
         }
     }
+
+    
 }
