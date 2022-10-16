@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlBold;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlOption;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -79,7 +78,10 @@ public class LoadMoviesShowTimes {
             client.getOptions().setJavaScriptEnabled(true);
             client.getOptions().setThrowExceptionOnScriptError(false);  
             List<HtmlAnchor> anchors = movieDetails.getByXPath("//a");
-            HtmlPage showTimePage = client.getPage("https://www.cinemaonline.sg" + anchors.get(26).getHrefAttribute());
+            int index = 26;
+            while (!anchors.get(index).asNormalizedText().equals("[Showtimes]"))
+                index++;
+            HtmlPage showTimePage = client.getPage("https://www.cinemaonline.sg" + anchors.get(index).getHrefAttribute());
             HtmlSelect dateSelect = (HtmlSelect)showTimePage.getElementById("ctl00_cphContent_ctl00_ddlShowdate");
             if (dateSelect == null) {
                 client.close();
@@ -115,14 +117,18 @@ public class LoadMoviesShowTimes {
         switch(location[0]) {
             case "Cathay": cineplexIndex = 0; break;
             case "GV": cineplexIndex = 1; break;
-            case "Shaw": cineplexIndex = 2; break;
-            default: cineplexIndex = -1; break;
+            case "Shaw Theatres": cineplexIndex = 2; break;
+            default: return; 
         }
         String[] cinemaAndType = location[1].split(", ");
         String cinema;
         String cinemaType;
         if (cinemaAndType.length == 3) {
-            cinemaType = cinemaAndType[0].replace("\\s","").toUpperCase();
+            cinemaType = cinemaAndType[0].replace(" ","").toUpperCase();
+            if (cinemaType.endsWith("TWOTOVIEW"))
+                cinemaType = "GEMINI";
+            else if (!cinemaType.equals("GVMAX") || !cinemaType.equals("DELUXEPLUS") || !cinemaType.equals("GEMINI"))
+                return;
             cinema = cinemaAndType[1];
         }
         else if (cinemaAndType[0].startsWith("Gold")) {
@@ -133,7 +139,7 @@ public class LoadMoviesShowTimes {
             cinemaType = "STANDARD";
             cinema = cinemaAndType[0];
         }
-        cineplexes[cineplexIndex].addSession(movie, date, time, cinema, cinemaType);;
+        cineplexes[cineplexIndex].addSession(movie, date, time, cinema, cinemaType);
 
     }
 
