@@ -27,7 +27,7 @@ public class Session implements java.io.Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append(cinema.getCineplex() + " " + cinema.getLocation() + " - " + cinemaClass + "\n");
         sb.append(movie.getTitle() + " (" + movie.getRating() + ")\n");
-        sb.append(dateTime.toString() + "\n");
+        sb.append(dateTime.getDayOfMonth() + " " + dateTime.getMonth() + " " + dateTime.getYear() + " " + dateTime.toLocalTime() + "\n");
         return sb.toString();
     }
 
