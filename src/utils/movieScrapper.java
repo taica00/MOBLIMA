@@ -125,7 +125,6 @@ public class movieScrapper {
         String[] cinemaAndType = location[1].split(", ");
         String cinemaName= "NULL";
         String cinemaType;
-        // TODO: cinemaType logic
         if (cinemaAndType.length == 3) {
             cinemaType = cinemaAndType[0];
             if (cinemaType.startsWith("Gemini")) {
