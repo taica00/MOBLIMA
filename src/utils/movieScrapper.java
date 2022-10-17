@@ -18,13 +18,16 @@ import models.Session;
 import models.Movie.MovieStatus;
 
 public class movieScrapper {
+    static final String C = "Cathay";
+    static final String G = "Golden Village";
+    static final String S = "Shaw Theatres";
     static Cineplex[] cineplexes = new Cineplex[3];
     static List<Movie> movies= new ArrayList<>();
     public static void main(String[] args) {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(java.util.logging.Level.OFF);
-        cineplexes[0] = new Cineplex("Cathay", new Cinema[]{new Cinema("AMK Hub"), new Cinema("Causeway Point"), new Cinema("Jem")});
-        cineplexes[1] = new Cineplex("Golden Village", new Cinema[]{new Cinema("Funan"), new Cinema("Grand"), new Cinema("VivoCity")});
-        cineplexes[2] = new Cineplex("Shaw", new Cinema[]{new Cinema("JCube"), new Cinema("Jewel"), new Cinema("Nex")});
+        cineplexes[0] = new Cineplex(C, new Cinema[]{new Cinema(C, "AMK Hub"), new Cinema(C, "Causeway Point"), new Cinema(C, "Jem")});
+        cineplexes[1] = new Cineplex(G, new Cinema[]{new Cinema(G, "Funan"), new Cinema(G, "Grand"), new Cinema(G, "VivoCity")});
+        cineplexes[2] = new Cineplex(S, new Cinema[]{new Cinema(S, "JCube"), new Cinema(S, "Jewel"), new Cinema(S, "Nex")});
         loadMovies("nowshowing.aspx", 20);
         loadMovies("comingsoon.aspx", 10);
         movies.sort((x, y)->x.getTitle().compareTo(y.getTitle()));
@@ -47,10 +50,10 @@ public class movieScrapper {
                 movieStatus = MovieStatus.COMINGSOON;
             }
             final HtmlPage page = client.getPage("https://www.cinemaonline.sg/movies/" + domain);
-            final HtmlDivision div = (HtmlDivision)page.getFirstByXPath("//div[@class=" + className + "]");
-            final List<HtmlDivision> moviesList = div.getByXPath("//li/div/div[@class='mov-lg']");
+            final HtmlDivision allMovies = (HtmlDivision)page.getFirstByXPath("//div[@class=" + className + "]");
+            final List<HtmlDivision> moviesList = allMovies.getByXPath(".//div[@class='mov-lg']");
             for (HtmlDivision movieDiv : moviesList) {
-                final HtmlAnchor anchor = (HtmlAnchor)movieDiv.getFirstByXPath("a");
+                final HtmlAnchor anchor = (HtmlAnchor)movieDiv.getFirstByXPath(".//a");
                 final HtmlPage moviePage = client.getPage("https://www.cinemaonline.sg" + anchor.getHrefAttribute());
                 HtmlDivision movieDetails = (HtmlDivision)moviePage.getFirstByXPath("//div[@class='con-lg']");
                 String[] movieDetailsArr = movieDetails.asNormalizedText().split("\n");
@@ -77,10 +80,9 @@ public class movieScrapper {
             client.getOptions().setCssEnabled(false);
             client.getOptions().setJavaScriptEnabled(true);
             client.getOptions().setThrowExceptionOnScriptError(false);  
-            List<HtmlAnchor> anchors = movieDetails.getByXPath("//a");
-            int index = 26;
-            while (!anchors.get(index).asNormalizedText().equals("[Showtimes]"))
-                index++;
+            List<HtmlAnchor> anchors = movieDetails.getByXPath(".//a");
+            int index = anchors.size();
+            while (!anchors.get(--index).asNormalizedText().equals("[Showtimes]"));
             HtmlPage showTimePage = client.getPage("https://www.cinemaonline.sg" + anchors.get(index).getHrefAttribute());
             HtmlSelect dateSelect = (HtmlSelect)showTimePage.getElementById("ctl00_cphContent_ctl00_ddlShowdate");
             if (dateSelect == null) {
@@ -94,11 +96,11 @@ public class movieScrapper {
                 HtmlDivision showTimesBox = showTimePage.getFirstByXPath("//div[@class='ShowtimesBox']");
                 if (showTimesBox == null) 
                     continue;
-                String date = ((HtmlOption)showTimesBox.getFirstByXPath("//option")).asNormalizedText().split(",")[0];
-                List<HtmlDivision> showTimesLists = showTimesBox.getByXPath("//div[@id='ShowtimesList']");
+                String date = option.asNormalizedText().split(", ")[0];
+                List<HtmlDivision> showTimesLists = showTimesBox.getByXPath(".//div[@id='ShowtimesList']");
                 for (HtmlDivision showTimesList : showTimesLists) { //iterate through locations
                     String[] location = showTimesList.asNormalizedText().split("\n")[0].split(" - "); // {cineplex, location}
-                    List<HtmlDivision> showTimes = showTimesList.getByXPath("//div[@class='btn btn-info']");
+                    List<HtmlDivision> showTimes = showTimesList.getByXPath(".//div[@class='btn btn-info']");
                     for (HtmlDivision showTime : showTimes) {
                         String time = showTime.asNormalizedText();
                         addSessionToCineplex(movie, date, location, time);
@@ -121,27 +123,50 @@ public class movieScrapper {
             default: return; 
         }
         String[] cinemaAndType = location[1].split(", ");
-        String cinemaName;
+        String cinemaName= "NULL";
         String cinemaType;
+        // TODO: cinemaType logic
         if (cinemaAndType.length == 3) {
-            cinemaType = cinemaAndType[0].replace(" ","").toUpperCase();
-            if (cinemaType.endsWith("TWOTOVIEW"))
+            cinemaType = cinemaAndType[0];
+            if (cinemaType.startsWith("Gemini")) {
                 cinemaType = "GEMINI";
-            else if (!cinemaType.equals("GVMAX") || !cinemaType.equals("DELUXEPLUS") || !cinemaType.equals("GEMINI"))
-                return;
-            cinemaName = cinemaAndType[1];
+                cinemaName = "Funan";
+            }
+            else if (cinemaType.startsWith("Gold")) {
+                cinemaType = "GOLDCLASSEXPRESS";
+                cinemaName = "Funan"; 
+            }
+            else if (cinemaType.equals("Grand")) {
+                cinemaType = "STANDARD";
+                cinemaName = "Grand";
+            }
+            else if (cinemaType.startsWith("Deluxe")) {
+                cinemaType = "DELUXEPLUS";
+                cinemaName = "Funan";
+            }
         }
         else if (cinemaAndType[0].startsWith("Gold")) {
             cinemaType = "GOLDCLASS";
             cinemaName = cinemaAndType[0].substring(11);
+        }
+        else if (cinemaAndType[0].startsWith("Gemini")) {
+            cinemaType = "GEMINI";
+            cinemaName = "Funan";
+        }
+        else if (cinemaAndType[0].startsWith("GVmax")) {
+            cinemaType = "GVMAX";
+            cinemaName = "VivoCity";
         }
         else {
             cinemaType = "STANDARD";
             cinemaName = cinemaAndType[0];
         }
         Cinema cinema = cineplexes[cineplexIndex].getCinema(cinemaName);
-        if (cinema != null)
+        
+        if (cinema != null) {
+            System.out.println(cinema.getCineplex()+" "+cinema.getLocation()+" "+movie.getTitle()+" "+date+" "+time+" "+cinemaType);
             cinema.addSession(movie, date, time, cinemaType);
+        }
     }
 
     private static void serialize() {
