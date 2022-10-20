@@ -32,9 +32,6 @@ public class MainApp {
             c.printStackTrace();
             return;
         }
-        List<Session> sessions = cineplexes[1].getCinema("Funan").getShowTimes();
-        for (Session session : sessions)
-            System.out.println(session);
 
     }
 }
