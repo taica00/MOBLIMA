@@ -1,37 +1,17 @@
 package main;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.List;
 
-import main.models.Cineplex;
-import main.models.Movie;
-import main.models.Session;
+import main.controllers.CineplexController;
+import main.controllers.MovieController;
+import main.ui.MainMenuUI;
 
 public class MainApp {
     public static void main(String[] args) {
-        List<Movie> movies = null;
-        Cineplex[] cineplexes = null;
-        try {
-            FileInputStream fileIn = new FileInputStream("src/data/movies.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            movies = (List<Movie>) in.readObject();
-            in.close();
-            fileIn.close();
+        initialiseData();
+        MainMenuUI.main(null);
+    }
 
-            fileIn = new FileInputStream("src/data/cineplexesshowtimes.ser");
-            in = new ObjectInputStream(fileIn);
-            cineplexes = (Cineplex[])in.readObject();
-            in.close();
-            fileIn.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-            return;
-        } catch (ClassNotFoundException c) {
-            System.out.println("Class not found");
-            c.printStackTrace();
-            return;
-        }
-
+    public static void initialiseData() {
+        CineplexController.loadCineplexes();
+        MovieController.loadMovies();
     }
 }

@@ -1,8 +1,9 @@
 package main.ui;
 
 import main.controllers.InputController;
+import main.controllers.MovieController;
 
-public class MainMenu {
+public class MainMenuUI {
     public static void main(String[] args) {
         int choice;
         do {
@@ -16,10 +17,11 @@ public class MainMenu {
             System.out.println("7. Admin login");
             System.out.println("8. Exit");
             System.out.print("Select an option: ");
-
             choice  = InputController.getInt();
+            System.out.println();
+            
             switch(choice) {
-                case 1: System.out.println("hi");
+                case 1: MovieController.listMovies(); break;
                 case 2: System.out.println("hi");
                 case 3: System.out.println("hi");
                 case 4: System.out.println("hi");
@@ -27,8 +29,9 @@ public class MainMenu {
                 case 6: System.out.println("hi");
                 case 7: System.out.println("hi");
                 case 8: break;
-                default: System.out.println("Invalid selection");
+                default: System.out.println("Invalid selection. Please try again\n");
             }
+            InputController.clear();
         } while (choice != 8);
     }
 }
