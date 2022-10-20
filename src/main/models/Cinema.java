@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cinema implements java.io.Serializable {
+    private static final long serialVersionUID = 2L;
     private String cineplex;
     private String location;
     private List<Session> showTimes;
@@ -17,9 +18,14 @@ public class Cinema implements java.io.Serializable {
     }
 
     public void addSession(Movie movie, String date, String time, String cinemaType) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy hh:mma");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy hh:mma");
         LocalDateTime dateTime = LocalDateTime.parse(date + " " + time, formatter);
         showTimes.add(new Session(this, movie, dateTime, cinemaType));
+    }
+
+    @Override
+    public String toString() {
+        return cineplex + " - " + location;
     }
 
     public List<Session> getShowTimes() {

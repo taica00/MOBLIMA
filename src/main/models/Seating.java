@@ -3,6 +3,7 @@ package main.models;
 import main.models.Session.CinemaClass;
 
 public class Seating implements java.io.Serializable {
+    private static final long serialVersionUID = 5L;
     private int[][] seats;
 
     public Seating(CinemaClass cinemaClass) {

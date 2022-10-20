@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Movie implements java.io.Serializable {
+    private static final long serialVersionUID = 3L;
     private String title;
     private Rating rating;
     private MovieStatus showingStatus;

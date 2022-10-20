@@ -3,12 +3,13 @@ package main.models;
 import java.time.LocalDateTime;
 
 public class Session implements java.io.Serializable {
+    private static final long serialVersionUID = 6L;
     private Cinema cinema;
     private Movie movie;
     private LocalDateTime dateTime;
     private CinemaClass cinemaClass;
     private Seating seating;
-    private String movieType;
+    private boolean is3D;
 
     public enum CinemaClass {STANDARD, GVMAX, GOLDCLASS, GOLDCLASSEXPRESS, DELUXEPLUS, GEMINI}
 
@@ -18,7 +19,7 @@ public class Session implements java.io.Serializable {
         this.dateTime = dateTime;
         this.cinemaClass = CinemaClass.valueOf(cinemaClass);
         seating = new Seating(this.cinemaClass);
-        movieType = "2D";
+        is3D = false;
     }
 
     @Override
