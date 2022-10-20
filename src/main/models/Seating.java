@@ -1,6 +1,6 @@
-package models;
+package main.models;
 
-import models.Session.CinemaClass;
+import main.models.Session.CinemaClass;
 
 public class Seating implements java.io.Serializable {
     private int[][] seats;

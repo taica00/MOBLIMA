@@ -1,11 +1,12 @@
+package main;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.List;
 
-import models.Cineplex;
-import models.Movie;
-import models.Session;
+import main.models.Cineplex;
+import main.models.Movie;
+import main.models.Session;
 
 public class MainApp {
     public static void main(String[] args) {

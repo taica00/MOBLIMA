@@ -1,6 +1,6 @@
-package models;
+package main.models;
 
-public class Ticket {
+public class Ticket implements java.io.Serializable {
     private Cinema cinema;
     private Session movieSession;
     private double price;

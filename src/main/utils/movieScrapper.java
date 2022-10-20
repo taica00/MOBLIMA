@@ -11,11 +11,11 @@ import com.gargoylesoftware.htmlunit.html.HtmlOption;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 
-import models.Cinema;
-import models.Cineplex;
-import models.Movie;
-import models.Session;
-import models.Movie.MovieStatus;
+import main.models.Cinema;
+import main.models.Cineplex;
+import main.models.Movie;
+import main.models.Session;
+import main.models.Movie.MovieStatus;
 
 public class movieScrapper {
     static final String C = "Cathay";

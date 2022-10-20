@@ -1,4 +1,4 @@
-package models;
+package main.models;
 
 public class Review implements java.io.Serializable{
     private int rating;
