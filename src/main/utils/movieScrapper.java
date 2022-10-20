@@ -14,10 +14,9 @@ import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 import main.models.Cinema;
 import main.models.Cineplex;
 import main.models.Movie;
-import main.models.Session;
 import main.models.Movie.MovieStatus;
 
-public class movieScrapper {
+public class MovieScrapper {
     static final String C = "Cathay";
     static final String G = "Golden Village";
     static final String S = "Shaw Theatres";
@@ -103,6 +102,8 @@ public class movieScrapper {
                     List<HtmlDivision> showTimes = showTimesList.getByXPath(".//div[@class='btn btn-info']");
                     for (HtmlDivision showTime : showTimes) {
                         String time = showTime.asNormalizedText();
+                        if (time.endsWith(")")) 
+                            time = time.substring(0, 7);
                         addSessionToCineplex(movie, date, location, time);
                     }
                 }
@@ -117,9 +118,9 @@ public class movieScrapper {
     private static void addSessionToCineplex(Movie movie, String date, String[] location, String time) {
         int cineplexIndex;
         switch(location[0]) {
-            case "Cathay": cineplexIndex = 0; break;
-            case "GV": cineplexIndex = 1; break;
-            case "Shaw Theatres": cineplexIndex = 2; break;
+            case C: cineplexIndex = 0; break;
+            case G: cineplexIndex = 1; break;
+            case S: cineplexIndex = 2; break;
             default: return; 
         }
         String[] cinemaAndType = location[1].split(", ");
@@ -170,19 +171,19 @@ public class movieScrapper {
 
     private static void serialize() {
         try {
-            FileOutputStream fileOut = new FileOutputStream("src/data/movies.ser");
+            FileOutputStream fileOut = new FileOutputStream("src/main/data/movies.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(movies);
             out.close();
             fileOut.close();
-            System.out.println("Serialized data is saved in src/data/movies.ser");
+            System.out.println("Serialized data is saved in src/main/data/movies.ser");
 
-            fileOut = new FileOutputStream("src/data/cineplexesshowtimes.ser");
+            fileOut = new FileOutputStream("src/main/data/cineplexes.ser");
             out = new ObjectOutputStream(fileOut);
             out.writeObject(cineplexes);
             out.close();
             fileOut.close();
-            System.out.println("Serialized data is saved in src/data/cineplexesshowtimes.ser");
+            System.out.println("Serialized data is saved in src/main/data/cineplexes.ser");
         } catch (IOException i) {
             i.printStackTrace();
         } 
