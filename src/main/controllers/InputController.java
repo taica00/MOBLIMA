@@ -10,7 +10,11 @@ public class InputController {
     }
 
     public static int getInt() {
-        return scan.nextInt();
+        return scan.hasNextInt() ? scan.nextInt() : -1;
+    }
+
+    public static void clear() {
+        scan.nextLine();
     }
 
     

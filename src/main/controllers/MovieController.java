@@ -6,6 +6,8 @@ import java.io.ObjectInputStream;
 import java.util.List;
 
 import main.models.Movie;
+import main.ui.MovieDetailsUI;
+import main.ui.MovieListUI;
 
 public class MovieController {
     private static List<Movie> movies;
@@ -16,8 +18,19 @@ public class MovieController {
     }
 
     public static void listMovies() {
-        for (Movie movie : movies)
-            System.out.println(movie);
+        int i = 1;
+        for (Movie movie : movies) {
+            System.out.println((i++) + ". " + movie.getTitle());
+        }
+        System.out.println();
+        MovieListUI.main(new String[]{""+movies.size()});
+    }
+
+    public static void viewMovieDetails(int index) {
+        Movie movie = movies.get(index-1);
+        System.out.println(movie);
+        MovieDetailsUI.setMovie(movie);
+        MovieDetailsUI.main(null);
     }
 
     public static void loadMovies() {
