@@ -31,6 +31,15 @@ public class Cinema implements java.io.Serializable {
     public List<Session> getShowTimes() {
         return showTimes;
     }
+    
+    public List<Session> getShowTimes(Movie movie) {
+        List<Session> sessions = new ArrayList<>();
+        for (Session session : showTimes) {
+            if (session.getMovie().getTitle().equals(movie.getTitle()))
+                sessions.add(session);
+        }
+        return sessions;
+    }
 
     public String getLocation() {
         return location;
