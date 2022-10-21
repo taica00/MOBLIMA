@@ -3,7 +3,6 @@ package main.ui;
 import main.controllers.CineplexController;
 import main.controllers.InputController;
 import main.controllers.ReviewsController;
-import main.models.Cineplex;
 import main.models.Movie;
 
 public class MovieDetailsUI {
@@ -11,6 +10,7 @@ public class MovieDetailsUI {
     public static void main(String[] args) {
         int choice = -1;
         boolean validInput = false;
+        //TODO different UI for different MovieStatus
         System.out.println("1. View showtimes | 2. View reviews | 3. Return to homepage");
         while (!validInput) {
             InputController.clear();
