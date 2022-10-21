@@ -9,13 +9,9 @@ import main.models.Movie;
 import main.ui.MovieDetailsUI;
 import main.ui.MovieListUI;
 
-public class MovieController {
+public class MovieController extends Controller {
     private static List<Movie> movies;
     private static final String FILENAME = "src/main/data/movies.ser";
-
-    private MovieController() {
-        throw new IllegalStateException("Utility class");
-    }
 
     public static void listMovies() {
         int i = 1;

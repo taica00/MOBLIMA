@@ -10,21 +10,20 @@ import main.models.Cineplex;
 import main.models.Movie;
 import main.models.Session;
 
-public class CineplexController {
+public class CineplexController extends Controller {
     private static Cineplex[] cineplexes;
     private static final String FILENAME = "src/main/data/cineplexes.ser";
-
-    private CineplexController() {
-        throw new IllegalStateException("Utility class");
-    }
 
     public static void viewShowTimes(Movie movie) {
         for (Cineplex cineplex : cineplexes) {
             for (Cinema cinema : cineplex.getCinemas()) {
-                List<Session> sessions = cinema.getShowTimes();
+                List<Session> sessions = cinema.getShowTimes(movie);
                 if (sessions.isEmpty())
                     continue;
                 System.out.println(cinema);
+                for (Session session : sessions)
+                    System.out.println(session.getDateTime());
+                System.out.println();
             }
         }
     }
