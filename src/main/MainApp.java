@@ -1,5 +1,4 @@
 package main;
-
 import main.controllers.CineplexController;
 import main.controllers.MovieController;
 import main.ui.MainMenuUI;
