@@ -13,7 +13,7 @@ public class MovieController extends Controller {
     private static List<Movie> movies;
     private static final String FILENAME = "src/main/data/movies.ser";
 
-    public static void listMovies() {
+    public static void listMovies(String movieName) {
         int i = 1;
         for (Movie movie : movies) {
             System.out.println((i++) + ". " + movie.getTitle());

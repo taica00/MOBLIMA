@@ -3,6 +3,7 @@ package main.controllers;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import main.models.Cinema;
@@ -21,8 +22,10 @@ public class CineplexController extends Controller {
                 if (sessions.isEmpty())
                     continue;
                 System.out.println(cinema);
-                for (Session session : sessions)
-                    System.out.println(session.getDateTime());
+                for (Session session : sessions) {
+                    LocalDateTime dateTime = session.getDateTime();
+                    System.out.println(dateTime.getDayOfMonth() + " " + dateTime.getMonth() + " " + dateTime.getYear() + " " + dateTime.toLocalTime() + " - " + session.getCinemaClass());
+                }
                 System.out.println();
             }
         }

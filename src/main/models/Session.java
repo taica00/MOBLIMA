@@ -70,15 +70,6 @@ public class Session implements java.io.Serializable {
     public void setSeating(Seating seating) {
         this.seating = seating;
     }
-
-    public String getMovieType() {
-        return movieType;
-    }
-
-    public void setMovieType(String movieType) {
-        this.movieType = movieType;
-    }
-
-    
+ 
 
 }

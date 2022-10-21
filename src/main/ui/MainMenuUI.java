@@ -2,6 +2,7 @@ package main.ui;
 
 import main.controllers.InputController;
 import main.controllers.MovieController;
+import main.models.Movie;
 
 public class MainMenuUI {
     public static void main(String[] args) {
@@ -21,8 +22,8 @@ public class MainMenuUI {
             System.out.println();
             
             switch(choice) {
-                case 1: MovieController.listMovies(); break;
-                case 2: System.out.println("hi");
+                case 1: MovieController.listMovies(null); break;
+                case 2: MovieController.listMovies(InputController.getString()); break;
                 case 3: System.out.println("hi");
                 case 4: System.out.println("hi");
                 case 5: System.out.println("hi");
