@@ -44,10 +44,12 @@ public class ShowTimesUI extends UI {
         System.out.println("\n-------------------------------------------------------------");
         System.out.println("1. Book tickets | 2. Return to homepage");
         int choice = InputController.getInt(1, 2, "Select an option: ");
+        System.out.println();
         if (choice == 2)
             return;
-        System.out.println("Enter desired session in the following format: {cinemaCode ddMMyy cinemaClass HHmm}, e.g. SJE 231022 STANDARD 1335");
-        String input = InputController.getString();
+        String message = "Enter desired session in the following format: {cinemaCode ddMMyy cinemaClass HHmm}, e.g. SJE 231022 STANDARD 1335";
+        String input = InputController.getString(message);
+        System.out.println();
         SessionController.viewSeating(movieSessions, input.split(" "));
     }
 }
