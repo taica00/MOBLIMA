@@ -15,6 +15,6 @@ public class MovieListUI extends UI {
         System.out.println();
         if (choice == 0)
             return;
-        MovieDetailsUI.view(movies.get(choice));
+        MovieDetailsUI.view(movies.get(choice-1));
     }
 }
