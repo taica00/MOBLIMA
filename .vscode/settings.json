@@ -1,7 +1,6 @@
 {
     "java.project.sourcePaths": [
-        "src",
-        "src\\main\\utils"
+        "src"
     ],
     "java.project.referencedLibraries": {
         "include": [

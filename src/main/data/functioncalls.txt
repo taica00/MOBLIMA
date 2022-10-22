@@ -1,1 +1,0 @@
-MainApp -> MainMenuUI -> MovieController.listMovies() -> MovieListUI -> MovieController.viewMovieDetails -> MovieDetailsUI
