@@ -5,6 +5,7 @@ import main.models.Session.CinemaClass;
 public class Seating implements java.io.Serializable {
     private static final long serialVersionUID = 5L;
     private int[][] seats;
+    private int availableSeats;
 
     public Seating(CinemaClass cinemaClass) {
         generateSeating(cinemaClass);
@@ -13,6 +14,7 @@ public class Seating implements java.io.Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("SEATS SELECTION:\n\n");
         sb.append(" ");
         for (int i = 0; i < seats[0].length-3; i++) {
             if (i == (seats[0].length-5)/2)
@@ -87,5 +89,10 @@ public class Seating implements java.io.Serializable {
                 seats[j][i] = -1; //aisle
             }
         }
+        availableSeats = rows * (columns - aisles.length); 
+    }
+
+    public int getAvailableSeats() {
+        return availableSeats;
     }
 }
