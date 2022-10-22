@@ -5,8 +5,16 @@ Standard(3D)                           9       13.5       16.5
 GVmax(2D)                 10           9       11.5        16
 GVmax(3D)                             11       15.5       18.5
 Deluxe Plus               10          12        17         22
-Gemini(per pair)          20          24        26         36
+Gemini(per pair)          20          24        26         36 
+Dreamers                                                      
+Premiere                                                       
+Platinum                                                       
 
                    Mon-Wed(before 5pm)  Mon-Wed(after 5pm)  Thurs-Sun/PH
 Gold Class                 32                  35               45  
 Gold Class Express         28                  31               41
+                     (Mon-Thurs before 6pm)
+                    Senior Citizen  Student  Mon - Thu  Fri-Sun/PH
+Lumiere                    17          18        23          28                    
+                       (Fri before 6pm)
+                           22          23
