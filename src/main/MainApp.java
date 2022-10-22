@@ -6,7 +6,7 @@ import main.ui.MainMenuUI;
 public class MainApp {
     public static void main(String[] args) {
         initialiseData();
-        MainMenuUI.main(null);
+        MainMenuUI.view();
     }
 
     public static void initialiseData() {

@@ -7,7 +7,7 @@ public class MainMenuUI extends UI {
     public static void view() {
         int choice;
         do {
-            System.out.println("*********** MOBLIMA ***********\n");
+            System.out.println("\n********************** MOBLIMA **********************\n");
             System.out.println("1. List all movies.");
             System.out.println("2. Search for a movie.");
             System.out.println("3. View showtimes");
@@ -21,7 +21,7 @@ public class MainMenuUI extends UI {
             
             switch(choice) {
                 case 1: MovieController.listMovies(); break;
-                case 2: MovieController.listMovies(InputController.getString()); break;
+                case 2: break;
                 case 3: break;
                 case 4: break;
                 case 5: break;
