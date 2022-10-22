@@ -11,7 +11,7 @@ public class Session implements java.io.Serializable {
     private Seating seating;
     private boolean is3D;
 
-    public enum CinemaClass {STANDARD, GVMAX, GOLDCLASS, GOLDCLASSEXPRESS, DELUXEPLUS, GEMINI}
+    public enum CinemaClass {STANDARD, GVMAX, GOLDCLASS, GOLDCLASSEXPRESS, DELUXEPLUS, GEMINI, IMAX, LUMIERE, DREAMERS, PREMIERE, PLATINUM}
 
     public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, String cinemaClass) {
         this.cinema = cinema;
