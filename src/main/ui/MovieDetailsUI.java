@@ -5,9 +5,10 @@ import main.controllers.InputController;
 import main.controllers.ReviewsController;
 import main.models.Movie;
 
-public class MovieDetailsUI {
-    private static Movie movie;
-    public static void main(String[] args) {
+public class MovieDetailsUI extends UI {
+
+    public static void view(Movie movie) {
+        System.out.println(movie);
         int choices = 0;
         System.out.print("1. Return to homepage ");
         switch (movie.getShowingStatus()) {
@@ -25,29 +26,12 @@ public class MovieDetailsUI {
                 break;
         }
         System.out.println();
-        int choice = getChoice(choices);
+        int choice = InputController.getInt(1, choices, "Enter your choice: ");
         switch(choice) {
-            case 2: ReviewsController.viewReviews(movie);
+            case 1: return;
+            case 2: ReviewsController.viewReviews(movie); break;
             case 3: CineplexController.viewShowTimes(movie); break; 
+            default: System.out.println("Something weird happened");
         }
-    }
-
-    public static void setMovie(Movie m) {
-        movie = m;
-    }
-
-    private static int getChoice(int choices) {
-        int choice = -1;
-        boolean validInput = false;
-        while (!validInput) {
-            InputController.clear();
-            System.out.print("Enter selection: ");
-            choice = InputController.getInt();
-            if (choice >= 1 && choice <= choices)
-                validInput = true;
-            else
-                System.out.println("Invalid selection. Please try again\n");
-        }
-        return choice;
     }
 }

@@ -2,10 +2,9 @@ package main.ui;
 
 import main.controllers.InputController;
 import main.controllers.MovieController;
-import main.models.Movie;
 
-public class MainMenuUI {
-    public static void main(String[] args) {
+public class MainMenuUI extends UI {
+    public static void view() {
         int choice;
         do {
             System.out.println("*********** MOBLIMA ***********\n");
@@ -17,22 +16,20 @@ public class MainMenuUI {
             System.out.println("6. List Top 5 ranking movies by reviewers' ratings");
             System.out.println("7. Admin login");
             System.out.println("8. Exit");
-            System.out.print("Select an option: ");
-            choice  = InputController.getInt();
+            choice = InputController.getInt(1, 8, "Select an option: ");
             System.out.println();
             
             switch(choice) {
-                case 1: MovieController.listMovies(null); break;
+                case 1: MovieController.listMovies(); break;
                 case 2: MovieController.listMovies(InputController.getString()); break;
-                case 3: System.out.println("hi");
-                case 4: System.out.println("hi");
-                case 5: System.out.println("hi");
-                case 6: System.out.println("hi");
-                case 7: System.out.println("hi");
+                case 3: break;
+                case 4: break;
+                case 5: break;
+                case 6: break; 
+                case 7: break;
                 case 8: break;
-                default: System.out.println("Invalid selection. Please try again\n");
+                default: System.out.println("Something weird happened");
             }
-            InputController.clear();
         } while (choice != 8);
     }
 }

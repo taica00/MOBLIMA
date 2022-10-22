@@ -1,24 +1,20 @@
 package main.ui;
 
-import main.controllers.InputController;
-import main.controllers.MovieController;
+import java.util.List;
 
-public class MovieListUI {
-    public static void main(String[] args) {
-        boolean validInput = false;
-        int choice = -1;
-        while (!validInput) {    
-            InputController.clear();
-            System.out.print("Enter list number of movie to view details or '0' to return to homepage: ");
-            choice = InputController.getInt();
-            if (choice == 0)
-                return;
-            if (choice >= 1 && choice <= Integer.parseInt(args[0]))
-                validInput = true;
-            else
-                System.out.println("Invalid selection. Please try again\n");
-        }
+import main.controllers.InputController;
+import main.models.Movie;
+
+public class MovieListUI extends UI {
+
+    public static void view(List<Movie> movies) {
+        int i = 1;
+        for (Movie movie : movies) 
+            System.out.println((i++) + ". " + movie.getTitle());
+        int choice = InputController.getInt(0, movies.size(), "Enter list number of movie to view details or '0' to return to homepage: ");
         System.out.println();
-        MovieController.viewMovieDetails(choice);
+        if (choice == 0)
+            return;
+        MovieDetailsUI.view(movies.get(choice));
     }
 }
