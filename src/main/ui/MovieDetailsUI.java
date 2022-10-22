@@ -26,7 +26,7 @@ public class MovieDetailsUI extends UI {
                 break;
         }
         System.out.println();
-        int choice = InputController.getInt(1, choices, "Enter your choice: ");
+        int choice = InputController.getInt(1, choices, "Select an option: ");
         switch(choice) {
             case 1: return;
             case 2: ReviewsController.viewReviews(movie); break;
