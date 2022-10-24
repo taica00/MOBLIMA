@@ -16,7 +16,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 import main.models.Cinema;
 import main.models.Cineplex;
 import main.models.Movie;
-import main.models.Movie.MovieStatus;
+import main.models.MovieStatus;
 
 public class MoviesShowtimesScrapper extends Populator {
     static final String C = "Cathay";
@@ -42,7 +42,7 @@ public class MoviesShowtimesScrapper extends Populator {
             client.getOptions().setCssEnabled(false);
             client.getOptions().setJavaScriptEnabled(false);
             String className;
-            Movie.MovieStatus movieStatus;
+            MovieStatus movieStatus;
             if(domain.equals("nowshowing.aspx")) {
                 className = "'NowShowingMov'";
                 movieStatus = MovieStatus.NOW_SHOWING;
@@ -116,7 +116,7 @@ public class MoviesShowtimesScrapper extends Populator {
                         if (cClass.endsWith(")"))
                             cClass = "STANDARD";
                         else if (cClass.endsWith("SUITES"))
-                            cClass = "PLATINUM";
+                            cClass = "PLATINUM_MOVIE_SUITES";
                         List<HtmlDivision> showTimes = cinemaClass.getByXPath(".//div[@class='btn btn-info']");
                         for (HtmlDivision showTime : showTimes) {
                             String time = showTime.asNormalizedText();

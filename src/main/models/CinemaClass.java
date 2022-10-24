@@ -73,7 +73,7 @@ public enum CinemaClass implements SeatingLayout {
         @Override
         public int[] aisles() {return new int[]{2, 5, 8};}
     },
-    PLATINUM("Platinum Movie Suites") {
+    PLATINUM_MOVIE_SUITES("Platinum Movie Suites") {
         @Override
         public int rows() {return 5;}
         @Override
