@@ -1,6 +1,6 @@
 package main.models;
 
-enum CinemaClass implements SeatingLayout {
+public enum CinemaClass implements SeatingLayout {
     STANDARD("Standard") {
         @Override
         public int rows() {return 17;}

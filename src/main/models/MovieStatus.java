@@ -1,6 +1,6 @@
 package main.models;
 
-enum MovieStatus {
+public enum MovieStatus {
     COMING_SOON("Coming Soon"), 
     PREVIEW("Preview"), 
     NOW_SHOWING("Now Showing"), 
