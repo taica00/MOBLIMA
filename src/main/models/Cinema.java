@@ -10,19 +10,17 @@ public class Cinema implements java.io.Serializable {
     private String cineplex;
     private String cinemaCode;
     private String location;
-    private List<Session> showTimes;
+    private List<Session> sessions;
 
     public Cinema(String cineplex, String location) {
         this.cineplex = cineplex;
         this.location = location;
-        showTimes = new ArrayList<>();
+        sessions = new ArrayList<>();
         generateCinemaCode();
     }
 
-    public void addSession(Movie movie, String date, String time, String cinemaType) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy hh:mma");
-        LocalDateTime dateTime = LocalDateTime.parse(date + " " + time, formatter);
-        showTimes.add(new Session(this, movie, dateTime, cinemaType));
+    public void addSession(Movie movie, LocalDateTime dateTime, String cinemaClass, boolean is3D) {
+        sessions.add(new Session(this, movie, dateTime, cinemaClass, is3D));
     }
 
     @Override
@@ -41,17 +39,17 @@ public class Cinema implements java.io.Serializable {
         cinemaCode = sb.toString();
     }
 
-    public List<Session> getShowTimes(Movie movie) {
-        List<Session> sessions = new ArrayList<>();
-        for (Session session : showTimes) {
+    public List<Session> getSessions(Movie movie) {
+        List<Session> movieSessions = new ArrayList<>();
+        for (Session session : sessions) {
             if (session.getMovie().getTitle().equals(movie.getTitle()) && session.getDateTime().isAfter(LocalDateTime.now()))
-                sessions.add(session);
+                movieSessions.add(session);
         }
-        return sessions;
+        return movieSessions;
     }
     
-    public List<Session> getShowTimes() {
-        return showTimes;
+    public List<Session> getSessions() {
+        return sessions;
     }
 
     public String getLocation() {
