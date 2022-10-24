@@ -33,7 +33,7 @@ public class Cinema implements java.io.Serializable {
         sb.append(cineplex.charAt(0));
         String[] locationWords = location.split(" ");
         if (locationWords.length == 2)
-            sb.append(locationWords[0].charAt(0) + "" + locationWords[1].charAt(1));
+            sb.append(locationWords[0].charAt(0) + "" + locationWords[1].charAt(0));
         else
             sb.append(location.substring(0, 2).toUpperCase());
         cinemaCode = sb.toString();
