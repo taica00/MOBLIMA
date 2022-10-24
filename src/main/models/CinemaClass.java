@@ -5,7 +5,7 @@ enum CinemaClass implements SeatingLayout {
         @Override
         public int rows() {return 17;}
         @Override
-        public int columns() {return 20;}
+        public int columns() {return 36;}
         @Override
         public int[] aisles() {return new int[]{7, 28};}    
     },
