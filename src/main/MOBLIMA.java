@@ -3,14 +3,20 @@ import main.controllers.CineplexController;
 import main.controllers.MovieController;
 import main.ui.MainMenuUI;
 
-public class MainApp {
+public class MOBLIMA {
     public static void main(String[] args) {
-        initialiseData();
+        loadState();
         MainMenuUI.view();
+        saveState();
     }
 
-    public static void initialiseData() {
+    private static void loadState() {
         CineplexController.loadCineplexes();
         MovieController.loadMovies();
+    }
+
+    private static void saveState() {
+        CineplexController.saveCineplexes();
+        MovieController.saveMovies();
     }
 }
