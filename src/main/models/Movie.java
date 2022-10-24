@@ -16,7 +16,6 @@ public class Movie implements java.io.Serializable {
     private int ticketSales;
 
     public enum Rating {G, PG, PG13, NC16, M18, R21, NA}
-    public enum MovieStatus {COMINGSOON, PREVIEW, NOWSHOWING, ENDOFSHOWING}
 
     public Movie(String title, String rating, MovieStatus showingStatus, String sypnopsis, String director, String casts) {
         this.title = title;
