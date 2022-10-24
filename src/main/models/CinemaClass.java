@@ -51,17 +51,17 @@ public enum CinemaClass implements SeatingLayout {
     },
     LUMIERE("Lumiere") {
         @Override
-        public int rows() {return 5;}
+        public int rows() {return 4;}
         @Override
-        public int columns() {return 9;}
+        public int columns() {return 8;}
         @Override
         public int[] aisles() {return new int[]{2, 5};}
     },
     DREAMERS("Dreamers") {
         @Override
-        public int rows() {return 11;}
+        public int rows() {return 6;}
         @Override
-        public int columns() {return 6;}
+        public int columns() {return 11;}
         @Override
         public int[] aisles() {return new int[]{5};}
     },
