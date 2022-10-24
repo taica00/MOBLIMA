@@ -1,9 +1,7 @@
 package main.utils;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,7 @@ import main.models.Cineplex;
 import main.models.Movie;
 import main.models.Movie.MovieStatus;
 
-public class MovieScrapper {
+public class MoviesShowtimesScrapper extends Populator {
     static final String C = "Cathay";
     static final String G = "Golden Village";
     static final String S = "Shaw Theatres";
@@ -34,7 +32,8 @@ public class MovieScrapper {
         loadMovies("nowshowing.aspx", 20);
         loadMovies("comingsoon.aspx", 10);
         movies.sort((x, y)->x.getTitle().compareTo(y.getTitle()));
-        serialize();
+        serialize(cineplexes, "cineplexes.ser");
+        serialize(movies, "movies.ser");
     }
 
     private static void loadMovies(String domain, int count) {
@@ -46,11 +45,11 @@ public class MovieScrapper {
             Movie.MovieStatus movieStatus;
             if(domain.equals("nowshowing.aspx")) {
                 className = "'NowShowingMov'";
-                movieStatus = MovieStatus.NOWSHOWING;
+                movieStatus = MovieStatus.NOW_SHOWING;
             }
             else {
                 className = "'ComingSoonMov'";
-                movieStatus = MovieStatus.COMINGSOON;
+                movieStatus = MovieStatus.COMING_SOON;
             }
             final HtmlPage page = client.getPage("https://www.cinemaonline.sg/movies/" + domain);
             final HtmlDivision allMovies = (HtmlDivision)page.getFirstByXPath("//div[@class=" + className + "]");
@@ -62,7 +61,7 @@ public class MovieScrapper {
                 String[] movieDetailsArr = movieDetails.asNormalizedText().split("\n");
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d MMM yyyy");
                 LocalDate date = LocalDate.parse(movieDetailsArr[6].split(": ")[1], dtf);
-                if (movieStatus.equals(movieStatus.NOWSHOWING) && date.isAfter(LocalDate.now()))
+                if (movieStatus.equals(MovieStatus.NOW_SHOWING) && date.isAfter(LocalDate.now()))
                     continue;
                 String title = movieDetailsArr[0];
                 String sypnosis = movieDetailsArr[1];
@@ -70,7 +69,7 @@ public class MovieScrapper {
                 String cast = movieDetailsArr[10].substring(6);
                 String director = movieDetailsArr[11].substring(10);
                 movies.add(new Movie(title, rating, movieStatus, sypnosis, director, cast));
-                if (movieStatus == MovieStatus.NOWSHOWING)
+                if (movieStatus == MovieStatus.NOW_SHOWING)
                     loadShowTimes(movieDetails, movies.get(movies.size()-1));
                 if (--count == 0) 
                     return;
@@ -123,10 +122,12 @@ public class MovieScrapper {
                             String time = showTime.asNormalizedText();
                             if (time.endsWith(")")) 
                                 continue;
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyyhh:mma");
+                            LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
                             if (location[0].equals("GV"))
-                                addSessionToCineplexGV(movie, date, location[1], time);
+                                addSessionToGV(movie, dateTime, location[1]);
                             else
-                                addSessionToCineplex(movie, date, location, time, cClass);
+                                addSessionToCineplex(movie, dateTime, location, cClass);
                         }
                     } 
                 }
@@ -137,7 +138,7 @@ public class MovieScrapper {
             e.printStackTrace();
         }
     }
-    private static void addSessionToCineplex(Movie movie, String date, String[] location, String time, String cinemaType) { 
+    private static void addSessionToCineplex(Movie movie, LocalDateTime dateTime, String[] location, String cinemaClass) { 
         Cineplex cineplex = null;
         for (Cineplex c : cineplexes)
             if (c.getName().equals(location[0]))
@@ -148,22 +149,18 @@ public class MovieScrapper {
         Cinema cinema = cineplex.getCinema(cinemaName);
         if (cinema == null)
             return;
-        System.out.println(cinema.getCineplex()+" "+cinema.getLocation()+" "+movie.getTitle()+" "+date+" "+time+" "+cinemaType);
-        cinema.addSession(movie, date, time, cinemaType);
+        System.out.println(cinema + " " + movie.getTitle() + " " + dateTime + " " + cinemaClass);
+        cinema.addSession(movie, dateTime, cinemaClass, false);
     }
 
-    private static void addSessionToCineplexGV(Movie movie, String date, String location, String time) {
+    private static void addSessionToGV(Movie movie, LocalDateTime dateTime, String location) {
         String[] cinemaAndType = location.split(", ");
         String cinemaName= "NULL";
         String cinemaType;
         if (cinemaAndType.length == 3) {
             cinemaType = cinemaAndType[0];
-            if (cinemaType.startsWith("Gemini")) {
-                cinemaType = "GEMINI";
-                cinemaName = "Funan";
-            }
-            else if (cinemaType.startsWith("Gold")) {
-                cinemaType = "GOLDCLASSEXPRESS";
+            if (cinemaType.startsWith("Gold")) {
+                cinemaType = "GOLD_CLASS_EXPRESS";
                 cinemaName = "Funan"; 
             }
             else if (cinemaType.equals("Grand")) {
@@ -171,18 +168,16 @@ public class MovieScrapper {
                 cinemaName = "Grand";
             }
             else if (cinemaType.startsWith("Deluxe")) {
-                cinemaType = "DELUXEPLUS";
+                cinemaType = "DELUXE_PLUS";
                 cinemaName = "Funan";
             }
         }
         else if (cinemaAndType[0].startsWith("Gold")) {
-            cinemaType = "GOLDCLASS";
+            cinemaType = "GOLD_CLASS";
             cinemaName = cinemaAndType[0].substring(11);
         }
-        else if (cinemaAndType[0].startsWith("Gemini")) {
-            cinemaType = "GEMINI";
-            cinemaName = "Funan";
-        }
+        else if (cinemaAndType[0].startsWith("Gemini")) 
+            return;
         else if (cinemaAndType[0].startsWith("GVmax")) {
             cinemaType = "GVMAX";
             cinemaName = "VivoCity";
@@ -194,28 +189,8 @@ public class MovieScrapper {
         Cinema cinema = cineplexes.get(1).getCinema(cinemaName);
         if (cinema == null) 
             return;
-        System.out.println(cinema.getCineplex()+" "+cinema.getLocation()+" "+movie.getTitle()+" "+date+" "+time+" "+cinemaType);
-        cinema.addSession(movie, date, time, cinemaType);
+        System.out.println(cinema + " " + movie.getTitle() + " " + dateTime + " " + cinemaType);
+        cinema.addSession(movie, dateTime, cinemaType, false);
         
-    }
-
-    private static void serialize() {
-        try {
-            FileOutputStream fileOut = new FileOutputStream("src/main/data/movies.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(movies);
-            out.close();
-            fileOut.close();
-            System.out.println("Serialized data is saved in src/main/data/movies.ser");
-
-            fileOut = new FileOutputStream("src/main/data/cineplexes.ser");
-            out = new ObjectOutputStream(fileOut);
-            out.writeObject(cineplexes);
-            out.close();
-            fileOut.close();
-            System.out.println("Serialized data is saved in src/main/data/cineplexes.ser");
-        } catch (IOException i) {
-            i.printStackTrace();
-        } 
     }
 }
