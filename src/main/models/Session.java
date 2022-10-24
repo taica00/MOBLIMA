@@ -11,24 +11,15 @@ public class Session implements java.io.Serializable {
     private Seating seating;
     private boolean is3D;
 
-    public enum CinemaClass {STANDARD, GVMAX, GOLDCLASS, GOLDCLASSEXPRESS, DELUXEPLUS, GEMINI, IMAX, LUMIERE, DREAMERS, PREMIERE, PLATINUM}
-
-    public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, String cinemaClass) {
+    public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, String cinemaClass, boolean is3D) {
+        if (cinema == null || movie == null)
+            throw new IllegalArgumentException("Cinema/Movie cannot be null");
         this.cinema = cinema;
         this.movie = movie;
         this.dateTime = dateTime;
         this.cinemaClass = CinemaClass.valueOf(cinemaClass);
         seating = new Seating(this.cinemaClass);
-        is3D = false;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(cinema.getCineplex() + " " + cinema.getLocation() + " - " + cinemaClass + "\n");
-        sb.append(movie.getTitle() + " (" + movie.getRating() + ")\n");
-        sb.append(dateTime.getDayOfMonth() + " " + dateTime.getMonth() + " " + dateTime.getYear() + " " + dateTime.toLocalTime() + "\n");
-        return sb.toString();
+        this.is3D = is3D;
     }
 
     public Cinema getCinema() {
@@ -67,9 +58,8 @@ public class Session implements java.io.Serializable {
         return seating;
     }
 
-    public void setSeating(Seating seating) {
-        this.seating = seating;
+    public void set3D(boolean is3D) {
+        this.is3D = is3D;
     }
- 
 
 }
