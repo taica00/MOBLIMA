@@ -1,11 +1,9 @@
 package main.models;
 
-import main.models.Session.CinemaClass;
-
 public class Seating implements java.io.Serializable {
     private static final long serialVersionUID = 5L;
     private int[][] seats;
-    private int availableSeats;
+    private int numAvailableSeats;
 
     public Seating(CinemaClass cinemaClass) {
         generateSeating(cinemaClass);
@@ -52,47 +50,19 @@ public class Seating implements java.io.Serializable {
     }
 
     private void generateSeating(CinemaClass cinemaClass) {
-        int rows = 0, columns = 0;
-        int[] aisles;
-        switch (cinemaClass) {
-            case STANDARD: 
-                rows = 17;
-                columns = 36;
-                aisles = new int[]{7, 28};
-                break;
-            case GVMAX: 
-                rows = 10;
-                columns = 20;
-                aisles = new int[]{4, 15};
-                break;
-            case GOLDCLASS:
-            case GOLDCLASSEXPRESS:
-                rows = 4;
-                columns = 11;
-                aisles = new int[]{2, 5, 8};
-                break;
-            case DELUXEPLUS:
-                rows = 5;
-                columns = 11;
-                aisles = new int[]{2, 5, 8};
-                break;
-            case GEMINI: //each index represents 2 seats
-                rows = 7;
-                columns = 11;
-                aisles = new int[]{2, 5, 8};
-                break;
-            default: aisles = new int[1]; 
-        }
+        int rows = cinemaClass.rows();
+        int columns = cinemaClass.columns();
+        int[] aisles = cinemaClass.aisles();
         seats = new int[rows][columns];
         for (int i : aisles) {
             for (int j = 0; j < seats.length; j++) {
                 seats[j][i] = -1; //aisle
             }
         }
-        availableSeats = rows * (columns - aisles.length); 
+        numAvailableSeats = rows * (columns - aisles.length); 
     }
 
-    public int getAvailableSeats() {
-        return availableSeats;
+    public int getNumAvailableSeats() {
+        return numAvailableSeats;
     }
 }
