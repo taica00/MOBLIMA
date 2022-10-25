@@ -1,21 +1,16 @@
                      (Mon-Fri before 6pm) 
                     Senior Citizen  Student  Mon - Thu  Fri-Sun/PH
-Standard(2D)               5           7        10        14.5 
-Standard(3D)               7           9       13.5       16.5
-GVmax(2D)                 10           9       11.5        16
-GVmax(3D)                 12          11       15.5       18.5
+Standard                   5           7        10        14.5 
+GVmax                     10          10       11.5        16
 Deluxe Plus               10          12        17         22
 Gemini(per pair)          20          24        26         36
-IMAX(2D)                  17          19        20         23
-IMAX(3D)                  19          21        22         25
+IMAX                      17          19        20         23
 Lumiere                   17          18        23         28  
 Dreamers                   7           8         9         14  
-Premiere                  20          25        30         35    
-Platinum                                                       
-
-                   Mon-Wed(before 5pm)  Mon-Wed(after 5pm)  Thurs-Sun/PH
-Gold Class                 32                  35               45  
-Gold Class Express         28                  31               41
+Premiere                  22          25        30         35    
+Platinum                  16          16        25         25                                     
+Gold Class                32          32        35         45  
+Gold Class Express        28          28        31         41
                 
                     
                   
