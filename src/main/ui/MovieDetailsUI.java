@@ -12,14 +12,14 @@ public class MovieDetailsUI extends UI {
         int choices = 0;
         System.out.print("1. Return to homepage ");
         switch (movie.getShowingStatus()) {
-            case COMINGSOON: 
+            case COMING_SOON: 
                 choices = 1;
                 break;
-            case ENDOFSHOWING: 
+            case END_OF_SHOWING: 
                 System.out.print("| 2. View reviews "); 
                 choices = 2;
                 break;
-            case NOWSHOWING: 
+            case NOW_SHOWING: 
             case PREVIEW: 
                 System.out.print("| 2. View reviews | 3. View showtimes"); 
                 choices = 3;
