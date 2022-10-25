@@ -62,4 +62,8 @@ public class Session implements java.io.Serializable {
         this.is3D = is3D;
     }
 
+    public boolean is3D() {
+        return is3D;
+    }
+
 }
