@@ -1,7 +1,7 @@
 package tests;
 
+import main.models.CinemaClass;
 import main.models.Seating;
-import main.models.Session.CinemaClass;
 
 public class SeatingTests {
     public static void main(String[] args) {
