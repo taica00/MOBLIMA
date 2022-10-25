@@ -9,8 +9,8 @@ Gemini(per pair)          20          24        26         36
 IMAX(2D)                  17          19        20         23
 IMAX(3D)                  19          21        22         25
 Lumiere                   17          18        23         28  
-Dreamers                                                      
-Premiere                                                       
+Dreamers                   7           8         9         14  
+Premiere                  20          25        30         35    
 Platinum                                                       
 
                    Mon-Wed(before 5pm)  Mon-Wed(after 5pm)  Thurs-Sun/PH
