@@ -2,23 +2,23 @@ package main.controllers;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
+import main.models.CinemaClass;
 import main.models.Session;
-import main.models.Session.CinemaClass;
+import main.ui.BookingUI;
 import main.ui.SeatingUI;
 
 public class SessionController extends Controller {
-    public static void viewSeating(List<List<Session>> movieSessions, String[] input) {
-        String cinemaCode = input[0];
+    public static void viewSeating(List<List<Session>> movieSessions, String cinemaCode, String date, String cinemaClass, String time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyHHmm");
-        LocalDateTime dateTime = LocalDateTime.parse(input[1]+input[3], formatter);
-        CinemaClass cinemaClass = CinemaClass.valueOf(input[2]);
+        LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
         for (List<Session> cinemaSessions : movieSessions) {
             for (Session session : cinemaSessions) {
                 if (!session.getCinema().getCinemaCode().equals(cinemaCode))
                     break;
-                if (dateTime.isEqual(session.getDateTime()) && cinemaClass.equals(session.getCinemaClass())) {
+                if (dateTime.isEqual(session.getDateTime()) && CinemaClass.valueOf(cinemaClass).equals(session.getCinemaClass())) {
                     SeatingUI.view(session);
                     return;
                 }
@@ -28,6 +28,21 @@ public class SessionController extends Controller {
     }
 
     public static void bookSeats(Session session, String[] seats) {
-
+        List<String> bookedSeats = new ArrayList<>();
+        for (String seat : seats) {
+            char row = seat.charAt(0);
+            char col = seat.charAt(1);
+            if (!Character.isUpperCase(row) || !Character.isDigit(col)) 
+                System.out.println(seat + " is not a valid selection.");
+            else if (!session.getSeating().bookSeat(row, col)) 
+                System.out.println("Seat " + seat + " is occupied");
+            else
+                bookedSeats.add(seat);
+        }
+        if (bookedSeats.isEmpty()) {
+            System.out.println("No seats booked. Returning to homepage.");
+            return;
+        }
+        BookingUI.view(session, bookedSeats);
     }
 }

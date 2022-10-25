@@ -24,12 +24,12 @@ public class InputController extends Controller {
 
     public static String getString(String message) {
         clear();
-        System.out.println(message);
+        System.out.print(message);
         return scan.nextLine();
     }
 
     private static void clear() {
-        scan.nextLine();
+        scan = new Scanner(System.in);
     }
 
     
