@@ -7,8 +7,8 @@ import java.util.List;
 import main.controllers.InputController;
 import main.controllers.SessionController;
 import main.models.Cinema;
+import main.models.CinemaClass;
 import main.models.Session;
-import main.models.Session.CinemaClass;
 
 public class ShowTimesUI extends UI {
     public static void view(List<List<Session>> movieSessions) {
@@ -47,9 +47,11 @@ public class ShowTimesUI extends UI {
         System.out.println();
         if (choice == 2)
             return;
-        String message = "Enter desired session in the following format: {cinemaCode ddMMyy cinemaClass HHmm}, e.g. SJE 231022 STANDARD 1335";
-        String input = InputController.getString(message);
+        String cinemaCode = InputController.getString("Enter cinema code, e.g. for JCube (SJC), SJC is the cinema code: ");
+        String date = InputController.getString("Enter date in ddMMyy format, e.g. 251022: ");
+        String cinemaClass = InputController.getString("Enter cinemaClass(non case-sensitive, please input '_' for spaces), e.g. gold_class_express: ");
+        String time = InputController.getString("Enter time in HHmm format, e.g. 1620: ");
         System.out.println();
-        SessionController.viewSeating(movieSessions, input.split(" "));
+        SessionController.viewSeating(movieSessions, cinemaCode, date, cinemaClass.toUpperCase(), time);
     }
 }
