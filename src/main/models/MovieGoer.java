@@ -1,5 +1,6 @@
 package main.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieGoer implements java.io.Serializable {
@@ -23,6 +24,7 @@ public class MovieGoer implements java.io.Serializable {
         this.mobile = mobile;
         this.email = email;
         this.cardNumber = cardNumber;
+        transactions = new ArrayList<>();
     }
 
     public void addTransaction(Transaction transaction) {
