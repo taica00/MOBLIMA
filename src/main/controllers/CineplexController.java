@@ -7,6 +7,7 @@ import main.models.Cinema;
 import main.models.Cineplex;
 import main.models.Movie;
 import main.models.Session;
+import main.ui.CinemaListUI;
 import main.ui.ShowTimesUI;
 
 public class CineplexController extends Controller {
@@ -24,6 +25,15 @@ public class CineplexController extends Controller {
             }
         }
         ShowTimesUI.view(movieSessions);
+    }
+
+    public static void displayCinemas() {
+        List<Cinema> cinemas = new ArrayList<>();
+        for (Cineplex cineplex : cineplexes) {
+            for (Cinema cinema : cineplex.getCinemas())
+                cinemas.add(cinema);
+        }
+        CinemaListUI.view(cinemas);
     }
 
     public static void loadCineplexes() {
