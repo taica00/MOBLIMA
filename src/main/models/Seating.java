@@ -26,6 +26,10 @@ public class Seating implements java.io.Serializable {
         return true;
     }
 
+    public void unBookSeat(char row, char col) {
+        seats[row-'A'][col-'1'] = 0;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
