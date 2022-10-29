@@ -48,6 +48,9 @@ public class Transaction implements java.io.Serializable {
     @Override
     public String toString() {
         // TODO Auto-generated method stub
+        StringBuilder super = new StringBuilder();
+        super.append("BOOKING HISTORY:\n\n");
+        super.append(" ");
         return super.toString();
     }
     
