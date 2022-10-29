@@ -8,6 +8,7 @@ import main.models.Movie;
 public class MovieListUI extends UI {
 
     public static void view(List<Movie> movies) {
+        System.out.println("List of movies:");
         int i = 1;
         for (Movie movie : movies) 
             System.out.println((i++) + ". " + movie.getTitle());
