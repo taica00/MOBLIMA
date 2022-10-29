@@ -26,12 +26,6 @@ public class TransactionsController extends Controller {
         movieGoers.add(movieGoer);
     }
 
-    public static void viewTransactions(MovieGoer movieGoer) {
-        System.out.println("BOOKING HISTORY:");
-        for (Transaction transaction : movieGoer.getTransactions())
-            System.out.println(transaction);
-    }
-
     public static void loadMovieGoers() {
         movieGoers = loadData(FILEPATH);
     }
