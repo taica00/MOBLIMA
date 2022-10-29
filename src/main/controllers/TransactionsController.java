@@ -3,16 +3,15 @@ package main.controllers;
 import java.util.List;
 import main.models.MovieGoer;
 import main.models.Session;
+import main.models.Transaction;
 
 public class TransactionsController extends Controller {
     private static List<MovieGoer> movieGoers;
     private static final String FILEPATH = "src/main/data/moviegoers.ser";
 
-    public static void makePayment(Session session, List<String> bookedSeats, String name, String mobile, String email, double price) {
-        MovieGoer movieGoer = null;
-        for (MovieGoer mGoer : movieGoers) {
-
-        }
+    public static void makePayment(Session session, List<String> bookedSeats, MovieGoer movieGoer, double price) {
+        Transaction transaction = new Transaction(session, bookedSeats, price);
+        movieGoer.addTransaction(transaction);
     }
 
     public static MovieGoer getMovieGoer(String email) {
@@ -23,8 +22,14 @@ public class TransactionsController extends Controller {
         return null;
     }
 
-    public static void viewTransactions() {
+    public static void addMovieGoer(MovieGoer movieGoer) {
+        movieGoers.add(movieGoer);
+    }
 
+    public static void viewTransactions(MovieGoer movieGoer) {
+        System.out.println("BOOKING HISTORY:");
+        for (Transaction transaction : movieGoer.getTransactions())
+            System.out.println(transaction);
     }
 
     public static void loadMovieGoers() {
