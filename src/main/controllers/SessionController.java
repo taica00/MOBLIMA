@@ -45,4 +45,12 @@ public class SessionController extends Controller {
         }
         BookingUI.view(session, bookedSeats);
     }
+
+    public static void undoBooking(Session session, List<String> seats) {
+        for (String seat : seats) {
+            char row = seat.charAt(0);
+            char col = seat.charAt(1);
+            session.getSeating().unBookSeat(row, col);
+        }
+    }
 }
