@@ -34,7 +34,7 @@ public class BookingUI extends UI {
                 System.out.println("Returning home.");
                 return;
             }
-            String message = "Would you like to use your existing payment method " + movieGoer.getMaskedCardNumber() + "? (Y/N)";
+            String message = "Would you like to use your existing payment method " + movieGoer.getMaskedCardNumber() + "? (Y/N) ";
             if (!InputController.getBoolean(message, 'Y', 'N'))
                 movieGoer.setCardNumber(InputController.getNumericString("Enter card number: ", 8, 19)); // use new payment method
         }
@@ -46,5 +46,6 @@ public class BookingUI extends UI {
             TransactionsController.addMovieGoer(movieGoer);
         }
         TransactionsController.makePayment(session, bookedSeats, movieGoer, price); // generate transaction
+        System.out.println("Payment successful. Returning to homepage.");
     }
 }
