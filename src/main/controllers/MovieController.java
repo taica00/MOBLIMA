@@ -15,7 +15,7 @@ public class MovieController extends Controller {
     }
 
     public static void searchMovies() {
-        String search = InputController.getString("Enter title of movie to search for:");
+        String search = InputController.getString("Enter title of movie to search for: ");
         List<Movie> searchResults = new ArrayList<>();
         for (Movie movie : movies) {
             if (movie.getTitle().toLowerCase().contains(search.toLowerCase())) 
