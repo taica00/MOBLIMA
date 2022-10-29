@@ -42,13 +42,14 @@ public class MovieGoer implements java.io.Serializable {
     }
 
     public String getMaskedCardNumber() {
-        return cardNumber.substring(cardNumber.length()-4);
+        return "*" + cardNumber.substring(cardNumber.length()-4);
     }
 
     public List<Transaction> getTransactions() {
         return transactions;
     }
 
-    
-    
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }   
 }
