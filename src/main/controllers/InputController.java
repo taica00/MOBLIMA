@@ -62,7 +62,7 @@ public class InputController extends Controller {
                 return true;
             else {
                 System.out.println("Invalid particulars.");
-                if (!getBoolean("Try again? (Y/N)", 'Y', 'N'))
+                if (!getBoolean("Try again? (Y/N) ", 'Y', 'N'))
                     return false;
             }
         }
