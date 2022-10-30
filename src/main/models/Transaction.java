@@ -20,7 +20,7 @@ public class Transaction implements java.io.Serializable {
     private void generateTID() {
         StringBuilder sb = new StringBuilder();
         sb.append(session.getCinema().getCinemaCode());
-        LocalDateTime dateTime = session.getDateTime();
+        LocalDateTime dateTime = LocalDateTime.now();
         sb.append(dateTime.getYear());
         int month = dateTime.getMonthValue();
         if (month < 10)
@@ -47,11 +47,18 @@ public class Transaction implements java.io.Serializable {
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        StringBuilder super = new StringBuilder();
-        super.append("BOOKING HISTORY:\n\n");
-        super.append(" ");
-        return super.toString();
+        LocalDateTime dateTime = session.getDateTime();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Transaction id: " + TID + "\n");
+        sb.append(session.getCinema() + " " + session.getCinemaClass() + "\n");
+        sb.append(session.getMovie().getTitle() + " (" + session.getMovie().getRating() + ")\n");
+        sb.append(dateTime.getDayOfMonth() + " " + dateTime.getMonth() + " " + dateTime.getYear() + " " + dateTime.toLocalTime() + "\n");
+        sb.append("Seats booked: ");
+        for (String seat : seats) 
+            sb.append(seat + " ");
+        String priceString = String.format("$%.2f", price);
+        sb.append("\nTotal Price: " + priceString + "\n");
+        return sb.toString();
     }
     
 }
