@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.models.Movie;
+import main.models.MovieStatus;
 import main.ui.MovieListUI;
 
 public class MovieController extends Controller {
     private static List<Movie> movies;
     private static final String FILEPATH = "src/main/data/movies.ser";
 
-    public static void listMovies() {
-        MovieListUI.view(movies);
+    public static void listMovies(boolean admin) {
+        MovieListUI.view(movies, admin);
     }
 
     public static void searchMovies() {
@@ -26,7 +27,16 @@ public class MovieController extends Controller {
             return;
         }
         System.out.println("Search results: ");
-        MovieListUI.view(searchResults);
+        MovieListUI.view(searchResults, false);
+    }
+
+    public static void addMovie(String title, String rating, String showingStatus, String director, String casts, String sypnosis) {
+        Movie movie = new Movie(title, rating, MovieStatus.valueOf(showingStatus), sypnosis, director, casts);
+        movies.add(movie);
+    }
+
+    public static void removeMovie(int index) {
+        movies.remove(index);
     }
 
     public static void loadMovies() {
