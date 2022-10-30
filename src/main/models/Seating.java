@@ -19,15 +19,15 @@ public class Seating implements java.io.Serializable {
         seats = new int[rows][columns];
     }
 
-    public boolean bookSeat(char row, char col) {
-        if (seats[row-'A'][col-'1'] == 1) // occupied seat
+    public boolean bookSeat(char row, int col) {
+        if (seats[row-'A'][col-1] == 1) // occupied seat
             return false;
-        seats[row-'A'][col-'1'] = 1;
+        seats[row-'A'][col-1] = 1;
         return true;
     }
 
-    public void unBookSeat(char row, char col) {
-        seats[row-'A'][col-'1'] = 0;
+    public void unBookSeat(char row, int col) {
+        seats[row-'A'][col-1] = 0;
     }
 
     @Override
@@ -66,5 +66,9 @@ public class Seating implements java.io.Serializable {
         }
         sb.append("\nLegend: [ ]Available  [X]Occupied\n"); // legend
         return sb.toString();
+    }
+
+    public int getNumCols() {
+        return seats[0].length;
     }
 }
