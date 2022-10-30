@@ -1,5 +1,7 @@
 package main.controllers;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +29,38 @@ public class CineplexController extends Controller {
         ShowTimesUI.view(movieSessions);
     }
 
-    public static void displayCinemas() {
+    public static void displayCinemas(boolean admin) {
         List<Cinema> cinemas = new ArrayList<>();
         for (Cineplex cineplex : cineplexes) {
             for (Cinema cinema : cineplex.getCinemas())
                 cinemas.add(cinema);
         }
-        CinemaListUI.view(cinemas);
+        CinemaListUI.view(cinemas, admin);
+    }
+
+    public static void addSession(Cinema cinema, String movieTitle, String date, String cinemaClass, String time, boolean is3D) {
+        Movie movie = MovieController.searchMovie(movieTitle);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyHHmm");
+        LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
+        cinema.addSession(movie, dateTime, cinemaClass, is3D);
+    }
+
+    public static void updateSession(Cinema cinema, String movie, String date, String cinemaClass, String time) {
+        Session session = searchSession(cinema, movie, date, cinemaClass, time);
+    }
+
+    public static void removeSession(Cinema cinema, String movie, String date, String cinemaClass, String time) {
+        Session session = searchSession(cinema, movie, date, cinemaClass, time);
+    }
+
+    public static Session searchSession(Cinema cinema, String movie, String date, String cinemaClass, String time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyHHmm");
+        LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
+        for (Session session : cinema.getSessions()) {
+            if (movie.equalsIgnoreCase(session.getMovie().getTitle()) &&  dateTime.isEqual(session.getDateTime()) && CinemaClass.valueOf(cinemaClass).equals(session.getCinemaClass())) {
+                return session;
+            }
+        }
     }
 
     public static void loadCineplexes() {
