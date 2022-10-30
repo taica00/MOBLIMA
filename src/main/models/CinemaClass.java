@@ -23,7 +23,7 @@ public enum CinemaClass implements SeatingLayout {
         this.rows = rows;
         this.columns = columns;
         this.aisles = aisles;
-        this.ticketPrices = ticketPrices();
+        this.ticketPrices = ticketPrices;
     }
 
     @Override
