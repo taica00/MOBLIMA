@@ -4,11 +4,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import main.controllers.CineplexController;
 import main.controllers.InputController;
 import main.controllers.SessionController;
 import main.models.Cinema;
 import main.models.CinemaClass;
 import main.models.Movie;
+import main.models.MovieStatus;
 import main.models.Session;
 
 public class ShowTimesUI extends UI {
@@ -55,13 +57,16 @@ public class ShowTimesUI extends UI {
         SessionController.viewSeating(movieSessions, cinemaCode, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]);
     }
 
-    public static void view(Cinema cinema) { // view sessions for a particular cinema
+    public static void view(Cinema cinema, boolean admin) { // view sessions for a particular cinema
         List<Session> sessions = cinema.getSessions();
         LocalDate date = null;
         CinemaClass cinemaClass = null;
         Movie movie = null;
         int rowCount = 0;
         for (Session session: sessions) {
+            MovieStatus movieStatus = session.getMovie().getShowingStatus();
+            if (movieStatus.equals(MovieStatus.COMING_SOON) || movieStatus.equals(MovieStatus.END_OF_SHOWING))
+                continue;
             LocalDateTime dateTime = session.getDateTime();
             LocalDate sessionDate = dateTime.toLocalDate();
             CinemaClass sessionClass = session.getCinemaClass();
@@ -93,12 +98,42 @@ public class ShowTimesUI extends UI {
             }
         }
         System.out.println("\n-------------------------------------------------------------");
+        if (!admin)
+            movieGoerOptions(cinema);
+        else
+            adminOptions(cinema);
+    }
+
+    private static void movieGoerOptions(Cinema cinema) {
         if (!bookTickets())
             return;
         String sessionMovie = InputController.getString("Enter movie title: ");
         String[] sessionInfo = getSessionInfo();
         System.out.println();
         SessionController.viewSeating(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]);
+    }
+
+    private static void adminOptions(Cinema cinema) {
+        System.out.println("\n1. Create showtime | 2. Update showtime | 3. Remove showtime | 4. Return to admin menu\n");
+        int choice = InputController.getInt(1, 4, "Enter your option: ");
+        if (choice == 4)
+            return;
+        System.out.println("Enter showtime details.");
+        String sessionMovie = InputController.getString("Enter movie title: ");
+        String[] sessionInfo = getSessionInfo();
+        switch(choice) {
+            case 1: 
+                boolean is3D = InputController.getBoolean("Is this a 3D showing?(Y/N): ", 'Y', 'N');
+                CineplexController.addSession(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2], is3D);
+                break;
+            case 2: 
+                
+                break;
+            case 3: 
+                System.out.println("Cinema showtime removed. Returning to admin menu.");
+                break;
+            default: System.out.println("Something weird happened.");
+        }
     }
 
     private static boolean bookTickets() {
