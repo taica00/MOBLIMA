@@ -23,8 +23,9 @@ public class BookingUI extends UI {
             seniors = InputController.getInt(0, numTickets, "Enter number of senior citizens: ");
             students = InputController.getInt(0, numTickets-seniors, "Enter number of students: ");
         }
+        System.out.println("\n" + session.getCinemaClass());
         double price = PricingController.getTicketsPrice(session, numTickets, seniors, students);
-        System.out.printf("Grand Total: %.2f%n", price);
+        System.out.printf("Grand Total: %.2f%n%n", price);
         String email = InputController.getString("Enter email address: ");
         MovieGoer movieGoer = TransactionsController.getMovieGoer(email); // use email to identify movie goer
         if (movieGoer != null) {  // moviegoer has booked movie(s) before
