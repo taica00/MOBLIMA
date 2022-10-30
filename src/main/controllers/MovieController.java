@@ -30,6 +30,14 @@ public class MovieController extends Controller {
         MovieListUI.view(searchResults, false);
     }
 
+    public static Movie searchMovie(String movieTitle) {
+        for (Movie movie : movies) {
+            if (movie.getTitle().equalsIgnoreCase(movieTitle))
+                return movie;
+        }
+        return null;
+    }
+
     public static void addMovie(String title, String rating, String showingStatus, String director, String casts, String sypnosis) {
         Movie movie = new Movie(title, rating, MovieStatus.valueOf(showingStatus), sypnosis, director, casts);
         movies.add(movie);
