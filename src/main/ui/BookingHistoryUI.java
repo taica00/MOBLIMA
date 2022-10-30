@@ -15,12 +15,14 @@ public class BookingHistoryUI extends UI {
             System.out.println("No transactions found. Returning to homepage.");
             return;
         }
+        System.out.println("Past transactions found. Please confirm your identity.");
         if (!InputController.confirmIdentity(movieGoer)) {
             System.out.println("Returning to homepage.");
             return;
         }
-        System.out.println("BOOKING HISTORY:");
+        System.out.println("\nBOOKING HISTORY:\n");
         for (Transaction transaction : movieGoer.getTransactions())
             System.out.println(transaction);
+        InputController.getString("Enter any key to return to homepage.\n");
     }
 }
