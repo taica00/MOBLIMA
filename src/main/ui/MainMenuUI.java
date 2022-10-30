@@ -24,7 +24,7 @@ public class MainMenuUI extends UI {
             switch(choice) {
                 case 1: MovieController.listMovies(false); break;
                 case 2: MovieController.searchMovies(); break;
-                case 3: CineplexController.displayCinemas(); break;
+                case 3: CineplexController.displayCinemas(false); break;
                 case 4: BookingHistoryUI.view(); break;
                 case 5: break;
                 case 6: break; 
