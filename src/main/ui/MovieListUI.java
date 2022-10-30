@@ -28,8 +28,8 @@ public class MovieListUI extends UI {
     }
 
     private static void adminOptions(List<Movie> movies) {
-        System.out.println("\n1. Create listing | 2. Update listing | 3. Remove listing\n");
-        int choice = InputController.getInt(1, 3, "Enter your option: ");
+        System.out.println("\n1. Create listing | 2. Update listing | 3. Remove listing | 4. Return to admin menu\n");
+        int choice = InputController.getInt(1, 4, "Enter your option: ");
         int listIndex = -1;
         switch(choice) {
             case 1: AddMovieUI.view(); break;
@@ -42,6 +42,7 @@ public class MovieListUI extends UI {
                 MovieController.removeMovie(listIndex-1);
                 System.out.println("Movie listing removed. Returning to admin menu.");
                 break;
+            case 4: break;
             default: System.out.println("Something weird happened.");
         }
     }
