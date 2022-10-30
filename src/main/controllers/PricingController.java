@@ -13,29 +13,34 @@ public class PricingController extends Controller {
     public static double getTicketsPrice(Session session, int numTickets, int seniors, int students) {
         double[] pricing = session.getCinemaClass().ticketPrices();
         double total = 0;
-        for (int i = 0; i < seniors; i++)  // senior citizens
-            total += pricing[0];
-        for (int i = 0; i < students; i++) // students
-            total += pricing[1];
-        LocalDate date = session.getDateTime().toLocalDate();;
-        int pricingIndex = 2; // non peak pricing
-        if (isPeakPricing(date))  // peak pricing
-            pricingIndex = 3;
-        for (int i = 0; i < numTickets-seniors-students; i++) {
-            total += pricing[pricingIndex];
-        }
-        if (session.is3D())
-            total += numTickets * 2; // extra $2 for 3D movies
+        total += calculateAndPrintPrice(pricing[0], "Senior Citizen", seniors);
+        total += calculateAndPrintPrice(pricing[1], "Student", students);
+        LocalDate date = session.getDateTime().toLocalDate();
+        int others = numTickets - seniors - students;
+        if (!isPeakPricing(date))  
+            total += calculateAndPrintPrice(pricing[2], "Non-Peak", others);
+        else
+            total += calculateAndPrintPrice(pricing[3], "Peak", others);
+        if (session.is3D()) 
+            total += calculateAndPrintPrice(2, "3D Screening", numTickets);
         return total;
     }
 
-    public static boolean isPeakPricing(LocalDate date) {
+    private static double calculateAndPrintPrice(double ticketPrice, String priceCat, int quantity) {
+        if (quantity == 0)
+            return 0;
+        double cost = quantity * ticketPrice;
+        System.out.printf("%s $%.2f x%d : $%.2f%n", priceCat, ticketPrice, quantity, cost);
+        return cost;
+    }
+
+    private static boolean isPeakPricing(LocalDate date) {
         return date.getDayOfWeek().getValue() >= 5 || holidays.contains(date);
     }
 
     public static boolean eligibleForConcession(LocalDateTime dateTime) {
         int day = dateTime.getDayOfWeek().getValue();
-        return day >= 1 && day <= 5 && dateTime.getHour() < 18;
+        return day >= 1 && day <= 5 && dateTime.getHour() < 18 && !holidays.contains(dateTime.toLocalDate());
     }
 
     public static void loadHolidays() {
