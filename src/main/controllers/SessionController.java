@@ -31,15 +31,12 @@ public class SessionController extends Controller {
     }
 
     public static void viewSeating(Cinema cinema, String movie, String date, String cinemaClass, String time) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyHHmm");
-        LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
-        for (Session session : cinema.getSessions()) {
-            if (movie.equalsIgnoreCase(session.getMovie().getTitle()) &&  dateTime.isEqual(session.getDateTime()) && CinemaClass.valueOf(cinemaClass).equals(session.getCinemaClass())) {
-                SeatingUI.view(session);
-                return;
-            }
+        Session session = CineplexController.searchSession(cinema, movie, date, cinemaClass, time);
+        if (session == null) {
+            System.out.println("Session not found. Returning to homepage.");
+            return;
         }
-        System.out.println("Session not found. Returning to homepage.");
+        SeatingUI.view(session);
     }
 
     public static void bookSeats(Session session, String[] seats) {
