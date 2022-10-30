@@ -1,4 +1,5 @@
 package main;
+import main.controllers.AdminController;
 import main.controllers.CineplexController;
 import main.controllers.MovieController;
 import main.controllers.PricingController;
@@ -17,6 +18,7 @@ public class MOBLIMA {
         MovieController.loadMovies();
         TransactionsController.loadMovieGoers();
         PricingController.loadHolidays();
+        AdminController.loadAdminAccounts();
     }
 
     private static void saveState() {
@@ -24,5 +26,6 @@ public class MOBLIMA {
         MovieController.saveMovies();
         TransactionsController.saveMovieGoers();
         PricingController.saveHolidays();
+        AdminController.saveAdminAccounts();
     }
 }
