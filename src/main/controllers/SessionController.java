@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import main.models.Cinema;
 import main.models.CinemaClass;
 import main.models.Session;
@@ -44,10 +46,10 @@ public class SessionController extends Controller {
         List<String> bookedSeats = new ArrayList<>();
         for (String seat : seats) {
             char row = seat.charAt(0);
-            char col = seat.charAt(1);
-            if (!Character.isUpperCase(row) || !Character.isDigit(col)) 
+            String col = seat.substring(1);
+            if (!Character.isUpperCase(row) || !StringUtils.isNumeric(col) || Integer.parseInt(col) == 0 || Integer.parseInt(col) > session.getSeating().getNumCols()) 
                 System.out.println(seat + " is not a valid selection.");
-            else if (!session.getSeating().bookSeat(row, col)) 
+            else if (!session.getSeating().bookSeat(row, Integer.parseInt(col))) 
                 System.out.println("Seat " + seat + " is occupied");
             else
                 bookedSeats.add(seat);
@@ -62,7 +64,7 @@ public class SessionController extends Controller {
     public static void undoBooking(Session session, List<String> seats) {
         for (String seat : seats) {
             char row = seat.charAt(0);
-            char col = seat.charAt(1);
+            int col = Integer.parseInt(seat.substring(1));
             session.getSeating().unBookSeat(row, col);
         }
     }
