@@ -35,7 +35,11 @@ public class ShowTimesUI extends UI {
                     System.out.println("\n\n" + cinemaClass);
                     rowCount = 0;
                 }
-                System.out.print(dateTime.toLocalTime() + " ");
+                System.out.print(dateTime.toLocalTime());
+                if (session.is3D())
+                    System.out.print("(3D) ");
+                else
+                    System.out.print(" ");
                 if (++rowCount == 10) {
                     System.out.println();
                     rowCount = 0;
@@ -78,7 +82,11 @@ public class ShowTimesUI extends UI {
                 System.out.println("\n\n" + cinemaClass);
                 rowCount = 0;
             }
-            System.out.print(dateTime.toLocalTime() + " ");
+            System.out.print(dateTime.toLocalTime());
+            if (session.is3D())
+                System.out.print("(3D) ");
+            else
+                System.out.print(" ");
             if (++rowCount == 10) {
                 System.out.println();
                 rowCount = 0;
@@ -97,7 +105,7 @@ public class ShowTimesUI extends UI {
         System.out.println("1. Book tickets | 2. Return to homepage");
         int choice = InputController.getInt(1, 2, "Select an option: ");
         System.out.println();
-        return choice == 1 ? true : false;
+        return choice == 1;
     }
 
     private static String[] getSessionInfo() {
