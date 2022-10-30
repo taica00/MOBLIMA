@@ -8,12 +8,14 @@ public class Admin implements java.io.Serializable{
     private String hashedPassword; 
 
     public Admin(String userId, String password) {
+        if (userId == null || userId.isBlank() || password == null || password.isEmpty())
+            throw new IllegalArgumentException("userId or password cannot be null or blank");
         this.userId = userId;
         hashedPassword = DigestUtils.sha256Hex(password);
     }
 
-    public boolean verifyPassword(String passwword) {
-        return DigestUtils.sha256Hex(passwword).equals(hashedPassword);
+    public boolean verifyPassword(String password) {
+        return DigestUtils.sha256Hex(password).equals(hashedPassword);
     }
 
     public String getUserId() {
@@ -21,6 +23,8 @@ public class Admin implements java.io.Serializable{
     }
 
     public void setPassword(String password) {
+        if (password == null || password.isEmpty())
+            throw new IllegalArgumentException("Password cannot be null or blank");
         hashedPassword = DigestUtils.sha256Hex(password);
     }
 }
