@@ -59,12 +59,12 @@ public class Movie implements java.io.Serializable {
         this.title = title;
     }
 
-    public void setRating(Rating rating) {
-        this.rating = rating;
+    public void setRating(String rating) {
+        this.rating = Rating.valueOf(rating);
     }
 
-    public void setShowingStatus(MovieStatus showingStatus) {
-        this.showingStatus = showingStatus;
+    public void setShowingStatus(String showingStatus) {
+        this.showingStatus = MovieStatus.valueOf(showingStatus);
     }
 
     public void setSypnopsis(String sypnopsis) {
