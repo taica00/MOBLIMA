@@ -1,7 +1,5 @@
 package main.ui;
 
-import java.util.List;
-
 import main.controllers.InputController;
 import main.controllers.TransactionsController;
 import main.models.MovieGoer;
