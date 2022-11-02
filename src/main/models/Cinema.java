@@ -1,7 +1,6 @@
 package main.models;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +22,19 @@ public class Cinema implements java.io.Serializable {
         sessions.add(new Session(this, movie, dateTime, cinemaClass, is3D));
     }
 
+    public List<Session> getSessions(Movie movie) {
+        List<Session> movieSessions = new ArrayList<>();
+        for (Session session : sessions) {
+            if (session.getMovie().getTitle().equals(movie.getTitle()) && session.getDateTime().isAfter(LocalDateTime.now()))
+                movieSessions.add(session);
+        }
+        return movieSessions;
+    }
+
+    public void removeSession(Session session) {
+        sessions.remove(session);
+    }
+
     @Override
     public String toString() {
         return cineplex + " - " + location;
@@ -37,15 +49,6 @@ public class Cinema implements java.io.Serializable {
         else
             sb.append(location.substring(0, 2).toUpperCase());
         cinemaCode = sb.toString();
-    }
-
-    public List<Session> getSessions(Movie movie) {
-        List<Session> movieSessions = new ArrayList<>();
-        for (Session session : sessions) {
-            if (session.getMovie().getTitle().equals(movie.getTitle()) && session.getDateTime().isAfter(LocalDateTime.now()))
-                movieSessions.add(session);
-        }
-        return movieSessions;
     }
     
     public List<Session> getSessions() {
