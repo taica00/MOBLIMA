@@ -15,6 +15,10 @@ import main.models.Session;
 
 public class ShowTimesUI extends UI {
     public static void view(List<List<Session>> movieSessions) { // view sessions for a particular movie
+        if (movieSessions.isEmpty()) {
+            System.out.println("No showtimes available for this movie");
+            return;
+        }
         for (List<Session> cinemaSessions : movieSessions) {
             LocalDate date = null;
             CinemaClass cinemaClass = null;
@@ -63,10 +67,12 @@ public class ShowTimesUI extends UI {
         CinemaClass cinemaClass = null;
         Movie movie = null;
         int rowCount = 0;
+        boolean hasSession = false;
         for (Session session: sessions) {
             MovieStatus movieStatus = session.getMovie().getShowingStatus();
             if (movieStatus.equals(MovieStatus.COMING_SOON) || movieStatus.equals(MovieStatus.END_OF_SHOWING))
                 continue;
+            hasSession = true;
             LocalDateTime dateTime = session.getDateTime();
             LocalDate sessionDate = dateTime.toLocalDate();
             CinemaClass sessionClass = session.getCinemaClass();
@@ -97,6 +103,10 @@ public class ShowTimesUI extends UI {
                 rowCount = 0;
             }
         }
+        if (!hasSession) {
+            System.out.println("No showtimes available for this cinema.");
+            return;
+        }
         System.out.println("\n-------------------------------------------------------------");
         if (!admin)
             movieGoerOptions(cinema);
@@ -125,11 +135,13 @@ public class ShowTimesUI extends UI {
             case 1: 
                 boolean is3D = InputController.getBoolean("Is this a 3D showing?(Y/N): ", 'Y', 'N');
                 CineplexController.addSession(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2], is3D);
+                System.out.println("Cinema showtime added. Returning to admin menu");
                 break;
             case 2: 
-                
+                CineplexController.updateSession(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]);
                 break;
             case 3: 
+                CineplexController.removeSession(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]);
                 System.out.println("Cinema showtime removed. Returning to admin menu.");
                 break;
             default: System.out.println("Something weird happened.");
