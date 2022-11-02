@@ -23,7 +23,7 @@ public class AdminMenuUI extends UI {
             switch(choice) {
                 case 1: MovieController.listMovies(true); break;
                 case 2: CineplexController.displayCinemas(true); break;
-                case 3: break;
+                case 3: systemSettings(admin); break;
                 case 4: break;
                 case 5: break;
                 case 6: break;
@@ -45,5 +45,27 @@ public class AdminMenuUI extends UI {
             return;
         }
         view(adminAccount);
+    }
+
+    private static void systemSettings(Admin admin) {
+        System.out.println("\n******************** SYSTEM SETTINGS ********************\n");
+        System.out.println("1. Configure ticket prices.");
+        System.out.println("2. Configure holiday dates.");
+        System.out.println("3. Configure system settings.");
+        System.out.println("4. Change password.");
+        System.out.println("5. Create new admin account.");
+        System.out.println("6. Return to admin menu.\n");
+        int choice = InputController.getInt(1, 6, "Select an option: ");
+        System.out.println();
+        
+        switch(choice) {
+            case 1: break;
+            case 2: break;
+            case 3: break;
+            case 4: break;
+            case 5: break;
+            case 6: break;
+            default: System.out.println("Something weird happened");
+        }
     }
 }
