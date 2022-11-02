@@ -3,14 +3,9 @@ package tests;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import main.controllers.CineplexController;
-import main.controllers.MovieController;
-import main.controllers.PricingController;
 import main.models.Cinema;
 import main.models.Movie;
 import main.models.MovieStatus;
-import main.models.Session;
-import main.ui.CinemaListUI;
 import main.ui.MovieDetailsUI;
 import main.ui.ShowTimesUI;
 
