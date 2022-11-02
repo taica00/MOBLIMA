@@ -1,6 +1,8 @@
 package main.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import main.models.Cinema;
 import main.models.CinemaClass;
+import main.models.Movie;
 import main.models.Session;
 import main.ui.BookingUI;
 import main.ui.SeatingUI;
@@ -64,5 +67,35 @@ public class SessionController extends Controller {
             int col = Integer.parseInt(seat.substring(1));
             session.getSeating().unBookSeat(row, col);
         }
+    }
+
+    public static boolean updateCinema(Session session, String cinemaString) {
+        Cinema cinema = CineplexController.searchCinema(cinemaString);
+        if (cinema == null)
+            return false;
+        session.setCinema(cinema);
+        return true;
+    }
+
+    public static boolean updateMovie(Session session, String movieString) {
+        Movie movie = MovieController.searchMovie(movieString);
+        if (movie == null)
+            return false;
+        session.setMovie(movie);
+        return true;
+    }
+
+    public static void updateDate(Session session, String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
+        LocalDate date = LocalDate.parse(dateString, formatter);
+        LocalTime time = session.getDateTime().toLocalTime();
+        session.setDateTime(LocalDateTime.of(date, time));
+    }
+
+    public static void updateTime(Session session, String timeString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        LocalTime time = LocalTime.parse(timeString, formatter);
+        LocalDate date = session.getDateTime().toLocalDate();
+        session.setDateTime(LocalDateTime.of(date, time));
     }
 }

@@ -12,14 +12,26 @@ public class Session implements java.io.Serializable {
     private boolean is3D;
 
     public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, String cinemaClass, boolean is3D) {
-        if (cinema == null || movie == null)
-            throw new IllegalArgumentException("Cinema/Movie cannot be null");
+        if (cinema == null || movie == null || dateTime == null)
+            throw new IllegalArgumentException("Fields cannot be null");
         this.cinema = cinema;
         this.movie = movie;
         this.dateTime = dateTime;
         this.cinemaClass = CinemaClass.valueOf(cinemaClass);
         seating = new Seating(this.cinemaClass);
         this.is3D = is3D;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cinema: " + cinema);
+        sb.append("\nMovie: " + movie.getTitle());
+        sb.append("\nDate: " + dateTime.toLocalDate());
+        sb.append("\nTime: " + dateTime.toLocalTime());
+        sb.append("\nCinema class: " + cinemaClass);
+        sb.append("\n3D Screening: " + is3D);
+        return sb.toString();
     }
 
     public Cinema getCinema() {
