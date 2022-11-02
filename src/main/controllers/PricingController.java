@@ -2,6 +2,7 @@ package main.controllers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 import main.models.Session;
@@ -24,6 +25,12 @@ public class PricingController extends Controller {
         if (session.is3D()) 
             total += calculateAndPrintPrice(2, "3D Screening", numTickets);
         return total;
+    }
+
+    public static void addHolidayDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
+        LocalDate date = LocalDate.parse(dateString, formatter);
+        holidays.add(date);
     }
 
     private static double calculateAndPrintPrice(double ticketPrice, String priceCat, int quantity) {
