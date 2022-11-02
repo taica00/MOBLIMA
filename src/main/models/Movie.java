@@ -110,7 +110,4 @@ public class Movie implements java.io.Serializable {
     public List<Review> getReviews() {
         return reviews;
     }
-
-    
-    
 }
