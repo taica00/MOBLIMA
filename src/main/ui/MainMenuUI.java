@@ -1,6 +1,5 @@
 package main.ui;
 
-import main.controllers.AdminController;
 import main.controllers.CineplexController;
 import main.controllers.InputController;
 import main.controllers.MovieController;
