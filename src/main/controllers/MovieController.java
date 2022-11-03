@@ -2,6 +2,8 @@ package main.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
 
 import main.models.Movie;
 import main.models.MovieStatus;
@@ -9,10 +11,24 @@ import main.ui.MovieList;
 
 public class MovieController extends Controller {
     private static List<Movie> movies;
-    private static final String FILEPATH = "src/main/data/movies.ser";
+    private static final String FILEPATH = "src/main/data/";
 
-    public static void listMovies(boolean admin) {
-        MovieList.view(movies, admin);
+    public static void listMovies(boolean admin, boolean ticketSales, boolean rating) {
+        List<Movie> movieList = new ArrayList<>();
+        if (ticketSales) { // top 5 ranking by ticket sales
+            Map<Movie, Integer> sales = TransactionsController.getTicketSales();
+            PriorityQueue<Movie> ranking = new PriorityQueue<>((x, y) -> sales.getOrDefault(x, 0) - sales.getOrDefault(y, 0));
+            while (movieList.size() < 5) 
+                movieList.add(ranking.poll());
+        }
+        else if (rating) { // top 5 ranking by reviewer rating
+            PriorityQueue<Movie> ranking = new PriorityQueue<>((x, y) -> (int)(x.getReviewerRating() - y.getReviewerRating()));
+            while (movieList.size() < 5)
+                movieList.add(ranking.poll());
+        }
+        else
+            movieList = movies;
+        MovieList.view(movieList, admin, ticketSales, rating);
     }
 
     public static void searchMovies() {
@@ -27,7 +43,7 @@ public class MovieController extends Controller {
             return;
         }
         System.out.println("Search results: ");
-        MovieList.view(searchResults, false);
+        MovieList.view(searchResults, false, false, false);
     }
 
     public static Movie searchMovie(String movieTitle) {
@@ -48,10 +64,10 @@ public class MovieController extends Controller {
     }
 
     public static void loadMovies() {
-        movies = loadData(FILEPATH);
+        movies = loadData(FILEPATH + "movies.ser");
     }
 
     public static void saveMovies() {
-        saveData(movies, FILEPATH);
+        saveData(movies, FILEPATH + "movies.ser");
     }
 }
