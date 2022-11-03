@@ -54,6 +54,17 @@ public class InputController extends Controller {
         }
     }
 
+    public static double getDouble(String message) {
+        while (true) {
+            clear();
+            System.out.print(message);
+            Double input = scan.nextDouble();
+            if (input < 0)
+                System.out.println("Invalid input. Please try again");
+            return input;
+        }
+    }
+
     public static boolean confirmIdentity(MovieGoer movieGoer) {
         while (true) {
             String name = InputController.getString("Enter name: ");
