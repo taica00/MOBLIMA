@@ -63,7 +63,7 @@ public class AdminMenu extends UI {
             case 2: PricingController.configureHolidays(); break;
             case 3: changePassword(admin); break;
             case 4: 
-                String userId = InputController.getString("Enter userId");
+                String userId = InputController.getString("Enter userId: ");
                 String password = InputController.getString("Enter password: ");
                 AdminController.addAdmin(userId, password);
                 System.out.println("Admin account successfully added. Returning to admin menu.");
@@ -87,6 +87,6 @@ public class AdminMenu extends UI {
         }
         String newPassword = InputController.getString("Enter new password: ");
         admin.setPassword(newPassword);
-        System.out.println("Your password has been updated. Returning to admin menu");
+        System.out.println("Your password has been updated. Returning to admin menu.");
     }
 }
