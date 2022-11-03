@@ -5,7 +5,7 @@ import main.controllers.SessionController;
 import main.models.Seating;
 import main.models.Session;
 
-public class SeatingUI extends UI {
+public class SeatingLayout extends UI {
     public static void view(Session session) {
         Seating seating = session.getSeating();
         System.out.println(seating);

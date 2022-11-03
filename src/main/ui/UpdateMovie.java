@@ -3,7 +3,7 @@ package main.ui;
 import main.controllers.InputController;
 import main.models.Movie;
 
-public class UpdateMovieUI extends UI {
+public class UpdateMovie extends UI {
     public static void view(Movie movie) {
         String choice = "";
         while (true) {

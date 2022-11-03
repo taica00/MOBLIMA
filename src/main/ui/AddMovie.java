@@ -3,7 +3,7 @@ package main.ui;
 import main.controllers.InputController;
 import main.controllers.MovieController;
 
-public class AddMovieUI extends UI {
+public class AddMovie extends UI {
     public static void view() {
         String title = InputController.getString("Enter movie title: ");
         String rating = InputController.getString("Enter rating [G, PG, PG13, NC16, M18, R21, NA]: ");

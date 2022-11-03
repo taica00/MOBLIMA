@@ -13,7 +13,7 @@ import main.models.Movie;
 import main.models.MovieStatus;
 import main.models.Session;
 
-public class ShowTimesUI extends UI {
+public class ShowTimes extends UI {
     public static void view(List<List<Session>> movieSessions) { // view sessions for a particular movie
         if (movieSessions.isEmpty()) {
             System.out.println("No showtimes available for this movie");

@@ -5,7 +5,7 @@ import main.controllers.InputController;
 import main.controllers.ReviewsController;
 import main.models.Movie;
 
-public class MovieDetailsUI extends UI {
+public class MovieDetails extends UI {
 
     public static void view(Movie movie) {
         System.out.println(movie);

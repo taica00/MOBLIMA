@@ -9,22 +9,27 @@ import main.controllers.TransactionsController;
 import main.models.MovieGoer;
 import main.models.Session;
 
-public class BookingUI extends UI {
+public class TicketsPayment extends UI {
     public static void view(Session session, List<String> bookedSeats) {
+        // print out booked seats
         System.out.print("Seat(s) booked: ");
-        for (String seat : bookedSeats)
+        for (String seat : bookedSeats)   
             System.out.print(seat + " ");
         System.out.println();
+
         int seniors = 0;
         int students = 0;
         int numTickets = bookedSeats.size();
-        if (PricingController.eligibleForConcession(session.getDateTime())) { // showtime eligible for student/senior price
+        // if showtime eligible for student/senior price, get no. of student/seniors
+        if (PricingController.eligibleForConcession(session.getDateTime())) { 
             seniors = InputController.getInt(0, numTickets, "Enter number of senior citizens: ");
             students = InputController.getInt(0, numTickets-seniors, "Enter number of students: ");
         }
+        // print out tickets price
         System.out.println("\n" + session.getCinemaClass());
         double price = PricingController.getTicketsPrice(session, numTickets, seniors, students);
         System.out.printf("Grand Total: %.2f%n%n", price);
+        // get user email, name, phone number
         String email = InputController.getString("Enter email address: ");
         MovieGoer movieGoer = TransactionsController.getMovieGoer(email); // use email to identify movie goer
         if (movieGoer != null) {  // moviegoer has booked movie(s) before
@@ -45,7 +50,8 @@ public class BookingUI extends UI {
             movieGoer = new MovieGoer(name, mobile, email, cardNumber);
             TransactionsController.addMovieGoer(movieGoer);
         }
-        TransactionsController.makePayment(session, bookedSeats, movieGoer, price); // generate transaction
+        // generate transaction
+        TransactionsController.makePayment(session, bookedSeats, movieGoer, price); 
         System.out.println("Payment successful. Returning to homepage.");
     }
 }

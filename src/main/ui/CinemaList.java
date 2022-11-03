@@ -5,7 +5,7 @@ import java.util.List;
 import main.controllers.InputController;
 import main.models.Cinema;
 
-public class CinemaListUI extends UI {
+public class CinemaList extends UI {
     public static void view(List<Cinema> cinemas, boolean admin) {
         System.out.println("Cinema list: \n");
         int i = 1;
@@ -15,6 +15,6 @@ public class CinemaListUI extends UI {
         }
         System.out.println();
         int choice  = InputController.getInt(1, cinemas.size(), "Select index of cinema to view showtimes: ");
-        ShowTimesUI.view(cinemas.get(choice-1), admin);
+        ShowTimes.view(cinemas.get(choice-1), admin);
     }
 }

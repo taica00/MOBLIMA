@@ -4,7 +4,7 @@ import main.controllers.CineplexController;
 import main.controllers.InputController;
 import main.controllers.MovieController;
 
-public class MainMenuUI extends UI {
+public class MainMenu extends UI {
     public static void view() {
         int choice;
         do {
@@ -24,10 +24,10 @@ public class MainMenuUI extends UI {
                 case 1: MovieController.listMovies(false); break;
                 case 2: MovieController.searchMovies(); break;
                 case 3: CineplexController.displayCinemas(false); break;
-                case 4: BookingHistoryUI.view(); break;
+                case 4: BookingHistory.view(); break;
                 case 5: break;
                 case 6: break; 
-                case 7: AdminMenuUI.login(); break;
+                case 7: AdminMenu.login(); break;
                 case 8: break;
                 default: System.out.println("Something weird happened");
             }

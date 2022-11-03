@@ -5,7 +5,7 @@ import main.controllers.SessionController;
 import main.models.CinemaClass;
 import main.models.Session;
 
-public class UpdateSessionUI extends UI {
+public class UpdateSession extends UI {
     public static void view(Session session) {
         String choice = "";
         while (true) {

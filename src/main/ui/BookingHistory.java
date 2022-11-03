@@ -5,7 +5,7 @@ import main.controllers.TransactionsController;
 import main.models.MovieGoer;
 import main.models.Transaction;
 
-public class BookingHistoryUI extends UI {
+public class BookingHistory extends UI {
     public static void view() {
         String email = InputController.getString("Enter email address: ");
         MovieGoer movieGoer = TransactionsController.getMovieGoer(email);

@@ -6,7 +6,7 @@ import main.controllers.InputController;
 import main.controllers.MovieController;
 import main.models.Movie;
 
-public class MovieListUI extends UI {
+public class MovieList extends UI {
 
     public static void view(List<Movie> movies, boolean admin) {
         System.out.println("List of movies:");
@@ -24,7 +24,7 @@ public class MovieListUI extends UI {
         System.out.println();
         if (choice == 0)
             return;
-        MovieDetailsUI.view(movies.get(choice-1));
+        MovieDetails.view(movies.get(choice-1));
     }
 
     private static void adminOptions(List<Movie> movies) {
@@ -32,10 +32,10 @@ public class MovieListUI extends UI {
         int choice = InputController.getInt(1, 4, "Enter your option: ");
         int listIndex = -1;
         switch(choice) {
-            case 1: AddMovieUI.view(); break;
+            case 1: AddMovie.view(); break;
             case 2: 
                 listIndex = InputController.getInt(1, movies.size(), "Enter list number of movie to edit: "); 
-                UpdateMovieUI.view(movies.get(listIndex-1));
+                UpdateMovie.view(movies.get(listIndex-1));
                 break;
             case 3: 
                 listIndex = InputController.getInt(1, movies.size(), "Enter list number of movie to remove: "); 
