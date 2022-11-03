@@ -10,9 +10,9 @@ import main.models.CinemaClass;
 import main.models.Cineplex;
 import main.models.Movie;
 import main.models.Session;
-import main.ui.CinemaListUI;
-import main.ui.ShowTimesUI;
-import main.ui.UpdateSessionUI;
+import main.ui.CinemaList;
+import main.ui.ShowTimes;
+import main.ui.UpdateSession;
 
 public class CineplexController extends Controller {
     private static List<Cineplex> cineplexes;
@@ -29,7 +29,7 @@ public class CineplexController extends Controller {
                 movieSessions.add(cinemaSessions);
             }
         }
-        ShowTimesUI.view(movieSessions);
+        ShowTimes.view(movieSessions);
     }
 
     public static void displayCinemas(boolean admin) {
@@ -38,7 +38,7 @@ public class CineplexController extends Controller {
             for (Cinema cinema : cineplex.getCinemas())
                 cinemas.add(cinema);
         }
-        CinemaListUI.view(cinemas, admin);
+        CinemaList.view(cinemas, admin);
     }
 
     public static void addSession(Cinema cinema, String movieTitle, String date, String cinemaClass, String time, boolean is3D) {
@@ -50,7 +50,7 @@ public class CineplexController extends Controller {
 
     public static void updateSession(Cinema cinema, String movie, String date, String cinemaClass, String time) {
         Session session = searchSession(cinema, movie, date, cinemaClass, time);
-        UpdateSessionUI.view(session);
+        UpdateSession.view(session);
     }
 
     public static void removeSession(Cinema cinema, String movie, String date, String cinemaClass, String time) {
