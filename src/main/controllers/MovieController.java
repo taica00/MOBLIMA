@@ -5,14 +5,14 @@ import java.util.List;
 
 import main.models.Movie;
 import main.models.MovieStatus;
-import main.ui.MovieListUI;
+import main.ui.MovieList;
 
 public class MovieController extends Controller {
     private static List<Movie> movies;
     private static final String FILEPATH = "src/main/data/movies.ser";
 
     public static void listMovies(boolean admin) {
-        MovieListUI.view(movies, admin);
+        MovieList.view(movies, admin);
     }
 
     public static void searchMovies() {
@@ -27,7 +27,7 @@ public class MovieController extends Controller {
             return;
         }
         System.out.println("Search results: ");
-        MovieListUI.view(searchResults, false);
+        MovieList.view(searchResults, false);
     }
 
     public static Movie searchMovie(String movieTitle) {
