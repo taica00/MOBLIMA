@@ -3,7 +3,6 @@ package main.controllers;
 import java.util.List;
 
 import main.models.Admin;
-import main.ui.AdminMenuUI;
 
 public class AdminController extends Controller {
     private static List<Admin> adminAccounts;
@@ -15,6 +14,10 @@ public class AdminController extends Controller {
                 return account;
         }
         return null;
+    }
+
+    public static void addAdmin(String userId, String password) {
+        adminAccounts.add(new Admin(userId, password));
     }
 
     public static void loadAdminAccounts() {
