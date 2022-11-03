@@ -13,8 +13,8 @@ import main.models.Cinema;
 import main.models.CinemaClass;
 import main.models.Movie;
 import main.models.Session;
-import main.ui.BookingUI;
-import main.ui.SeatingUI;
+import main.ui.TicketsPayment;
+import main.ui.SeatingLayout;
 
 public class SessionController extends Controller {
     public static void viewSeating(List<List<Session>> movieSessions, String cinemaCode, String date, String cinemaClass, String time) {
@@ -25,7 +25,7 @@ public class SessionController extends Controller {
                 if (!session.getCinema().getCinemaCode().equals(cinemaCode))
                     break;
                 if (dateTime.isEqual(session.getDateTime()) && CinemaClass.valueOf(cinemaClass).equals(session.getCinemaClass())) {
-                    SeatingUI.view(session);
+                    SeatingLayout.view(session);
                     return;
                 }
             }
@@ -39,7 +39,7 @@ public class SessionController extends Controller {
             System.out.println("Session not found. Returning to homepage.");
             return;
         }
-        SeatingUI.view(session);
+        SeatingLayout.view(session);
     }
 
     public static void bookSeats(Session session, String[] seats) {
@@ -58,7 +58,7 @@ public class SessionController extends Controller {
             System.out.println("No seats booked. Returning to homepage.");
             return;
         }
-        BookingUI.view(session, bookedSeats);
+        TicketsPayment.view(session, bookedSeats);
     }
 
     public static void undoBooking(Session session, List<String> seats) {
