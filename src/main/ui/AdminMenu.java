@@ -4,9 +4,10 @@ import main.controllers.AdminController;
 import main.controllers.CineplexController;
 import main.controllers.InputController;
 import main.controllers.MovieController;
+import main.controllers.PricingController;
 import main.models.Admin;
 
-public class AdminMenuUI extends UI {
+public class AdminMenu extends UI {
     public static void view(Admin admin) {
         int choice;
         do {
@@ -21,11 +22,11 @@ public class AdminMenuUI extends UI {
             System.out.println();
             
             switch(choice) {
-                case 1: MovieController.listMovies(true); break;
+                case 1: MovieController.listMovies(true, false, false); break;
                 case 2: CineplexController.displayCinemas(true); break;
                 case 3: systemSettings(admin); break;
-                case 4: break;
-                case 5: break;
+                case 4: MovieController.listMovies(true, true, false); break;
+                case 5: MovieController.listMovies(true, false, true); break;
                 case 6: break;
                 default: System.out.println("Something weird happened");
             }
@@ -51,21 +52,41 @@ public class AdminMenuUI extends UI {
         System.out.println("\n******************** SYSTEM SETTINGS ********************\n");
         System.out.println("1. Configure ticket prices.");
         System.out.println("2. Configure holiday dates.");
-        System.out.println("3. Configure system settings.");
-        System.out.println("4. Change password.");
-        System.out.println("5. Create new admin account.");
-        System.out.println("6. Return to admin menu.\n");
-        int choice = InputController.getInt(1, 6, "Select an option: ");
+        System.out.println("3. Change password.");
+        System.out.println("4. Create new admin account.");
+        System.out.println("5. Return to admin menu.\n");
+        int choice = InputController.getInt(1, 5, "Select an option: ");
         System.out.println();
         
         switch(choice) {
-            case 1: break;
-            case 2: break;
-            case 3: break;
-            case 4: break;
+            case 1: UpdatePrices.view(); break;
+            case 2: PricingController.configureHolidays(); break;
+            case 3: changePassword(admin); break;
+            case 4: 
+                String userId = InputController.getString("Enter userId");
+                String password = InputController.getString("Enter password: ");
+                AdminController.addAdmin(userId, password);
+                System.out.println("Admin account successfully added. Returning to admin menu.");
+                break;
             case 5: break;
-            case 6: break;
             default: System.out.println("Something weird happened");
         }
+    }
+
+    private static void changePassword(Admin admin) {
+        int count = 0;
+        while (true) {
+            String curPassword = InputController.getString("Enter current password: ");
+            if (admin.verifyPassword(curPassword))
+                break;
+            if (++count == 3) {
+                System.out.println("Too many failed atttempts. Returning to admin menu.");
+                return;
+            }
+            System.out.println("Wrong password. Please try again.");
+        }
+        String newPassword = InputController.getString("Enter new password: ");
+        admin.setPassword(newPassword);
+        System.out.println("Your password has been updated. Returning to admin menu");
     }
 }
