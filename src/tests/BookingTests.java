@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 import main.models.Cinema;
 import main.models.Movie;
 import main.models.MovieStatus;
-import main.ui.MovieDetailsUI;
-import main.ui.ShowTimesUI;
+import main.ui.MovieDetails;
+import main.ui.ShowTimes;
 
 public class BookingTests {
     public static void main(String[] args) {
@@ -15,10 +15,10 @@ public class BookingTests {
 
         // from movie showtimes
         Movie testMovie = new Movie("test", "PG" , MovieStatus.NOW_SHOWING, "test", "test", "test");
-        MovieDetailsUI.view(testMovie);
+        MovieDetails.view(testMovie);
         System.out.println();
         testMovie.setShowingStatus("END_OF_SHOWING");
-        MovieDetailsUI.view(testMovie);
+        MovieDetails.view(testMovie);
 
         // from cinema showtimes
         System.out.println();
@@ -26,7 +26,7 @@ public class BookingTests {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyHHmm");
         LocalDateTime dateTime = LocalDateTime.parse("0211221200", formatter);
         testCinema.addSession(testMovie, dateTime, "STANDARD", false);
-        ShowTimesUI.view(testCinema, false);
+        ShowTimes.view(testCinema, false);
 
         // TODO booking only allowed for “Preview” and “Now Showing” status.
     }
