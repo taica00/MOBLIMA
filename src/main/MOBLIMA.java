@@ -4,12 +4,12 @@ import main.controllers.CineplexController;
 import main.controllers.MovieController;
 import main.controllers.PricingController;
 import main.controllers.TransactionsController;
-import main.ui.MainMenuUI;
+import main.ui.MainMenu;
 
 public class MOBLIMA {
     public static void main(String[] args) {
         loadState();
-        MainMenuUI.view();
+        MainMenu.view();
         saveState();
     }
 
@@ -17,6 +17,7 @@ public class MOBLIMA {
         CineplexController.loadCineplexes();
         MovieController.loadMovies();
         TransactionsController.loadMovieGoers();
+        TransactionsController.loadTicketSales();
         PricingController.loadHolidays();
         AdminController.loadAdminAccounts();
     }
@@ -25,6 +26,7 @@ public class MOBLIMA {
         CineplexController.saveCineplexes();
         MovieController.saveMovies();
         TransactionsController.saveMovieGoers();
+        TransactionsController.saveTicketSales();
         PricingController.saveHolidays();
         AdminController.saveAdminAccounts();
     }
