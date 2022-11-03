@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 import main.models.Session;
+import main.ui.ConfigureHolidays;
 
 public class PricingController extends Controller {
     private static Set<LocalDate> holidays;
@@ -27,10 +28,23 @@ public class PricingController extends Controller {
         return total;
     }
 
+    public static void configureHolidays() {
+        ConfigureHolidays.view(holidays);
+    }
+
     public static void addHolidayDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
         LocalDate date = LocalDate.parse(dateString, formatter);
         holidays.add(date);
+    }
+
+    public static void removeHolidayDate(LocalDate date) {
+        holidays.remove(date);
+    }
+
+    public static boolean eligibleForConcession(LocalDateTime dateTime) {
+        int day = dateTime.getDayOfWeek().getValue();
+        return day >= 1 && day <= 5 && dateTime.getHour() < 18 && !holidays.contains(dateTime.toLocalDate());
     }
 
     private static double calculateAndPrintPrice(double ticketPrice, String priceCat, int quantity) {
@@ -43,11 +57,6 @@ public class PricingController extends Controller {
 
     private static boolean isPeakPricing(LocalDate date) {
         return date.getDayOfWeek().getValue() >= 5 || holidays.contains(date);
-    }
-
-    public static boolean eligibleForConcession(LocalDateTime dateTime) {
-        int day = dateTime.getDayOfWeek().getValue();
-        return day >= 1 && day <= 5 && dateTime.getHour() < 18 && !holidays.contains(dateTime.toLocalDate());
     }
 
     public static void loadHolidays() {
