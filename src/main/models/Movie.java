@@ -13,7 +13,6 @@ public class Movie implements java.io.Serializable {
     private String casts;
     private double reviewerRating;
     private List<Review> reviews;
-    private int ticketSales;
 
     public enum Rating {G, PG, PG13, NC16, M18, R21, NA}
 
@@ -26,7 +25,6 @@ public class Movie implements java.io.Serializable {
         this.casts = casts;
         reviewerRating = 0;
         reviews = new ArrayList<>();
-        ticketSales = 0;
     }
 
     @Override
