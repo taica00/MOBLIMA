@@ -26,6 +26,10 @@ public enum CinemaClass implements SeatingLayout {
         this.ticketPrices = ticketPrices;
     }
 
+    public void setPrice(int index, double price) {
+        ticketPrices[index] = price;
+    }
+
     @Override
     public int rows() {return rows;}
 
