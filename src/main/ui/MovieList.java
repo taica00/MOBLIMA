@@ -4,29 +4,21 @@ import java.util.List;
 
 import main.controllers.InputController;
 import main.controllers.MovieController;
-import main.controllers.TransactionsController;
 import main.models.Movie;
 
 public class MovieList extends UI {
-
-    public static void view(List<Movie> movies, boolean admin, boolean ticketSales, boolean rating) {
+    public static void view(List<Movie> movies, boolean admin) {
         System.out.println("List of movies:");
         int i = 1;
-        for (Movie movie : movies) {
-            System.out.print((i++) + ". " + movie.getTitle());
-            if (ticketSales && admin)
-                System.out.print(" (" + TransactionsController.getTicketSales(movie) + ")");
-            else if (rating && admin)
-                System.out.print(" (" + movie.getReviewerRating() + ")");
-            System.out.println();
-        }
+        for (Movie movie : movies) 
+            System.out.println((i++) + ". " + movie.getTitle());
         if (admin) 
             adminOptions(movies);
         else 
             movieGoerOptions(movies);
     }
 
-    private static void movieGoerOptions(List<Movie> movies) {
+    protected static void movieGoerOptions(List<Movie> movies) {
         int choice = InputController.getInt(0, movies.size(), "Enter list number of movie to view details or '0' to return to homepage: ");
         System.out.println();
         if (choice == 0)

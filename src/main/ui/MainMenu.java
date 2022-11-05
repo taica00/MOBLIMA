@@ -21,12 +21,12 @@ public class MainMenu extends UI {
             System.out.println();
             
             switch(choice) {
-                case 1: MovieController.listMovies(false, false, false); break;
+                case 1: MovieController.listMovies(false); break;
                 case 2: MovieController.searchMovies(); break;
                 case 3: CineplexController.displayCinemas(false); break;
                 case 4: BookingHistory.view(); break;
-                case 5: MovieController.listMovies(false, true, false); break;
-                case 6: MovieController.listMovies(false, false, true); break; 
+                case 5: MovieController.rankMovies(true, false); break;
+                case 6: MovieController.rankMovies(false, false); break; 
                 case 7: AdminMenu.login(); break;
                 case 8: break;
                 default: System.out.println("Something weird happened");

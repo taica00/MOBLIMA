@@ -22,11 +22,11 @@ public class AdminMenu extends UI {
             System.out.println();
             
             switch(choice) {
-                case 1: MovieController.listMovies(true, false, false); break;
+                case 1: MovieController.listMovies(true); break;
                 case 2: CineplexController.displayCinemas(true); break;
                 case 3: systemSettings(admin); break;
-                case 4: MovieController.listMovies(true, true, false); break;
-                case 5: MovieController.listMovies(true, false, true); break;
+                case 4: MovieController.rankMovies(true, true); break;
+                case 5: MovieController.rankMovies(false, true); break;
                 case 6: break;
                 default: System.out.println("Something weird happened");
             }
