@@ -14,6 +14,10 @@ public class Cineplex implements java.io.Serializable {
         this.cinemas = new ArrayList<>(Arrays.asList(cinemas));
     }
 
+    public void addCinema(Cinema cinema) {
+        cinemas.add(cinema);
+    }
+
     public List<Cinema> getCinemas() {
         return cinemas;
     }
