@@ -14,10 +14,10 @@ import main.models.CinemaClass;
 import main.models.Movie;
 import main.models.Session;
 import main.ui.TicketsPayment;
-import main.ui.SeatingLayout;
+import main.ui.SeatsSelection;
 
 public class SessionController extends Controller {
-    public static void viewSeating(List<List<Session>> movieSessions, String cinemaCode, String date, String cinemaClass, String time) {
+    public static boolean viewSeating(List<List<Session>> movieSessions, String cinemaCode, String date, String cinemaClass, String time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyHHmm");
         LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
         for (List<Session> cinemaSessions : movieSessions) {
@@ -25,21 +25,20 @@ public class SessionController extends Controller {
                 if (!session.getCinema().getCinemaCode().equals(cinemaCode))
                     break;
                 if (dateTime.isEqual(session.getDateTime()) && CinemaClass.valueOf(cinemaClass).equals(session.getCinemaClass())) {
-                    SeatingLayout.view(session);
-                    return;
+                    SeatsSelection.view(session);
+                    return true;
                 }
             }
         }
-        System.out.println("Session not found. Returning to homepage.");
+        return false;
     }
 
-    public static void viewSeating(Cinema cinema, String movie, String date, String cinemaClass, String time) {
+    public static boolean viewSeating(Cinema cinema, String movie, String date, String cinemaClass, String time) {
         Session session = CineplexController.searchSession(cinema, movie, date, cinemaClass, time);
-        if (session == null) {
-            System.out.println("Session not found. Returning to homepage.");
-            return;
-        }
-        SeatingLayout.view(session);
+        if (session == null) 
+            return false;
+        SeatsSelection.view(session);
+        return true;
     }
 
     public static void bookSeats(Session session, String[] seats) {
