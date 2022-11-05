@@ -2,7 +2,6 @@ package main.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
 
 import main.models.Movie;
@@ -16,13 +15,16 @@ public class MovieController extends Controller {
     public static void listMovies(boolean admin, boolean ticketSales, boolean rating) {
         List<Movie> movieList = new ArrayList<>();
         if (ticketSales) { // top 5 ranking by ticket sales
-            Map<Movie, Integer> sales = TransactionsController.getTicketSales();
-            PriorityQueue<Movie> ranking = new PriorityQueue<>((x, y) -> sales.getOrDefault(x, 0) - sales.getOrDefault(y, 0));
+            PriorityQueue<Movie> ranking = new PriorityQueue<>((x, y) -> TransactionsController.getTicketSales(y) - TransactionsController.getTicketSales(x));
+            for (Movie movie : movies)
+                ranking.offer(movie);
             while (movieList.size() < 5) 
                 movieList.add(ranking.poll());
         }
         else if (rating) { // top 5 ranking by reviewer rating
-            PriorityQueue<Movie> ranking = new PriorityQueue<>((x, y) -> (int)(x.getReviewerRating() - y.getReviewerRating()));
+            PriorityQueue<Movie> ranking = new PriorityQueue<>((x, y) -> Double.compare(y.getReviewerRating(), x.getReviewerRating()));
+            for (Movie movie : movies)
+                ranking.offer(movie);
             while (movieList.size() < 5)
                 movieList.add(ranking.poll());
         }
