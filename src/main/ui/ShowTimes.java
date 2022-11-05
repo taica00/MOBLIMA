@@ -2,6 +2,7 @@ package main.ui;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import main.controllers.CineplexController;
@@ -14,6 +15,12 @@ import main.models.MovieStatus;
 import main.models.Session;
 
 public class ShowTimes extends UI {
+    private static final String RETURN_HOME = "Returning to homepage.";
+    private static final String RETURN_ADMIN = "Returning to admin menu.";
+    private static final String NO_SESSION = "Session not found.";
+    private static final String THIN_DIVIDER = "\n-------------------------------------------------------------";
+    private static final String THICK_DIVIDER = "\n=============================================================";
+
     public static void view(List<List<Session>> movieSessions) { // view sessions for a particular movie
         if (movieSessions.isEmpty()) {
             System.out.println("No showtimes available for this movie");
@@ -22,7 +29,7 @@ public class ShowTimes extends UI {
         for (List<Session> cinemaSessions : movieSessions) {
             LocalDate date = null;
             CinemaClass cinemaClass = null;
-            System.out.println("\n=============================================================");
+            System.out.println(THICK_DIVIDER);
             Cinema cinema = cinemaSessions.get(0).getCinema();      
             System.out.print(cinema + " (" + cinema.getCinemaCode() + ")");
             int rowCount = 0;
@@ -31,7 +38,7 @@ public class ShowTimes extends UI {
                 LocalDate sessionDate = dateTime.toLocalDate();
                 CinemaClass sessionClass = session.getCinemaClass();
                 if (date == null || !sessionDate.isEqual(date)) {
-                    System.out.println("\n-------------------------------------------------------------");
+                    System.out.println(THIN_DIVIDER);
                     date = sessionDate;
                     System.out.print(date.getDayOfMonth() + " " + date.getMonth() + " " + date.getYear());
                     cinemaClass = null;
@@ -52,13 +59,23 @@ public class ShowTimes extends UI {
                 }
             }
         }
-        System.out.println("\n-------------------------------------------------------------");
+        System.out.println(THIN_DIVIDER);
         if (!bookTickets())
             return;
         String cinemaCode = InputController.getString("Enter cinema code, e.g. for JCube (SJC), SJC is the cinema code: ");
         String[] sessionInfo = getSessionInfo();
         System.out.println();
-        SessionController.viewSeating(movieSessions, cinemaCode, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]);
+        try {
+            if (!SessionController.viewSeating(movieSessions, cinemaCode, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]))
+                System.out.println(NO_SESSION + " " + RETURN_HOME);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date or time format. " + RETURN_HOME);
+        } catch (IllegalArgumentException e) {
+            System.out.print("Invalid cinema class. Valid cinema classes: ");
+            for (CinemaClass cc : CinemaClass.values())
+                System.out.print(cc + ", ");
+            System.out.println("\n" + RETURN_HOME);
+        }
     }
 
     public static void view(Cinema cinema, boolean admin) { // view sessions for a particular cinema
@@ -77,14 +94,14 @@ public class ShowTimes extends UI {
             LocalDate sessionDate = dateTime.toLocalDate();
             CinemaClass sessionClass = session.getCinemaClass();
             if (movie == null || session.getMovie() != movie) {
-                System.out.println("\n\n=============================================================");
+                System.out.println("\n" + THICK_DIVIDER);
                 movie = session.getMovie();
                 System.out.print(movie.getTitle() + " (" + movie.getRating() + ")");
                 date = null;
             }
             if (date == null || !sessionDate.isEqual(date)) {
                 date = sessionDate;
-                System.out.println("\n-------------------------------------------------------------");   
+                System.out.println(THIN_DIVIDER);   
                 System.out.print(date.getDayOfMonth() + " " + date.getMonth() + " " + date.getYear());  
                 cinemaClass = null;           
             }
@@ -107,12 +124,18 @@ public class ShowTimes extends UI {
             System.out.println("No showtimes available for this cinema.");
             return;
         }
-        System.out.println("\n-------------------------------------------------------------");
-        if (!admin)
-            movieGoerOptions(cinema);
-        else
-            adminOptions(cinema);
-    }
+        System.out.println(THIN_DIVIDER);
+        try {
+            if (!admin)
+                movieGoerOptions(cinema);
+            else
+                adminOptions(cinema);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date or time format. " + RETURN_HOME);
+        } catch (IllegalArgumentException e) {
+            System.out.print("Invalid input. " + RETURN_HOME);
+        }
+    }   
 
     private static void movieGoerOptions(Cinema cinema) {
         if (!bookTickets())
@@ -120,7 +143,8 @@ public class ShowTimes extends UI {
         String sessionMovie = InputController.getString("Enter movie title: ");
         String[] sessionInfo = getSessionInfo();
         System.out.println();
-        SessionController.viewSeating(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]);
+        if (!SessionController.viewSeating(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]))
+            System.out.println(NO_SESSION + " " + RETURN_HOME);
     }
 
     private static void adminOptions(Cinema cinema) {
@@ -135,14 +159,15 @@ public class ShowTimes extends UI {
             case 1: 
                 boolean is3D = InputController.getBoolean("Is this a 3D showing?(Y/N): ", 'Y', 'N');
                 CineplexController.addSession(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2], is3D);
-                System.out.println("Cinema showtime added. Returning to admin menu");
+                System.out.println("Cinema showtime added. " + RETURN_ADMIN);
                 break;
             case 2: 
-                CineplexController.updateSession(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]);
+                if (!CineplexController.updateSession(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]))
+                    System.out.println(NO_SESSION + " " + RETURN_ADMIN);
                 break;
             case 3: 
                 CineplexController.removeSession(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]);
-                System.out.println("Cinema showtime removed. Returning to admin menu.");
+                System.out.println("Cinema showtime removed. " + RETURN_ADMIN);
                 break;
             default: System.out.println("Something weird happened.");
         }
