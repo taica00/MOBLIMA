@@ -11,7 +11,11 @@ public class AddMovie extends UI {
         String director = InputController.getString("Enter director: ");
         String casts = InputController.getString("Enter casts: ");
         String sypnopsis = InputController.getString("Enter sypnosis: ");
-        MovieController.addMovie(title, rating, showingStatus, director, casts, sypnopsis);
-        System.out.println("Movie added.");
+        try {
+            MovieController.addMovie(title, rating, showingStatus, director, casts, sypnopsis);
+            System.out.println("Movie added.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid input. Movie not added. Returning to admin menu.");
+        }
     }
 }

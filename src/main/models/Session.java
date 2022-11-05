@@ -39,6 +39,8 @@ public class Session implements java.io.Serializable {
     }
 
     public void setCinema(Cinema cinema) {
+        if (cinema == null)
+            throw new IllegalArgumentException("cinema cannot be null.");
         this.cinema = cinema;
     }
 
@@ -47,6 +49,8 @@ public class Session implements java.io.Serializable {
     }
 
     public void setMovie(Movie movie) {
+        if (movie == null)
+            throw new IllegalArgumentException("movie cannot be null.");
         this.movie = movie;
     }
 
@@ -55,6 +59,8 @@ public class Session implements java.io.Serializable {
     }
 
     public void setDateTime(LocalDateTime dateTime) {
+        if (dateTime == null)
+            throw new IllegalArgumentException("dateTime cannot be null.");
         this.dateTime = dateTime;
     }
 

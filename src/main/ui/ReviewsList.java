@@ -19,8 +19,12 @@ public class ReviewsList extends UI {
             String name = InputController.getString("Enter your name: ");
             int rating = InputController.getInt(1, 5, "Enter your rating for the movie (1-5[best]): ");
             String reviewContent = InputController.getString("Enter your review: \n");
-            movie.addReview(new Review(name, reviewContent, rating));
-            System.out.print("Review successfully added. ");
+            try {
+                movie.addReview(new Review(name, reviewContent, rating));
+                System.out.print("Review successfully added. ");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Fields cannot be empty.");
+            }
         }
         System.out.println("Returning to homepage.");
     }

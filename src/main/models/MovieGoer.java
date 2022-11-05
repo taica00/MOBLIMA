@@ -52,6 +52,8 @@ public class MovieGoer implements java.io.Serializable {
     }
 
     public void setCardNumber(String cardNumber) {
+        if (cardNumber == null || cardNumber.length() < 8 || cardNumber.length() > 19)
+            throw new IllegalArgumentException("Card number must be 8 to 19 digits long");
         this.cardNumber = cardNumber;
     }   
 }

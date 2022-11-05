@@ -11,8 +11,6 @@ public class Seating implements java.io.Serializable {
     private Set<Integer> aisles;
 
     public Seating(CinemaClass cinemaClass) {
-        if (cinemaClass == null)
-            throw new IllegalArgumentException("cinemaClass cannot be null");
         int rows = cinemaClass.rows();
         int columns = cinemaClass.columns();
         aisles = new HashSet<>(Arrays.stream(cinemaClass.aisles()).boxed().collect(Collectors.toList()));

@@ -6,7 +6,16 @@ import main.models.CinemaClass;
 public class UpdatePrices extends UI {
     public static void view() {
         String cinemaClassString = InputController.getString("Enter cinema class (replace space with underscore): ");
-        CinemaClass cinemaClass = CinemaClass.valueOf(cinemaClassString.toUpperCase());
+        CinemaClass cinemaClass;
+        try {
+            cinemaClass = CinemaClass.valueOf(cinemaClassString.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.print("Invalid cinema class. Valid cinema classes: ");
+            for (CinemaClass cc : CinemaClass.values())
+                System.out.print(cc + ", ");
+            System.out.println("\nReturning to admin menu.");
+            return;
+        }
         System.out.println("\nSelect pricing category to change: ");
         System.out.println("1. Senior Citizen (Mon-Fri before 6pm)");
         System.out.println("2. Student (Mon-Fri before 6pm)");

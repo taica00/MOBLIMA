@@ -11,6 +11,12 @@ public class Transaction implements java.io.Serializable {
     private double price;
 
     public Transaction(Session session, List<String> seats, double price) {
+        if (session == null || seats == null)
+            throw new IllegalArgumentException("fields cannot be null.");
+        if (seats.isEmpty())
+            throw new IllegalArgumentException("list of seats cannot be empty.");
+        if (price < 0)
+            throw new IllegalArgumentException("price cannot be negative");
         this.session = session;
         this.seats = seats;
         this.price = price;
@@ -57,7 +63,7 @@ public class Transaction implements java.io.Serializable {
         for (String seat : seats) 
             sb.append(seat + " ");
         String priceString = String.format("$%.2f", price);
-        sb.append("\nTotal Price: " + priceString + "\n");
+        sb.append("\nTotal price: " + priceString + "\n");
         return sb.toString();
     }
     

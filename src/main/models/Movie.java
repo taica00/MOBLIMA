@@ -17,6 +17,10 @@ public class Movie implements java.io.Serializable {
     public enum Rating {G, PG, PG13, NC16, M18, R21, NA}
 
     public Movie(String title, String rating, MovieStatus showingStatus, String sypnopsis, String director, String casts) {
+        if (title == null || sypnopsis == null || director == null || casts == null)
+            throw new IllegalArgumentException("Fields cannot be null");
+        if (title.isBlank() || sypnopsis.isBlank() || director.isBlank() || casts.isEmpty())
+            throw new IllegalArgumentException("Fields cannot be blank");
         this.title = title;
         this.rating = Rating.valueOf(rating);
         this.showingStatus = showingStatus;
@@ -69,6 +73,8 @@ public class Movie implements java.io.Serializable {
     }
 
     public void setTitle(String title) {
+        if (title == null || title.isBlank())
+            throw new IllegalArgumentException("title cannot be null or blank.");
         this.title = title;
     }
 
@@ -81,14 +87,20 @@ public class Movie implements java.io.Serializable {
     }
 
     public void setSypnopsis(String sypnopsis) {
+        if (sypnopsis == null || sypnopsis.isBlank())
+            throw new IllegalArgumentException("sypnopsis cannot be null or blank.");
         this.sypnopsis = sypnopsis;
     }
 
     public void setDirector(String director) {
+        if (director == null || director.isBlank())
+            throw new IllegalArgumentException("director cannot be null or blank.");
         this.director = director;
     }
 
     public void setCasts(String casts) {
+        if (casts == null || casts.isBlank())
+            throw new IllegalArgumentException("casts cannot be null or blank.");
         this.casts = casts;
     }
 
