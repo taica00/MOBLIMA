@@ -36,7 +36,7 @@ public class TicketsPayment extends UI {
             System.out.println("We have records of your past transactions. Please confirm your identity.");
             if (!InputController.confirmIdentity(movieGoer)) {  // unable to confirm identity, booking unsuccessful
                 SessionController.undoBooking(session, bookedSeats);  // mark seats back as available
-                System.out.println("Returning home.");
+                System.out.println("Returning to homepage.");
                 return;
             }
             String message = "Would you like to use your existing payment method " + movieGoer.getMaskedCardNumber() + "? (Y/N) ";
