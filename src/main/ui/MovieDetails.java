@@ -2,7 +2,6 @@ package main.ui;
 
 import main.controllers.CineplexController;
 import main.controllers.InputController;
-import main.controllers.ReviewsController;
 import main.models.Movie;
 
 public class MovieDetails extends UI {
@@ -27,9 +26,10 @@ public class MovieDetails extends UI {
         }
         System.out.println();
         int choice = InputController.getInt(1, choices, "Select an option: ");
+        System.out.println();
         switch(choice) {
             case 1: return;
-            case 2: ReviewsController.viewReviews(movie); break;
+            case 2: ReviewsList.view(movie); break;
             case 3: CineplexController.viewShowTimes(movie); break; 
             default: System.out.println("Something weird happened");
         }
