@@ -14,10 +14,11 @@ public class MovieList extends UI {
         int i = 1;
         for (Movie movie : movies) {
             System.out.print((i++) + ". " + movie.getTitle());
-            if (ticketSales)
-                System.out.println(" (" + TransactionsController.getTicketSales().get(movie) + ")");
-            else if (rating)
-                System.out.println(" (" + movie.getReviewerRating() + ")");
+            if (ticketSales && admin)
+                System.out.print(" (" + TransactionsController.getTicketSales(movie) + ")");
+            else if (rating && admin)
+                System.out.print(" (" + movie.getReviewerRating() + ")");
+            System.out.println();
         }
         if (admin) 
             adminOptions(movies);
