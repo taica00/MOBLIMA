@@ -71,4 +71,8 @@ public class Seating implements java.io.Serializable {
     public int getNumCols() {
         return seats[0].length;
     }
+
+    public int getNumRows() {
+        return seats.length;
+    }
 }
