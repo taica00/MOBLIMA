@@ -48,9 +48,12 @@ public class CineplexController extends Controller {
         cinema.addSession(movie, dateTime, cinemaClass, is3D);
     }
 
-    public static void updateSession(Cinema cinema, String movie, String date, String cinemaClass, String time) {
+    public static boolean updateSession(Cinema cinema, String movie, String date, String cinemaClass, String time) {
         Session session = searchSession(cinema, movie, date, cinemaClass, time);
+        if (session == null)
+            return false;
         UpdateSession.view(session);
+        return true;
     }
 
     public static void removeSession(Cinema cinema, String movie, String date, String cinemaClass, String time) {
