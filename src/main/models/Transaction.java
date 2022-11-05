@@ -17,10 +17,6 @@ public class Transaction implements java.io.Serializable {
         generateTID();
     }
 
-    public int getNumTickets() {
-        return seats.size();
-    }
-
     private void generateTID() {
         StringBuilder sb = new StringBuilder();
         sb.append(session.getCinema().getCinemaCode());
