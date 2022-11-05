@@ -29,8 +29,8 @@ public class MoviesShowtimesScrapper extends Populator {
         cineplexes.add(new Cineplex(C, new Cinema[]{new Cinema(C, "AMK Hub"), new Cinema(C, "Causeway Point"), new Cinema(C, "Jem")}));
         cineplexes.add(new Cineplex(G, new Cinema[]{new Cinema(G, "Funan"), new Cinema(G, "Grand"), new Cinema(G, "VivoCity")}));
         cineplexes.add(new Cineplex(S, new Cinema[]{new Cinema(S, "JCube"), new Cinema(S, "Jewel"), new Cinema(S, "Nex")}));
-        loadMovies("nowshowing.aspx", 20);
-        loadMovies("comingsoon.aspx", 10);
+        loadMovies("nowshowing.aspx", 25);
+        loadMovies("comingsoon.aspx", 5);
         movies.sort((x, y)->x.getTitle().compareTo(y.getTitle()));
         serialize(cineplexes, "cineplexes.ser");
         serialize(movies, "movies.ser");
@@ -63,7 +63,7 @@ public class MoviesShowtimesScrapper extends Populator {
                 LocalDate date = LocalDate.parse(movieDetailsArr[6].split(": ")[1], dtf);
                 if (movieStatus.equals(MovieStatus.NOW_SHOWING) && date.isAfter(LocalDate.now()))
                     continue;
-                String title = movieDetailsArr[0];
+                String title = formatMovieTitle(movieDetailsArr[0]);
                 String sypnosis = movieDetailsArr[1];
                 String rating = movieDetailsArr[5].split(": ")[1].trim();
                 String cast = movieDetailsArr[10].substring(6);
@@ -78,6 +78,12 @@ public class MoviesShowtimesScrapper extends Populator {
         } catch(Exception e) {
             e.printStackTrace();
         } 
+    }
+
+    private static String formatMovieTitle(String movieTitle) {
+        if (movieTitle.endsWith(")"))
+            return movieTitle.substring(0, movieTitle.indexOf("(")-1);
+        return movieTitle;
     }
 
     private static void loadShowTimes(HtmlDivision movieDetails, Movie movie) {
