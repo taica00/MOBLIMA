@@ -16,7 +16,7 @@ public class TransactionsController extends Controller {
     public static void makePayment(Session session, List<String> bookedSeats, MovieGoer movieGoer, double price) {
         Transaction transaction = new Transaction(session, bookedSeats, price);
         movieGoer.addTransaction(transaction);
-        addTicketSales(session.getMovie(), transaction.getNumTickets());
+        addTicketSales(session.getMovie(), bookedSeats.size());
     }
 
     public static MovieGoer getMovieGoer(String email) {
@@ -31,11 +31,11 @@ public class TransactionsController extends Controller {
         movieGoers.add(movieGoer);
     }
 
-    public static Map<Movie, Integer> getTicketSales() {
-        return ticketSales;
+    public static int getTicketSales(Movie movie) {
+        return ticketSales.getOrDefault(movie, 0);
     }
 
-    private static void addTicketSales(Movie movie, int numTickets) {
+    public static void addTicketSales(Movie movie, int numTickets) {
         int sales = ticketSales.getOrDefault(movie, 0);
         sales += numTickets;
         ticketSales.put(movie, sales);
