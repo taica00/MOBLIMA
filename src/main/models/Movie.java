@@ -2,6 +2,7 @@ package main.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Movie implements java.io.Serializable {
     private static final long serialVersionUID = 3L;
@@ -11,7 +12,6 @@ public class Movie implements java.io.Serializable {
     private String sypnopsis;
     private String director;
     private String casts;
-    private double reviewerRating;
     private List<Review> reviews;
 
     public enum Rating {G, PG, PG13, NC16, M18, R21, NA}
@@ -23,7 +23,6 @@ public class Movie implements java.io.Serializable {
         this.sypnopsis = sypnopsis;
         this.director = director;
         this.casts = casts;
-        reviewerRating = 0;
         reviews = new ArrayList<>();
     }
 
@@ -41,16 +40,32 @@ public class Movie implements java.io.Serializable {
 
     public void addReview(Review review) {
         reviews.add(review);
-        updateReviewerRating();
     }
 
-    private void updateReviewerRating() {
+    public double getReviewerRating() {
+        if (reviews.isEmpty())
+            return 0;
         double sum = 0;
         for (Review review : reviews)
             sum += review.getRating();
         sum /= reviews.size();
-        //TODO round to 1 d.p
-        reviewerRating = sum;
+        return (double) Math.round(sum * 10) / 10;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+        if (!(obj instanceof Movie))
+            return false;
+        Movie other = (Movie)obj;
+        return title.equals(other.title);
+    }
+
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        return prime + Objects.hashCode(title);
     }
 
     public void setTitle(String title) {
@@ -99,10 +114,6 @@ public class Movie implements java.io.Serializable {
 
     public String getCasts() {
         return casts;
-    }
-
-    public double getReviewerRating() {
-        return reviewerRating;
     }
 
     public List<Review> getReviews() {
