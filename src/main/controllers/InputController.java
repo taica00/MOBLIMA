@@ -53,7 +53,7 @@ public class InputController extends Controller {
             clear();
             System.out.print(message);
             String input = scan.nextLine();
-            if (StringUtils.isNumeric(input) || (input.length() >= lo && input.length() <= hi))
+            if (StringUtils.isNumeric(input) && input.length() >= lo && input.length() <= hi)
                 return input;
             System.out.println(INVALID_INPUT);
         }
