@@ -10,6 +10,11 @@ import main.models.MovieGoer;
 import main.models.Session;
 
 public class TicketsPayment extends UI {
+    
+    /** 
+     * @param session
+     * @param bookedSeats
+     */
     public static void view(Session session, List<String> bookedSeats) {
         // print out booked seats
         System.out.print("Seat(s) booked: ");
@@ -28,7 +33,7 @@ public class TicketsPayment extends UI {
         // print out tickets price
         System.out.println("\n" + session.getCinemaClass());
         double price = PricingController.getTicketsPrice(session, numTickets, seniors, students);
-        System.out.printf("Grand Total: %.2f%n%n", price);
+        System.out.printf("Grand Total: $%.2f%n%n", price);
         // get user email, name, phone number
         String email = InputController.getString("Enter email address: ");
         MovieGoer movieGoer = TransactionsController.getMovieGoer(email); // use email to identify movie goer
@@ -44,9 +49,9 @@ public class TicketsPayment extends UI {
                 movieGoer.setCardNumber(InputController.getNumericString("Enter card number: ", 8, 19)); // use new payment method
         }
         else { // moviegoer is a first timer
-            String name = InputController.getNumericString("Enter name: ", 1, 50);
-            String mobile = InputController.getNumericString("Enter mobile number: ", 8, 15);
-            String cardNumber = InputController.getNumericString("Enter card number: ", 8, 19);
+            String name = InputController.getString("Enter name: ");
+            String mobile = InputController.getNumericString("Enter mobile number (8-15 digits): ", 8, 15);
+            String cardNumber = InputController.getNumericString("Enter card number (8-19 digits): ", 8, 19);
             movieGoer = new MovieGoer(name, mobile, email, cardNumber);
             TransactionsController.addMovieGoer(movieGoer);
         }
