@@ -8,6 +8,10 @@ import main.controllers.InputController;
 import main.controllers.PricingController;
 
 public class ConfigureHolidays extends UI {
+    
+    /** 
+     * @param holidays
+     */
     public static void view(Set<LocalDate> holidays) {
         System.out.println("1. Set a date as holiday.");
         System.out.println("2. Unset a holiday date.");
@@ -29,6 +33,10 @@ public class ConfigureHolidays extends UI {
         }
     }
 
+    
+    /** 
+     * @param holidays
+     */
     private static void removeHolidayDate(LocalDate[] holidays) {
         int i = 1;
         for (LocalDate date : holidays)

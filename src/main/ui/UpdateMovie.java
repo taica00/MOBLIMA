@@ -4,6 +4,10 @@ import main.controllers.InputController;
 import main.models.Movie;
 
 public class UpdateMovie extends UI {
+    
+    /** 
+     * @param movie
+     */
     public static void view(Movie movie) {
         String choice = "";
         while (true) {

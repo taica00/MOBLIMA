@@ -11,6 +11,11 @@ public abstract class Populator {
         throw new IllegalStateException("Utility class");
     }
 
+    
+    /** 
+     * @param fileName
+     * @return T
+     */
     protected static <T> T loadData(String fileName) {
         try {
             FileInputStream fileIn = new FileInputStream("src/main/data/" + fileName);
@@ -28,6 +33,11 @@ public abstract class Populator {
         return null;
     }
 
+    
+    /** 
+     * @param obj
+     * @param fileName
+     */
     protected static <T> void serialize(T obj, String fileName) {
         try {
             FileOutputStream fileOut = new FileOutputStream("src/main/data/" + fileName);

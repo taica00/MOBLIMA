@@ -17,6 +17,12 @@ public class Seating implements java.io.Serializable {
         seats = new int[rows][columns];
     }
 
+    
+    /** 
+     * @param row
+     * @param col
+     * @return boolean
+     */
     public boolean bookSeat(char row, int col) {
         if (seats[row-'A'][col-1] == 1) // occupied seat
             return false;
@@ -24,10 +30,19 @@ public class Seating implements java.io.Serializable {
         return true;
     }
 
+    
+    /** 
+     * @param row
+     * @param col
+     */
     public void unBookSeat(char row, int col) {
         seats[row-'A'][col-1] = 0;
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -66,10 +81,18 @@ public class Seating implements java.io.Serializable {
         return sb.toString();
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getNumCols() {
         return seats[0].length;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getNumRows() {
         return seats.length;
     }

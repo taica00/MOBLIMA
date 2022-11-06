@@ -24,6 +24,10 @@ public class MoviesShowtimesScrapper extends Populator {
     static final String S = "Shaw Theatres";
     static List<Cineplex> cineplexes = new ArrayList<>();
     static List<Movie> movies= new ArrayList<>();
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(java.util.logging.Level.OFF);
         cineplexes.add(new Cineplex(C, new Cinema[]{new Cinema(C, "AMK Hub"), new Cinema(C, "Causeway Point"), new Cinema(C, "Jem")}));
@@ -36,6 +40,11 @@ public class MoviesShowtimesScrapper extends Populator {
         serialize(movies, "movies.ser");
     }
 
+    
+    /** 
+     * @param domain
+     * @param count
+     */
     private static void loadMovies(String domain, int count) {
         try {
             final WebClient client = new WebClient();
@@ -80,12 +89,22 @@ public class MoviesShowtimesScrapper extends Populator {
         } 
     }
 
+    
+    /** 
+     * @param movieTitle
+     * @return String
+     */
     private static String formatMovieTitle(String movieTitle) {
         if (movieTitle.endsWith(")"))
             return movieTitle.substring(0, movieTitle.indexOf("(")-1);
         return movieTitle;
     }
 
+    
+    /** 
+     * @param movieDetails
+     * @param movie
+     */
     private static void loadShowTimes(HtmlDivision movieDetails, Movie movie) {
         try {
             final WebClient client = new WebClient();
@@ -144,6 +163,13 @@ public class MoviesShowtimesScrapper extends Populator {
             e.printStackTrace();
         }
     }
+    
+    /** 
+     * @param movie
+     * @param dateTime
+     * @param location
+     * @param cinemaClass
+     */
     private static void addSessionToCineplex(Movie movie, LocalDateTime dateTime, String[] location, String cinemaClass) { 
         Cineplex cineplex = null;
         for (Cineplex c : cineplexes)
@@ -159,6 +185,12 @@ public class MoviesShowtimesScrapper extends Populator {
         cinema.addSession(movie, dateTime, cinemaClass, false);
     }
 
+    
+    /** 
+     * @param movie
+     * @param dateTime
+     * @param location
+     */
     private static void addSessionToGV(Movie movie, LocalDateTime dateTime, String location) {
         String[] cinemaAndType = location.split(", ");
         String cinemaName= "NULL";

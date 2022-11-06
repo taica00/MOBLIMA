@@ -5,6 +5,10 @@ import main.controllers.InputController;
 import main.models.Movie;
 
 public class MovieDetails extends UI {
+    
+    /** 
+     * @param movie
+     */
     public static void view(Movie movie) {
         System.out.println(movie);
         int choices = 0;

@@ -6,6 +6,11 @@ import main.controllers.InputController;
 import main.models.Cinema;
 
 public class CinemaList extends UI {
+    
+    /** 
+     * @param cinemas
+     * @param admin
+     */
     public static void view(List<Cinema> cinemas, boolean admin) {
         System.out.println("Cinema list: \n");
         int i = 1;

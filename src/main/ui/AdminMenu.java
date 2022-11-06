@@ -8,6 +8,10 @@ import main.controllers.PricingController;
 import main.models.Admin;
 
 public class AdminMenu extends UI {
+    
+    /** 
+     * @param admin
+     */
     public static void view(Admin admin) {
         int choice;
         do {
@@ -48,6 +52,10 @@ public class AdminMenu extends UI {
         view(adminAccount);
     }
 
+    
+    /** 
+     * @param admin
+     */
     private static void systemSettings(Admin admin) {
         System.out.println("\n******************** SYSTEM SETTINGS ********************\n");
         System.out.println("1. Configure ticket prices.");
@@ -73,6 +81,10 @@ public class AdminMenu extends UI {
         }
     }
 
+    
+    /** 
+     * @param admin
+     */
     private static void changePassword(Admin admin) {
         int count = 0;
         while (true) {

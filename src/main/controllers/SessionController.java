@@ -17,6 +17,15 @@ import main.ui.TicketsPayment;
 import main.ui.SeatsSelection;
 
 public class SessionController extends Controller {
+    
+    /** 
+     * @param movieSessions
+     * @param cinemaCode
+     * @param date
+     * @param cinemaClass
+     * @param time
+     * @return boolean
+     */
     public static boolean viewSeating(List<List<Session>> movieSessions, String cinemaCode, String date, String cinemaClass, String time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyHHmm");
         LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
@@ -33,6 +42,15 @@ public class SessionController extends Controller {
         return false;
     }
 
+    
+    /** 
+     * @param cinema
+     * @param movie
+     * @param date
+     * @param cinemaClass
+     * @param time
+     * @return boolean
+     */
     public static boolean viewSeating(Cinema cinema, String movie, String date, String cinemaClass, String time) {
         Session session = CineplexController.searchSession(cinema, movie, date, cinemaClass, time);
         if (session == null) 
@@ -41,6 +59,11 @@ public class SessionController extends Controller {
         return true;
     }
 
+    
+    /** 
+     * @param session
+     * @param seats
+     */
     public static void bookSeats(Session session, String[] seats) {
         List<String> bookedSeats = new ArrayList<>();
         for (String seat : seats) {
@@ -60,6 +83,11 @@ public class SessionController extends Controller {
         TicketsPayment.view(session, bookedSeats);
     }
 
+    
+    /** 
+     * @param session
+     * @param seats
+     */
     public static void undoBooking(Session session, List<String> seats) {
         for (String seat : seats) {
             char row = seat.charAt(0);
@@ -68,6 +96,12 @@ public class SessionController extends Controller {
         }
     }
 
+    
+    /** 
+     * @param session
+     * @param cinemaString
+     * @return boolean
+     */
     public static boolean updateCinema(Session session, String cinemaString) {
         Cinema cinema = CineplexController.searchCinema(cinemaString);
         if (cinema == null)
@@ -76,6 +110,12 @@ public class SessionController extends Controller {
         return true;
     }
 
+    
+    /** 
+     * @param session
+     * @param movieString
+     * @return boolean
+     */
     public static boolean updateMovie(Session session, String movieString) {
         Movie movie = MovieController.searchMovie(movieString);
         if (movie == null)
@@ -84,6 +124,11 @@ public class SessionController extends Controller {
         return true;
     }
 
+    
+    /** 
+     * @param session
+     * @param dateString
+     */
     public static void updateDate(Session session, String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
         LocalDate date = LocalDate.parse(dateString, formatter);
@@ -91,6 +136,11 @@ public class SessionController extends Controller {
         session.setDateTime(LocalDateTime.of(date, time));
     }
 
+    
+    /** 
+     * @param session
+     * @param timeString
+     */
     public static void updateTime(Session session, String timeString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
         LocalTime time = LocalTime.parse(timeString, formatter);

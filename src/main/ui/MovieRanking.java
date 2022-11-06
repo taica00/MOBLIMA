@@ -8,6 +8,12 @@ import main.controllers.TransactionsController;
 import main.models.Movie;
 
 public class MovieRanking extends MovieList {
+    
+    /** 
+     * @param movies
+     * @param ticketSales
+     * @param admin
+     */
     public static void view(List<Movie> movies, boolean ticketSales, boolean admin) {
         int i = 1;
         for (Movie movie : movies) {
@@ -27,6 +33,10 @@ public class MovieRanking extends MovieList {
             movieGoerOptions(movies);
     }
 
+    
+    /** 
+     * @param movies
+     */
     private static void adminOptions(List<Movie> movies) {
         System.out.println("\n1. Update listing | 2. Remove listing | 3. Return to admin menu\n");
         int choice = InputController.getInt(1, 3, "Enter your option: ");

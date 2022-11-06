@@ -13,10 +13,19 @@ public class MovieController extends Controller {
     private static List<Movie> movies;
     private static final String FILEPATH = "src/main/data/";
 
+    
+    /** 
+     * @param admin
+     */
     public static void listMovies(boolean admin) {
         MovieList.view(movies, admin);
     }
 
+    
+    /** 
+     * @param ticketSales
+     * @param admin
+     */
     public static void rankMovies(boolean ticketSales, boolean admin) {
         List<Movie> movieList = new ArrayList<>();
         PriorityQueue<Movie> ranking;
@@ -46,6 +55,11 @@ public class MovieController extends Controller {
         MovieList.view(searchResults, false);
     }
 
+    
+    /** 
+     * @param movieTitle
+     * @return Movie
+     */
     public static Movie searchMovie(String movieTitle) {
         for (Movie movie : movies) {
             if (movie.getTitle().equalsIgnoreCase(movieTitle))
@@ -54,12 +68,25 @@ public class MovieController extends Controller {
         return null;
     }
 
+    
+    /** 
+     * @param title
+     * @param rating
+     * @param showingStatus
+     * @param director
+     * @param casts
+     * @param sypnosis
+     */
     public static void addMovie(String title, String rating, String showingStatus, String director, String casts, String sypnosis) {
         Movie movie = new Movie(title, rating, MovieStatus.valueOf(showingStatus), sypnosis, director, casts);
         movies.add(movie);
         
     }
 
+    
+    /** 
+     * @param index
+     */
     public static void removeMovie(int index) {
         movies.remove(index);
     }

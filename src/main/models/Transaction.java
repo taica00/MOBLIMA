@@ -51,6 +51,10 @@ public class Transaction implements java.io.Serializable {
         TID = sb.toString();
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString() {
         LocalDateTime dateTime = session.getDateTime();

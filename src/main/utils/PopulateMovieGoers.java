@@ -6,6 +6,10 @@ import java.util.List;
 import main.models.MovieGoer;
 
 public class PopulateMovieGoers extends Populator {
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         List<MovieGoer> movieGoers = new ArrayList<>();
         movieGoers.add(new MovieGoer("Mike Coxlong", "98765432", "mikecoxlong@gmail.com", "7480932833"));

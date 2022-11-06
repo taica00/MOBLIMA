@@ -7,6 +7,10 @@ import main.models.Movie;
 import main.models.Review;
 
 public class ReviewsList extends UI {
+    
+    /** 
+     * @param movie
+     */
     public static void view(Movie movie) {
         List<Review> reviews = movie.getReviews();
         if (reviews.isEmpty())

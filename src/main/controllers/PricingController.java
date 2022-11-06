@@ -12,6 +12,14 @@ public class PricingController extends Controller {
     private static Set<LocalDate> holidays;
     private static final String FILEPATH = "src/main/data/holidays.ser";
 
+    
+    /** 
+     * @param session
+     * @param numTickets
+     * @param seniors
+     * @param students
+     * @return double
+     */
     public static double getTicketsPrice(Session session, int numTickets, int seniors, int students) {
         double[] pricing = session.getCinemaClass().ticketPrices();
         double total = 0;
@@ -32,21 +40,41 @@ public class PricingController extends Controller {
         ConfigureHolidays.view(holidays);
     }
 
+    
+    /** 
+     * @param dateString
+     */
     public static void addHolidayDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
         LocalDate date = LocalDate.parse(dateString, formatter);
         holidays.add(date);
     }
 
+    
+    /** 
+     * @param date
+     */
     public static void removeHolidayDate(LocalDate date) {
         holidays.remove(date);
     }
 
+    
+    /** 
+     * @param dateTime
+     * @return boolean
+     */
     public static boolean eligibleForConcession(LocalDateTime dateTime) {
         int day = dateTime.getDayOfWeek().getValue();
         return day >= 1 && day <= 5 && dateTime.getHour() < 18 && !holidays.contains(dateTime.toLocalDate());
     }
 
+    
+    /** 
+     * @param ticketPrice
+     * @param priceCat
+     * @param quantity
+     * @return double
+     */
     private static double calculateAndPrintPrice(double ticketPrice, String priceCat, int quantity) {
         if (quantity == 0)
             return 0;
@@ -55,6 +83,11 @@ public class PricingController extends Controller {
         return cost;
     }
 
+    
+    /** 
+     * @param date
+     * @return boolean
+     */
     private static boolean isPeakPricing(LocalDate date) {
         return date.getDayOfWeek().getValue() >= 5 || holidays.contains(date);
     }

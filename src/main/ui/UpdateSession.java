@@ -8,6 +8,10 @@ import main.models.CinemaClass;
 import main.models.Session;
 
 public class UpdateSession extends UI {
+    
+    /** 
+     * @param session
+     */
     public static void view(Session session) {
         String choice = "";
         while (true) {

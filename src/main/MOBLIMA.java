@@ -7,6 +7,10 @@ import main.controllers.TransactionsController;
 import main.ui.MainMenu;
 
 public class MOBLIMA {
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         loadState();
         MainMenu.view();

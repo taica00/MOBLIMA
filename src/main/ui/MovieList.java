@@ -7,6 +7,11 @@ import main.controllers.MovieController;
 import main.models.Movie;
 
 public class MovieList extends UI {
+    
+    /** 
+     * @param movies
+     * @param admin
+     */
     public static void view(List<Movie> movies, boolean admin) {
         System.out.println("List of movies:");
         int i = 1;
@@ -18,6 +23,10 @@ public class MovieList extends UI {
             movieGoerOptions(movies);
     }
 
+    
+    /** 
+     * @param movies
+     */
     protected static void movieGoerOptions(List<Movie> movies) {
         int choice = InputController.getInt(0, movies.size(), "Enter list number of movie to view details or '0' to return to homepage: ");
         System.out.println();
@@ -26,6 +35,10 @@ public class MovieList extends UI {
         MovieDetails.view(movies.get(choice-1));
     }
 
+    
+    /** 
+     * @param movies
+     */
     private static void adminOptions(List<Movie> movies) {
         System.out.println("\n1. Create listing | 2. Update listing | 3. Remove listing | 4. Return to admin menu\n");
         int choice = InputController.getInt(1, 4, "Enter your option: ");

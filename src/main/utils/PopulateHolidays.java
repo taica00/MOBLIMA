@@ -5,6 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PopulateHolidays extends Populator {
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         Set<LocalDate> holidays = new HashSet<>();
         holidays.add(LocalDate.of(2022, 12, 26));

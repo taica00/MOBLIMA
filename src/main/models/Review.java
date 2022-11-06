@@ -16,6 +16,10 @@ public class Review implements java.io.Serializable{
         this.rating = rating;
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -25,6 +29,10 @@ public class Review implements java.io.Serializable{
         return sb.toString();
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getRating() {
         return rating;
     }

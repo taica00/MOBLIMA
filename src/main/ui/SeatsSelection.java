@@ -6,6 +6,10 @@ import main.models.Seating;
 import main.models.Session;
 
 public class SeatsSelection extends UI {
+    
+    /** 
+     * @param session
+     */
     public static void view(Session session) {
         Seating seating = session.getSeating();
         System.out.println(seating);

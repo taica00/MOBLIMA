@@ -11,6 +11,11 @@ public abstract class Controller {
         throw new IllegalStateException("Utility class");
     }
 
+    
+    /** 
+     * @param filePath
+     * @return T
+     */
     protected static <T> T loadData(String filePath) {
         try {
             FileInputStream fileIn = new FileInputStream(filePath);
@@ -28,6 +33,11 @@ public abstract class Controller {
         return null;
     }
     
+    
+    /** 
+     * @param element
+     * @param filePath
+     */
     protected static <T> void saveData(T element, String filePath) {
         try {
             FileOutputStream fileOut = new FileOutputStream(filePath);
