@@ -3,13 +3,44 @@ package main.models;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Represents a Transaction made by a movie-goer.
+ * A transaction contains information of payment made for booked seat(s) of one session.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-06 
+ */
+
 public class Transaction implements java.io.Serializable {
     private static final long serialVersionUID = 7L;
+
+    /**
+     * The transaction ID of this transaction.
+     */
     private String TID;
+
+    /**
+     * The session of the seat(s) booked in this transaction.
+     */
     private Session session;
+
+    /**
+     * The list of seat(s) booked in this transaction.
+     */
     private List<String> seats;
+
+    /**
+     * The price (SGD) paid for the seat(s) booked in this transaction.
+     */
     private double price;
 
+    /**
+     * Creates a new Transaction with the given fields.
+     * The transaction ID is then generated. 
+     * @param session
+     * @param seats
+     * @param price
+     */
     public Transaction(Session session, List<String> seats, double price) {
         if (session == null || seats == null)
             throw new IllegalArgumentException("fields cannot be null.");
@@ -23,6 +54,10 @@ public class Transaction implements java.io.Serializable {
         generateTID();
     }
 
+    /**
+     * The transaction ID is generated using the cinema code of the cinema hosting the session
+     * as well as the date and time that this transaction is made.
+     */
     private void generateTID() {
         StringBuilder sb = new StringBuilder();
         sb.append(session.getCinema().getCinemaCode());
@@ -50,10 +85,9 @@ public class Transaction implements java.io.Serializable {
             sb.append(minute);    
         TID = sb.toString();
     }
-
     
     /** 
-     * @return String
+     * @return details of the transaction.
      */
     @Override
     public String toString() {

@@ -94,13 +94,7 @@ public class CineplexController extends Controller {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(PATTERN);
         LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
         List<Session> cinemaSessions = cinema.getSessions();
-        for (int i = 0; i < cinemaSessions.size(); i++) {
-            Session session = cinemaSessions.get(i);
-            if (movie.equalsIgnoreCase(session.getMovie().getTitle()) &&  dateTime.isEqual(session.getDateTime()) && CinemaClass.valueOf(cinemaClass).equals(session.getCinemaClass())) {
-                cinemaSessions.remove(i);
-                return;
-            }
-        }
+        cinemaSessions.removeIf(x -> (movie.equalsIgnoreCase(x.getMovie().getTitle()) &&  dateTime.isEqual(x.getDateTime()) && CinemaClass.valueOf(cinemaClass).equals(x.getCinemaClass())));
     }
 
     

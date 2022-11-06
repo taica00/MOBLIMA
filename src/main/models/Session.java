@@ -2,15 +2,56 @@ package main.models;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a showtime session of a movie.
+ * A session can only be screening one movie.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-06 
+ */
+
 public class Session implements java.io.Serializable {
     private static final long serialVersionUID = 6L;
+
+    /**
+     * The cinema that this session is held at.
+     */
     private Cinema cinema;
+
+    /**
+     * The movie that this session is screening.
+     */
     private Movie movie;
+    
+    /**
+     * The date and time of this session.
+     */
     private LocalDateTime dateTime;
+
+    /**
+     * The cinema class of this session.
+     */
     private CinemaClass cinemaClass;
+
+    /**
+     * The seating layout of this session, determined by its cinema class.
+     */
     private Seating seating;
+
+    /**
+     * Indicates whether the session is a 3D screening.
+     */
     private boolean is3D;
 
+    /**
+     * Creates a new Session with the given fields.
+     * The seating layout is determined by the given cinema class.
+     * @param cinema
+     * @param movie
+     * @param dateTime
+     * @param cinemaClass
+     * @param is3D
+     */
     public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, String cinemaClass, boolean is3D) {
         if (cinema == null || movie == null || dateTime == null)
             throw new IllegalArgumentException("Fields cannot be null");
@@ -22,9 +63,8 @@ public class Session implements java.io.Serializable {
         this.is3D = is3D;
     }
 
-    
     /** 
-     * @return String
+     * @return details of the session.
      */
     @Override
     public String toString() {
@@ -38,17 +78,15 @@ public class Session implements java.io.Serializable {
         return sb.toString();
     }
 
-    
     /** 
-     * @return Cinema
+     * @return Cinema hosting this session.
      */
     public Cinema getCinema() {
         return cinema;
     }
 
-    
     /** 
-     * @param cinema
+     * @param cinema cinema hosting this session.
      */
     public void setCinema(Cinema cinema) {
         if (cinema == null)
@@ -56,17 +94,15 @@ public class Session implements java.io.Serializable {
         this.cinema = cinema;
     }
 
-    
     /** 
-     * @return Movie
+     * @return Movie screened during this session.
      */
     public Movie getMovie() {
         return movie;
     }
-
     
     /** 
-     * @param movie
+     * @param movie movie screened during this session.
      */
     public void setMovie(Movie movie) {
         if (movie == null)
@@ -74,17 +110,15 @@ public class Session implements java.io.Serializable {
         this.movie = movie;
     }
 
-    
     /** 
-     * @return LocalDateTime
+     * @return date and time of this session.
      */
     public LocalDateTime getDateTime() {
         return dateTime;
     }
-
-    
+  
     /** 
-     * @param dateTime
+     * @param dateTime date and time of this session.
      */
     public void setDateTime(LocalDateTime dateTime) {
         if (dateTime == null)
@@ -92,31 +126,27 @@ public class Session implements java.io.Serializable {
         this.dateTime = dateTime;
     }
 
-    
     /** 
-     * @return CinemaClass
+     * @return cinema class of this session.
      */
     public CinemaClass getCinemaClass() {
         return cinemaClass;
     }
 
-    
     /** 
-     * @param cinemaClass
+     * @param cinemaClass cinema class of this session.
      */
     public void setCinemaClass(CinemaClass cinemaClass) {
         this.cinemaClass = cinemaClass;
     }
 
-    
     /** 
-     * @return Seating
+     * @return seating layout of this session
      */
     public Seating getSeating() {
         return seating;
     }
 
-    
     /** 
      * @param is3D
      */
@@ -124,9 +154,8 @@ public class Session implements java.io.Serializable {
         this.is3D = is3D;
     }
 
-    
     /** 
-     * @return boolean
+     * @return true if this session is a 3D screening.
      */
     public boolean is3D() {
         return is3D;

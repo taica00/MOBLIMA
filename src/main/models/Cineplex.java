@@ -1,7 +1,5 @@
 package main.models;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,10 +28,10 @@ public class Cineplex implements java.io.Serializable {
      * @param name
      * @param cinemas
      */
-    // TODO change cinemas to list
-    public Cineplex(String name, Cinema[] cinemas) {
+    
+    public Cineplex(String name, List<Cinema> cinemas) {
         this.name = name;
-        this.cinemas = new ArrayList<>(Arrays.asList(cinemas));
+        this.cinemas = cinemas;
     }
 
     /** 

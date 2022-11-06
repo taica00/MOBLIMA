@@ -5,11 +5,32 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Represents the seating layout of a showtime session.
+ * 
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-06 
+ */
+
 public class Seating implements java.io.Serializable {
     private static final long serialVersionUID = 5L;
+    
+    /**
+     * The seats of this seating represented in a 2D array.
+     */
     private int[][] seats;
+
+    /**
+     * This set holds the column index of all aisles.
+     */
     private Set<Integer> aisles;
 
+    /**
+     * Creates a new Seating with the given cinemaClass.
+     * The fields for this seating are provided by methods in {@link CinemaClass}.
+     * @param cinemaClass
+     */
     public Seating(CinemaClass cinemaClass) {
         int rows = cinemaClass.rows();
         int columns = cinemaClass.columns();
@@ -17,11 +38,11 @@ public class Seating implements java.io.Serializable {
         seats = new int[rows][columns];
     }
 
-    
-    /** 
+    /**
+     * Books a seat with the given row and column indexes. 
      * @param row
      * @param col
-     * @return boolean
+     * @return true if seat is not taken.
      */
     public boolean bookSeat(char row, int col) {
         if (seats[row-'A'][col-1] == 1) // occupied seat
@@ -30,8 +51,8 @@ public class Seating implements java.io.Serializable {
         return true;
     }
 
-    
-    /** 
+    /**
+     * Unbooks a seat in the case where movie-goer does not complete payment. 
      * @param row
      * @param col
      */
@@ -39,9 +60,8 @@ public class Seating implements java.io.Serializable {
         seats[row-'A'][col-1] = 0;
     }
 
-    
     /** 
-     * @return String
+     * @return the seating layout, showing the available and taken seats.
      */
     @Override
     public String toString() {
@@ -80,18 +100,16 @@ public class Seating implements java.io.Serializable {
         sb.append("\nLegend: [ ]Available  [X]Occupied\n"); // legend
         return sb.toString();
     }
-
     
     /** 
-     * @return int
+     * @return number of columns for this seating.
      */
     public int getNumCols() {
         return seats[0].length;
     }
-
     
     /** 
-     * @return int
+     * @return number of rows for this seating.
      */
     public int getNumRows() {
         return seats.length;
