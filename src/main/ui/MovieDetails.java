@@ -4,9 +4,18 @@ import main.controllers.CineplexController;
 import main.controllers.InputController;
 import main.models.Movie;
 
+/**
+ * This class provides the UI to display details of a movie.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class MovieDetails extends UI {
     
-    /** 
+    /**
+     * Displays the details of the given movie. 
+     * The user can choose to view the sessions or reviews of the given movie.
      * @param movie
      */
     public static void view(Movie movie) {

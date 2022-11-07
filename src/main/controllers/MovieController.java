@@ -9,22 +9,32 @@ import main.models.MovieStatus;
 import main.ui.MovieList;
 import main.ui.MovieRanking;
 
+/**
+ * This class manages user actions pertaining to the {@link Movie} class.
+ * Stores a list of all movies.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class MovieController extends Controller {
     private static List<Movie> movies;
     private static final String FILEPATH = "src/main/data/";
-
     
-    /** 
-     * @param admin
+    /**
+     * Calls {@link MovieList} to display all movies in the stored list. 
+     * @param admin indicates if user is an admin or movie-goer.
      */
     public static void listMovies(boolean admin) {
         MovieList.view(movies, admin);
     }
 
-    
     /** 
-     * @param ticketSales
-     * @param admin
+     * This method is called when user requests to display top 5 movies by ticket sales or reviewer ratings.
+     * The list of movies is first sorted by a priority queue.
+     * The front five elements are then added into a list and passed to {@link MovieRanking}. 
+     * @param ticketSales indicates if movies are to be ranked by ticket sales or reviewer ratings.
+     * @param admin indicates if user is an admin or movie-goer.
      */
     public static void rankMovies(boolean ticketSales, boolean admin) {
         List<Movie> movieList = new ArrayList<>();
@@ -40,6 +50,11 @@ public class MovieController extends Controller {
         MovieRanking.view(movieList, ticketSales, admin);
     }
 
+    /**
+     * This method is called when user requests to search for a movie.
+     * A list of movies containing the input string is passed to {@link MovieList}.
+     * If not, returns to {@link MainMenu}.
+     */
     public static void searchMovies() {
         String search = InputController.getString("Enter title of movie to search for: ");
         List<Movie> searchResults = new ArrayList<>();
@@ -55,10 +70,10 @@ public class MovieController extends Controller {
         MovieList.view(searchResults, false);
     }
 
-    
-    /** 
+    /**
+     * Search for a movie that contains the given string. 
      * @param movieTitle
-     * @return Movie
+     * @return Movie containing the given string.
      */
     public static Movie searchMovie(String movieTitle) {
         for (Movie movie : movies) {
@@ -68,8 +83,8 @@ public class MovieController extends Controller {
         return null;
     }
 
-    
-    /** 
+    /**
+     * Creates a new Movie with the given fields and then adds it to the list of movies. 
      * @param title
      * @param rating
      * @param showingStatus
@@ -83,8 +98,8 @@ public class MovieController extends Controller {
         
     }
 
-    
-    /** 
+    /**
+     * removes a movie from the list at the given index. 
      * @param index
      */
     public static void removeMovie(int index) {

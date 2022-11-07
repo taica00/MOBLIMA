@@ -14,6 +14,14 @@ import main.models.Movie;
 import main.models.MovieStatus;
 import main.models.Session;
 
+/**
+ * This class provides the UI to display session showtimes.
+ * Showtimes can be viewed for a particular movie, or for a particular cinema.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class ShowTimes extends UI {
     private static final String RETURN_HOME = "Returning to homepage.";
     private static final String RETURN_ADMIN = "Returning to admin menu.";
@@ -21,11 +29,13 @@ public class ShowTimes extends UI {
     private static final String THIN_DIVIDER = "\n-------------------------------------------------------------";
     private static final String THICK_DIVIDER = "\n=============================================================";
 
-    
     /** 
-     * @param movieSessions.isEmpty()
+     * Displays all sessions of a particular movie across all cinemas, given in a list.
+     * Movie-goer enters session info to book tickets for the session.
+     * Calls {@link SessionController} to handle seats selection for requested session.
+     * @param movieSessions list of sessions for a particular movie.
      */
-    public static void view(List<List<Session>> movieSessions) { // view sessions for a particular movie
+    public static void view(List<List<Session>> movieSessions) { 
         if (movieSessions.isEmpty()) {
             System.out.println("No showtimes available for this movie");
             return;
@@ -83,8 +93,11 @@ public class ShowTimes extends UI {
     }
 
     
-    /** 
-     * @param cinema
+    /**
+     * Displays all sessions of the given cinema.
+     * User enters session info to retrieve the session from database.
+     * Displays different options depending on whether user is admin or movie-goer.
+     * @param cinema 
      * @param sessions
      */
     public static void view(Cinema cinema, boolean admin) { // view sessions for a particular cinema
@@ -142,7 +155,10 @@ public class ShowTimes extends UI {
     }   
 
     
-    /** 
+    /**
+     * Asks if movie-goer wants to book tickets.
+     * Gets information of requested session.
+     * Calls {@link SessionController} to handle seats selection for requested session.
      * @param cinema
      */
     private static void movieGoerOptions(Cinema cinema) {
@@ -162,7 +178,8 @@ public class ShowTimes extends UI {
     }
 
     
-    /** 
+    /**
+     * Displays admin options for configuring of session. 
      * @param cinema
      */
     private static void adminOptions(Cinema cinema) {
@@ -173,6 +190,7 @@ public class ShowTimes extends UI {
         System.out.println("Enter showtime details.");
         String sessionMovie = InputController.getString("Enter movie title: ");
         String[] sessionInfo = getSessionInfo();
+        //TODO search for session
         try {
             switch(choice) {
                 case 1: 
@@ -197,9 +215,8 @@ public class ShowTimes extends UI {
         }
     }   
 
-    
     /** 
-     * @return boolean
+     * @return true if movie-goer requests to book tickets.
      */
     private static boolean bookTickets() {
         System.out.println("1. Book tickets | 2. Return to homepage");
@@ -207,10 +224,10 @@ public class ShowTimes extends UI {
         System.out.println();
         return choice == 1;
     }
-
     
-    /** 
-     * @return String[]
+    /**
+     * Requests user to input details of a session.
+     * @return array of user inputted session information.
      */
     private static String[] getSessionInfo() {
         String date = InputController.getNumericString("Enter date in ddMMyy format, e.g. 251022: ", 6, 6);

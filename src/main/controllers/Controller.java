@@ -6,15 +6,26 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * This class is the super class for all controller classes.
+ * Includes methods to deserialise/serialise data for all subclasses.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public abstract class Controller {
+    /**
+     * @throws IllegalStateException if user attempts to create an object of this utility class.
+     */
     protected Controller() {
         throw new IllegalStateException("Utility class");
     }
 
-    
-    /** 
+    /**
+     * Deserialises the object from the given filepath. 
      * @param filePath
-     * @return T
+     * @return object loaded from data file.
      */
     protected static <T> T loadData(String filePath) {
         try {
@@ -33,9 +44,9 @@ public abstract class Controller {
         return null;
     }
     
-    
-    /** 
-     * @param element
+    /**
+     * Serialises the given object at the given filepath. 
+     * @param element object to be serialised.
      * @param filePath
      */
     protected static <T> void saveData(T element, String filePath) {

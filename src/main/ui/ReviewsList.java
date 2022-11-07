@@ -6,10 +6,20 @@ import main.controllers.InputController;
 import main.models.Movie;
 import main.models.Review;
 
+/**
+ * This class provides the UI to display all reviews of a movie.
+ * User can choose to add a new review through this UI.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class ReviewsList extends UI {
     
-    /** 
-     * @param movie
+    /**
+     * Displays all reviews of the given movie.
+     * Movie-goer can choose to add a new review for the given movie. 
+     * @param movie 
      */
     public static void view(Movie movie) {
         List<Review> reviews = movie.getReviews();

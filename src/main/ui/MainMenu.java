@@ -4,7 +4,19 @@ import main.controllers.CineplexController;
 import main.controllers.InputController;
 import main.controllers.MovieController;
 
+/**
+ * This class provides the UI to display the main menu of the application.
+ * All functions of movie-goers are displayed here.
+ * Admins can access the admin login through this menu.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class MainMenu extends UI {
+    /**
+     * Displays the main menu of the application.
+     */
     public static void view() {
         int choice;
         do {
@@ -28,7 +40,7 @@ public class MainMenu extends UI {
                 case 5: MovieController.rankMovies(true, false); break;
                 case 6: MovieController.rankMovies(false, false); break; 
                 case 7: AdminMenu.login(); break;
-                case 8: break;
+                case 8: System.out.println("Thank you for using MOBLIMA. Hope to see you again!"); break;
                 default: System.out.println("Something weird happened");
             }
         } while (choice != 8);

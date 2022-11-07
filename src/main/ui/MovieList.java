@@ -6,11 +6,21 @@ import main.controllers.InputController;
 import main.controllers.MovieController;
 import main.models.Movie;
 
+/**
+ * This class provides the UI to display a list of movies.
+ * There are different functions between admin and movie-goer users.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class MovieList extends UI {
     
     /** 
-     * @param movies
-     * @param admin
+     * Displays the given list of movies.
+     * Displays different options depending on whether user is admin or movie-goer.
+     * @param movies list of movies.
+     * @param admin if user is admin or movie-goer.
      */
     public static void view(List<Movie> movies, boolean admin) {
         System.out.println("List of movies:");
@@ -22,10 +32,11 @@ public class MovieList extends UI {
         else 
             movieGoerOptions(movies);
     }
-
     
-    /** 
-     * @param movies
+    /**
+     * Gets movie-goer to choose a movie to view its details.
+     * Passes the chosen movie to {@link MovieDetails}. 
+     * @param movies list of movies displayed.
      */
     protected static void movieGoerOptions(List<Movie> movies) {
         int choice = InputController.getInt(0, movies.size(), "Enter list number of movie to view details or '0' to return to homepage: ");
@@ -35,9 +46,9 @@ public class MovieList extends UI {
         MovieDetails.view(movies.get(choice-1));
     }
 
-    
-    /** 
-     * @param movies
+    /**
+     * Displays the options for an admin to configure the movie database. 
+     * @param movies list of movies displayed.
      */
     private static void adminOptions(List<Movie> movies) {
         System.out.println("\n1. Create listing | 2. Update listing | 3. Remove listing | 4. Return to admin menu\n");
@@ -58,6 +69,4 @@ public class MovieList extends UI {
             default: System.out.println("Something weird happened.");
         }
     }
-
-    
 }

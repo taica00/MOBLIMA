@@ -7,12 +7,22 @@ import main.controllers.MovieController;
 import main.controllers.PricingController;
 import main.models.Admin;
 
+/**
+ * This class provides the UI to display the functions of an admin user.
+ * An admin account is required to access these functions.
+ * Admins can create more admin accounts.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class AdminMenu extends UI {
     
-    /** 
-     * @param admin
+    /**
+     * Displays admin functions.
+     * @param admin account of the admin
      */
-    public static void view(Admin admin) {
+    private static void view(Admin admin) {
         int choice;
         do {
             System.out.println("\n******************** ADMIN MENU ********************\n");
@@ -37,6 +47,10 @@ public class AdminMenu extends UI {
         } while (choice != 6);
     }
 
+    /**
+     * Gets the user to login with their admin account.
+     * A successful login is required to access the admin menu.
+     */
     public static void login() {
         String userId = InputController.getString("Enter userId: ");
         Admin adminAccount = AdminController.searchUserId(userId);
@@ -51,10 +65,10 @@ public class AdminMenu extends UI {
         }
         view(adminAccount);
     }
-
     
-    /** 
-     * @param admin
+    /**
+     * Displays system settings 
+     * @param admin account of admin.
      */
     private static void systemSettings(Admin admin) {
         System.out.println("\n******************** SYSTEM SETTINGS ********************\n");
@@ -81,9 +95,10 @@ public class AdminMenu extends UI {
         }
     }
 
-    
-    /** 
-     * @param admin
+    /**
+     * Changes the password for the given admin account. 
+     * User has 3 attempts to correctly input the current password of the given admin account.
+     * @param admin account of admin.
      */
     private static void changePassword(Admin admin) {
         int count = 0;

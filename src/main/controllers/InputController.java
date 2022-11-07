@@ -6,16 +6,26 @@ import org.apache.commons.lang3.StringUtils;
 
 import main.models.MovieGoer;
 
+/**
+ * This class takes inputs from the user when the main application requires so.
+ * There are different methods for different variable types.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class InputController extends Controller {
     private static Scanner scan = new Scanner(System.in);
     private static final String INVALID_INPUT = "Invalid input. Please try again\n";
 
-    
-    /** 
+    /**
+     * Prints the given message and takes an integer input from the user.
+     * Input must be between(inclusive) the given start and end fields.
+     * Continues to prompt the user for a input if previous input is invaid. 
      * @param start
      * @param end
      * @param message
-     * @return int
+     * @return int input from user.
      */
     public static int getInt(int start, int end, String message) {
         while (true) {
@@ -30,10 +40,10 @@ public class InputController extends Controller {
         }
     }
 
-    
-    /** 
+    /**
+     * Prints the given message and takes a string input from the user.
      * @param message
-     * @return String
+     * @return String input from user
      */
     public static String getString(String message) {
         clear();
@@ -41,12 +51,14 @@ public class InputController extends Controller {
         return scan.nextLine();
     }
 
-    
-    /** 
+    /**
+     * Prints the given message and takes a numeric string input from the user.
+     * Length of input must be between(inclusive) the given lo and hi fields. 
+     * Continues to prompt the user for a input if previous input is invaid. 
      * @param message
      * @param lo
      * @param hi
-     * @return String
+     * @return numeric string input from user.
      */
     public static String getNumericString(String message, int lo, int hi) {
         while (true) {
@@ -59,12 +71,14 @@ public class InputController extends Controller {
         }
     }
 
-    
-    /** 
+    /**
+     * Prints the given message and takes a character input from the user.
+     * Input must be either of T or F.
+     * Continues to prompt the user for a input if previous input is invaid.  
      * @param message
      * @param T
      * @param F
-     * @return boolean
+     * @return user input as a boolean value.
      */
     public static boolean getBoolean(String message, char T, char F) {
         while (true) {
@@ -81,8 +95,9 @@ public class InputController extends Controller {
         }
     }
 
-    
-    /** 
+    /**
+     * Prints the given message and takes a double input from the user.
+     * Continues to prompt the user for a input if previous input is not a double. 
      * @param message
      * @return double
      */
@@ -97,10 +112,12 @@ public class InputController extends Controller {
         }
     }
 
-    
-    /** 
+    /**
+     * Takes inputs for name and mobile number from the user.
+     * Verifies the input with the given movieGoer. 
+     * Continues to prompt the user for inputs if previous input is invalid.
      * @param movieGoer
-     * @return boolean
+     * @return true if user input matches the given movieGoer details.
      */
     public static boolean confirmIdentity(MovieGoer movieGoer) {
         while (true) {

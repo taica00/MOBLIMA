@@ -14,13 +14,25 @@ import main.ui.CinemaList;
 import main.ui.ShowTimes;
 import main.ui.UpdateSession;
 
+/**
+ * This class manages user actions pertaining to the {@link Cineplex} and {@link Cinema} class.
+ * Stores a list of cineplexes.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class CineplexController extends Controller {
+    /**
+     * The list of all cineplexes.
+     */
     private static List<Cineplex> cineplexes;
     private static final String FILEPATH = "src/main/data/cineplexes.ser";
     private static final String PATTERN = "ddMMyyHHmm";
 
-    
     /** 
+     * Search all cinemas for sessions screening the given movie.
+     * Calls {@link ShowTimes} to display these sessions.
      * @param movie
      */
     public static void viewShowTimes(Movie movie) {
@@ -35,9 +47,9 @@ public class CineplexController extends Controller {
         }
         ShowTimes.view(movieSessions);
     }
-
     
-    /** 
+    /**
+     * Calls {@link CinemaList} to display all cinemas. 
      * @param admin
      */
     public static void displayCinemas(boolean admin) {
@@ -49,8 +61,8 @@ public class CineplexController extends Controller {
         CinemaList.view(cinemas, admin);
     }
 
-    
     /** 
+     * Adds a new session to the given cinema with the given fields.
      * @param cinema
      * @param movieTitle
      * @param date
@@ -64,15 +76,17 @@ public class CineplexController extends Controller {
         LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
         cinema.addSession(movie, dateTime, cinemaClass, is3D);
     }
-
-    
-    /** 
+ 
+    /**
+     * This method is called when an admin wishes to update the details of a session.
+     * {@link searchSession} is first called to search the given cinema for a session that matches the given inputs.
+     * Then {@link UpdateSession} is called to receive user inputs.
      * @param cinema
      * @param movie
      * @param date
      * @param cinemaClass
      * @param time
-     * @return boolean
+     * @return true if session is found, false if session is not found.
      */
     public static boolean updateSession(Cinema cinema, String movie, String date, String cinemaClass, String time) {
         Session session = searchSession(cinema, movie, date, cinemaClass, time);
@@ -82,8 +96,8 @@ public class CineplexController extends Controller {
         return true;
     }
 
-    
-    /** 
+    /**
+     * Removes a session with the given details from the given cinema's list of sessions.
      * @param cinema
      * @param movie
      * @param date
@@ -97,8 +111,8 @@ public class CineplexController extends Controller {
         cinemaSessions.removeIf(x -> (movie.equalsIgnoreCase(x.getMovie().getTitle()) &&  dateTime.isEqual(x.getDateTime()) && CinemaClass.valueOf(cinemaClass).equals(x.getCinemaClass())));
     }
 
-    
     /** 
+     * Searches the given cinema for a session matching the given inputs.
      * @param cinema
      * @param movie
      * @param date
@@ -116,9 +130,9 @@ public class CineplexController extends Controller {
         }
         return null;
     }
-
     
-    /** 
+    /**
+     * Searches the list of cineplexes for a cinema location that matches the given string.
      * @param cinemaString
      * @return Cinema
      */

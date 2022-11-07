@@ -7,12 +7,22 @@ import main.controllers.MovieController;
 import main.controllers.TransactionsController;
 import main.models.Movie;
 
+/**
+ * This class provides the UI to display the top ranked movies.
+ * Movies can be ranked by ticket sales or reviewer ratings.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class MovieRanking extends MovieList {
     
-    /** 
-     * @param movies
-     * @param ticketSales
-     * @param admin
+    /**
+     * Displays the top 5 ranked movies.
+     * Displays different options depending on whether user is admin or movie-goer.
+     * @param movies movies to be displayed.
+     * @param ticketSales ranked by ticket sales or reviewer ratings.
+     * @param admin user is admin or movie-goer.
      */
     public static void view(List<Movie> movies, boolean ticketSales, boolean admin) {
         int i = 1;
@@ -32,10 +42,10 @@ public class MovieRanking extends MovieList {
         else
             movieGoerOptions(movies);
     }
-
     
-    /** 
-     * @param movies
+    /**
+     * Displays the options for an admin to configure the movie database.  
+     * @param movies list of movies displayed.
      */
     private static void adminOptions(List<Movie> movies) {
         System.out.println("\n1. Update listing | 2. Remove listing | 3. Return to admin menu\n");
