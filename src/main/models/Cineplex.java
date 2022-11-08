@@ -8,8 +8,8 @@ import java.util.List;
  * A cineplex holds multiple cinema theatres.
  * Certain cineplexes may only hold cinema theatres of certain cinema classes.
  * @author Tai Chen An
- * @version 1.0 
- * @since 2022-11-06 
+ * @version 1.1 
+ * @since 2022-11-09 
  */
 
 public class Cineplex implements java.io.Serializable {
@@ -55,9 +55,9 @@ public class Cineplex implements java.io.Serializable {
      * @param location 
      * @return Cinema
      */
-    public Cinema getCinema(String location) {
+    public Cinema getCinema(CinemaClass cinemaClass, int cinemaNumber) {
         for (Cinema cinema : cinemas) {
-            if (location.equals(cinema.getLocation()))
+            if (cinemaClass.equals(cinema.getCinemaClass()) && cinemaNumber == cinema.getCinemaNumber())
                 return cinema;
         }
         return null;

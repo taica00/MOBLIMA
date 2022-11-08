@@ -19,8 +19,8 @@ import main.ui.SeatsSelection;
 /**
  * This class manages user actions pertaining to the {@link Session} class.
  * @author Tai Chen An
- * @version 1.0 
- * @since 2022-11-08 
+ * @version 1.1 
+ * @since 2022-11-09 
  */
 
 public class SessionController extends Controller {
@@ -83,7 +83,7 @@ public class SessionController extends Controller {
             String col = seat.substring(1);
             if (!Character.isUpperCase(row) || !StringUtils.isNumeric(col) || Integer.parseInt(col) == 0 || Integer.parseInt(col) > session.getSeating().getNumCols()) 
                 System.out.println(seat + " is not a valid selection.");
-            else if (!session.getSeating().bookSeat(row, Integer.parseInt(col))) 
+            else if (!session.getCinema().getSeating().bookSeat(row, Integer.parseInt(col))) 
                 System.out.println("Seat " + seat + " is occupied");
             else
                 bookedSeats.add(seat);
@@ -105,7 +105,7 @@ public class SessionController extends Controller {
         for (String seat : seats) {
             char row = seat.charAt(0);
             int col = Integer.parseInt(seat.substring(1));
-            session.getSeating().unBookSeat(row, col);
+            session.getCinema().getSeating().unBookSeat(row, col);
         }
     }
  

@@ -1,6 +1,5 @@
 package main.models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +7,8 @@ import java.util.List;
  * Represents a cinema theatre.
  * A theatre can host many showtime sessions.
  * @author Tai Chen An
- * @version 1.0 
- * @since 2022-11-06 
+ * @version 1.1 
+ * @since 2022-11-09 
  */
 
 public class Cinema implements java.io.Serializable {
@@ -74,8 +73,8 @@ public class Cinema implements java.io.Serializable {
      * @param cinemaClass
      * @param is3D
      */
-    public void addSession(Movie movie, LocalDateTime dateTime, boolean is3D) {
-        sessions.add(new Session(this, movie, dateTime, is3D));
+    public void addSession(Session session) {
+        sessions.add(session);
     }
 
     /**
@@ -157,5 +156,9 @@ public class Cinema implements java.io.Serializable {
      */
     public Seating getSeating() {
         return seating;
+    }
+
+    public int getCinemaNumber() {
+        return cinemaNumber;
     }
 }

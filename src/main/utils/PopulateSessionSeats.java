@@ -14,7 +14,7 @@ public class PopulateSessionSeats extends Populator {
     public static void main(String[] args) {
         TransactionsController.loadTicketSales();
         PricingController.loadHolidays();
-        List<Cineplex> cineplexes = loadData("cineplexes.ser");
+        List<Cineplex> cineplexes = deserialise("cineplexes.ser");
         for (Cineplex cineplex : cineplexes) {
             for (Cinema cinema : cineplex.getCinemas()) {
                 for (Session session : cinema.getSessions())

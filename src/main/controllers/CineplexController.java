@@ -18,8 +18,8 @@ import main.ui.UpdateSession;
  * This class manages user actions pertaining to the {@link Cineplex} and {@link Cinema} class.
  * Stores a list of cineplexes.
  * @author Tai Chen An
- * @version 1.0 
- * @since 2022-11-08 
+ * @version 1.1 
+ * @since 2022-11-09 
  */
 
 public class CineplexController extends Controller {
@@ -74,7 +74,7 @@ public class CineplexController extends Controller {
         Movie movie = MovieController.searchMovie(movieTitle);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(PATTERN);
         LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
-        cinema.addSession(movie, dateTime, cinemaClass, is3D);
+        cinema.addSession(new Session(cinema, movie, dateTime, is3D));
     }
  
     /**
@@ -132,13 +132,13 @@ public class CineplexController extends Controller {
     }
     
     /**
-     * Searches the list of cineplexes for a cinema location that matches the given string.
+     * Searches the list of cineplexes for a cinema that matches the given fields.
      * @param cinemaString
      * @return Cinema
      */
-    public static Cinema searchCinema(String cinemaString) {
+    public static Cinema searchCinema(CinemaClass cinemaClass, int cinemaNumber) {
         for (Cineplex cineplex : cineplexes) {
-            Cinema cinema = cineplex.getCinema(cinemaString);
+            Cinema cinema = cineplex.getCinema(cinemaClass, cinemaNumber);
             if (cinema != null)
                 return cinema;
         }
