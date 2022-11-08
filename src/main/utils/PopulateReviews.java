@@ -14,9 +14,6 @@ import main.models.Review;
 
 public class PopulateReviews extends Populator {
     
-    /** 
-     * @param args
-     */
     public static void main(String[] args) {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(java.util.logging.Level.OFF);
         List<Movie> movies = loadData("movies.ser");
@@ -45,12 +42,6 @@ public class PopulateReviews extends Populator {
         serialize(movies, "movies.ser");
     }
 
-    
-    /** 
-     * @param movie
-     * @param reviewsList
-     * @param count
-     */
     private static void addReview(Movie movie, List<HtmlDivision> reviewsList, int count) {
         for (HtmlDivision div : reviewsList) {
             HtmlSpan ratingSpan = div.getFirstByXPath(".//span[@class='rating-other-user-rating']");
@@ -66,22 +57,12 @@ public class PopulateReviews extends Populator {
         }
     }
 
-    
-    /** 
-     * @param movieTitle
-     * @return String
-     */
     private static String formatMovieTitle(String movieTitle) {
         movieTitle = movieTitle.replace(" ", "+");
         movieTitle = movieTitle.replace(":", "%3A");
         return movieTitle;
     }
 
-    
-    /** 
-     * @param moviePageUrl
-     * @return String
-     */
     private static String getReviewPageUrl(String moviePageUrl) {
         return moviePageUrl.substring(0, moviePageUrl.lastIndexOf("?")) + "reviews";
     }

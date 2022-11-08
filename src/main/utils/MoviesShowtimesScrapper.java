@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -25,14 +26,26 @@ public class MoviesShowtimesScrapper extends Populator {
     static List<Cineplex> cineplexes = new ArrayList<>();
     static List<Movie> movies= new ArrayList<>();
     
-    /** 
-     * @param args
-     */
     public static void main(String[] args) {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(java.util.logging.Level.OFF);
-        cineplexes.add(new Cineplex(C, new Cinema[]{new Cinema(C, "AMK Hub"), new Cinema(C, "Causeway Point"), new Cinema(C, "Jem")}));
-        cineplexes.add(new Cineplex(G, new Cinema[]{new Cinema(G, "Funan"), new Cinema(G, "Grand"), new Cinema(G, "VivoCity")}));
-        cineplexes.add(new Cineplex(S, new Cinema[]{new Cinema(S, "JCube"), new Cinema(S, "Jewel"), new Cinema(S, "Nex")}));
+        List<Cinema> cathayCinemas = new ArrayList<>();
+        cathayCinemas.add(new Cinema(C, "AMK Hub"));
+        cathayCinemas.add(new Cinema(C, "Causeway Point"));
+        cathayCinemas.add(new Cinema(C, "Jem"));
+        cineplexes.add(new Cineplex(C, cathayCinemas));
+
+        List<Cinema> gvCinemas = new ArrayList<>();
+        gvCinemas.add(new Cinema(G, "Funan"));
+        gvCinemas.add(new Cinema(G, "Grand"));
+        gvCinemas.add(new Cinema(G, "VivoCity"));
+        cineplexes.add(new Cineplex(G, gvCinemas));
+
+        List<Cinema> shawCinemas = new ArrayList<>();
+        shawCinemas.add(new Cinema(G, "JCube"));
+        shawCinemas.add(new Cinema(G, "Jewel"));
+        shawCinemas.add(new Cinema(G, "Nex"));
+        cineplexes.add(new Cineplex(G, shawCinemas));
+    
         loadMovies("nowshowing.aspx", 25);
         loadMovies("comingsoon.aspx", 5);
         movies.sort((x, y)->x.getTitle().compareTo(y.getTitle()));
@@ -40,11 +53,6 @@ public class MoviesShowtimesScrapper extends Populator {
         serialize(movies, "movies.ser");
     }
 
-    
-    /** 
-     * @param domain
-     * @param count
-     */
     private static void loadMovies(String domain, int count) {
         try {
             final WebClient client = new WebClient();
@@ -89,22 +97,12 @@ public class MoviesShowtimesScrapper extends Populator {
         } 
     }
 
-    
-    /** 
-     * @param movieTitle
-     * @return String
-     */
     private static String formatMovieTitle(String movieTitle) {
         if (movieTitle.endsWith(")"))
             return movieTitle.substring(0, movieTitle.indexOf("(")-1);
         return movieTitle;
     }
 
-    
-    /** 
-     * @param movieDetails
-     * @param movie
-     */
     private static void loadShowTimes(HtmlDivision movieDetails, Movie movie) {
         try {
             final WebClient client = new WebClient();
@@ -163,13 +161,7 @@ public class MoviesShowtimesScrapper extends Populator {
             e.printStackTrace();
         }
     }
-    
-    /** 
-     * @param movie
-     * @param dateTime
-     * @param location
-     * @param cinemaClass
-     */
+
     private static void addSessionToCineplex(Movie movie, LocalDateTime dateTime, String[] location, String cinemaClass) { 
         Cineplex cineplex = null;
         for (Cineplex c : cineplexes)
@@ -185,12 +177,6 @@ public class MoviesShowtimesScrapper extends Populator {
         cinema.addSession(movie, dateTime, cinemaClass, false);
     }
 
-    
-    /** 
-     * @param movie
-     * @param dateTime
-     * @param location
-     */
     private static void addSessionToGV(Movie movie, LocalDateTime dateTime, String location) {
         String[] cinemaAndType = location.split(", ");
         String cinemaName= "NULL";
@@ -228,7 +214,6 @@ public class MoviesShowtimesScrapper extends Populator {
         if (cinema == null) 
             return;
         System.out.println(cinema + " " + movie.getTitle() + " " + dateTime + " " + cinemaType);
-        cinema.addSession(movie, dateTime, cinemaType, false);
-        
+        cinema.addSession(movie, dateTime, cinemaType, false);  
     }
 }

@@ -7,10 +7,6 @@ import java.util.Map;
 import main.models.Movie;
 
 public class PopulateTicketSales extends Populator {
-    
-    /** 
-     * @param args
-     */
     public static void main(String[] args) {
         Map<Movie, Integer> ticketSales = new HashMap<>();
         List<Movie> movies = loadData("movies.ser");

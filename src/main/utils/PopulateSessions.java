@@ -10,11 +10,7 @@ import main.models.Cineplex;
 import main.models.Seating;
 import main.models.Session;
 
-public class PopulateSessions extends Populator {
-    
-    /** 
-     * @param args
-     */
+public class PopulateSessions extends Populator {  
     public static void main(String[] args) {
         TransactionsController.loadTicketSales();
         PricingController.loadHolidays();
@@ -29,10 +25,6 @@ public class PopulateSessions extends Populator {
         TransactionsController.saveTicketSales();
     }
 
-    
-    /** 
-     * @param session
-     */
     private static void helper(Session session) {
         Random rd = new Random();
         Seating seating = session.getSeating();
