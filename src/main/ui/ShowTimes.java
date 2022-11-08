@@ -190,7 +190,6 @@ public class ShowTimes extends UI {
         System.out.println("Enter showtime details.");
         String sessionMovie = InputController.getString("Enter movie title: ");
         String[] sessionInfo = getSessionInfo();
-        //TODO search for session
         try {
             switch(choice) {
                 case 1: 

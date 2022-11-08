@@ -9,11 +9,24 @@ import main.controllers.TransactionsController;
 import main.models.MovieGoer;
 import main.models.Session;
 
+/**
+ * This class provides the UI for movie-goers to make payment for booked movie tickets.
+ * Showtimes can be viewed for a particular movie, or for a particular cinema.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class TicketsPayment extends UI {
     
-    /** 
-     * @param session
-     * @param bookedSeats
+    /**
+     * Displays the booking information and gets movie-goer to make payment.
+     * Prompts movie-goer for number of senior citizens and students if showtime is eligible for concession pricing.
+     * Prints out calculation for total price of tickets.
+     * Prompts movie-goer for email address, name, phone number and card number to complete payment.
+     * Calls {@link TransactionsController} to store transaction information.
+     * @param session session of seats booked.
+     * @param bookedSeats list of seats booked by the movie-goer.
      */
     public static void view(Session session, List<String> bookedSeats) {
         // print out booked seats

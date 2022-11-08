@@ -7,10 +7,18 @@ import main.controllers.SessionController;
 import main.models.CinemaClass;
 import main.models.Session;
 
+/**
+ * This class provides the UI for an admin to update session details.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class UpdateSession extends UI {
     
-    /** 
-     * @param session
+    /**
+     * Displays the given session details and gets user input for choice of configuration.
+     * @param session session to be updated.
      */
     public static void view(Session session) {
         String choice = "";

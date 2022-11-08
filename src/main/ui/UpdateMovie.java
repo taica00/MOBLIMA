@@ -3,10 +3,18 @@ package main.ui;
 import main.controllers.InputController;
 import main.models.Movie;
 
+/**
+ * This class provides the UI for an admin to update movie details.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class UpdateMovie extends UI {
     
-    /** 
-     * @param movie
+    /**
+     * Displays the given movie details and gets user input on choice of configuration. 
+     * @param movie movie to be updated.
      */
     public static void view(Movie movie) {
         String choice = "";

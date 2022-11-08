@@ -3,7 +3,18 @@ package main.ui;
 import main.controllers.InputController;
 import main.models.CinemaClass;
 
+/**
+ * This class provides the UI for an admin to update ticket prices.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class UpdatePrices extends UI {
+    /**
+     * Prompts user to enter cinema class.
+     * If cinema class is valid, then prompts user for pricing category to update.
+     */
     public static void view() {
         String cinemaClassString = InputController.getString("Enter cinema class (replace space with underscore): ");
         CinemaClass cinemaClass;
