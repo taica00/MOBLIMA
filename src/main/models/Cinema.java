@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a physical cinema. 
- * A cinema can hold many showtime sessions.
+ * Represents a cinema theatre.
+ * A theatre can host many showtime sessions.
  * @author Tai Chen An
  * @version 1.0 
  * @since 2022-11-06 
@@ -15,19 +15,31 @@ import java.util.List;
 public class Cinema implements java.io.Serializable {
     private static final long serialVersionUID = 2L;
     /**
-     * The cineplex that this cinema belongs to
+     * The cineplex that this cinema belongs to.
      */
-    private String cineplex;
+    private Cineplex cineplex;
+
+    /**
+     * The identifier for this cinema theatre. 
+     * Cinemas of different cinema classes can have the same number.
+     * Cinemas of the same cinema class must have a unique number.
+     */
+    private int cinemaNumber;
 
     /**
      * The cinema code of this cinema to be used in {@link Transaction}.
      */
     private String cinemaCode;
 
-    /**
-     * The physical location of this cinema, which is also the name that it is known by.
+    /** 
+     * The class of this cinema.
      */
-    private String location;
+    private CinemaClass cinemaClass;
+
+    /**
+     * The seating layout of this cinema, determined by its cinema class.
+     */
+    private Seating seating;
 
     /**
      * A list of showtime sessions that is held at this cinema.
@@ -37,15 +49,20 @@ public class Cinema implements java.io.Serializable {
     /**
      * Creates a new Cinema which is owned by the given cineplex and located at the given location.
      * The cinema code is then generated.
-     * @param cineplex
-     * @param location
+     * @param cineplex cineplex that this cinema belongs to.
+     * @param cinemaNumber identifier for this cinema theatre.
+     * @param cinemaClass class of this cinema.
      */
-    public Cinema(String cineplex, String location) {
-        if (cineplex == null || cineplex.isEmpty() || location == null || location.isBlank())
+    public Cinema(Cineplex cineplex, int cinemaNumber, CinemaClass cinemaClass) {
+        if (cineplex == null || cinemaClass == null)
             throw new IllegalArgumentException("Fields cannot be null or blank.");
+        if (cinemaNumber < 1)
+            throw new IllegalArgumentException("Cinema number start from 1 onwards.");
         this.cineplex = cineplex;
-        this.location = location;
-        sessions = new ArrayList<>();
+        this.cinemaNumber = cinemaNumber;
+        this.cinemaClass = cinemaClass;
+        sessions = new ArrayList<>();  
+        seating = new Seating(this.cinemaClass);
         generateCinemaCode();
     }
 
@@ -57,20 +74,20 @@ public class Cinema implements java.io.Serializable {
      * @param cinemaClass
      * @param is3D
      */
-    public void addSession(Movie movie, LocalDateTime dateTime, String cinemaClass, boolean is3D) {
-        sessions.add(new Session(this, movie, dateTime, cinemaClass, is3D));
+    public void addSession(Movie movie, LocalDateTime dateTime, boolean is3D) {
+        sessions.add(new Session(this, movie, dateTime, is3D));
     }
 
     /**
      * Searches for all showtime sessions in this cinema screening the given movie.
      * These sessions are then returned in a list.
-     * @param movie
-     * @return List<Session>
+     * @param movie movie of sessions to search for.
+     * @return list of sessions screening the given movie.
      */
     public List<Session> getSessions(Movie movie) {
         List<Session> movieSessions = new ArrayList<>();
         for (Session session : sessions) {
-            if (session.getMovie().getTitle().equals(movie.getTitle()))
+            if (session.getMovie().equals(movie))
                 movieSessions.add(session);
         }
         return movieSessions;
@@ -83,42 +100,42 @@ public class Cinema implements java.io.Serializable {
     public void removeSession(Session session) {
         sessions.remove(session);
     }
-    
-    /** 
-     * @return location of the cinema along with its cineplex.
+
+    /**
+     * @return string of cineplex location and cinema class of this cinema.
      */
     @Override
     public String toString() {
-        return cineplex + " - " + location;
+        return cineplex.getLocation() + " " + cinemaClass + " " + cinemaNumber;
     }
 
     /**
      * Generates the cinema code for this cinema.
-     * First letter is from the cineplex, next two are from the location.
+     * First letter is from the cineplex, next two are from the cinema class.
      */
     private void generateCinemaCode() {
         StringBuilder sb = new StringBuilder();
-        sb.append(cineplex.charAt(0));
-        String[] locationWords = location.split(" ");
+        sb.append(cineplex.getLocation().charAt(0));
+        String[] locationWords = cinemaClass.toString().split(" ");
         if (locationWords.length == 2)
             sb.append(locationWords[0].charAt(0) + "" + locationWords[1].charAt(0));
         else
-            sb.append(location.substring(0, 2).toUpperCase());
+            sb.append(locationWords[0].substring(0, 2).toUpperCase());
         cinemaCode = sb.toString();
     }
-    
+
+    /**
+     * @return class of cinema.
+     */
+    public CinemaClass getCinemaClass() {
+        return cinemaClass;
+    }
+
     /** 
      * @return List<Session>
      */
     public List<Session> getSessions() {
         return sessions;
-    }
-
-    /** 
-     * @return location of cinema.
-     */
-    public String getLocation() {
-        return location;
     }
 
     /** 
@@ -129,9 +146,16 @@ public class Cinema implements java.io.Serializable {
     }
 
     /** 
-     * @return cineplex name of cinema.
+     * @return Cineplex that the cinema is at.
      */
-    public String getCineplex() {
+    public Cineplex getCineplex() {
         return cineplex;
+    }
+
+    /** 
+     * @return seating layout of this session
+     */
+    public Seating getSeating() {
+        return seating;
     }
 }

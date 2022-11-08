@@ -94,7 +94,7 @@ public class Transaction implements java.io.Serializable {
         LocalDateTime dateTime = session.getDateTime();
         StringBuilder sb = new StringBuilder();
         sb.append("Transaction id: " + TID + "\n");
-        sb.append(session.getCinema() + " " + session.getCinemaClass() + "\n");
+        sb.append(session.getCinema() + "\n");
         sb.append(session.getMovie().getTitle() + " (" + session.getMovie().getRating() + ")\n");
         sb.append(dateTime.getDayOfMonth() + " " + dateTime.getMonth() + " " + dateTime.getYear() + " " + dateTime.toLocalTime() + "\n");
         sb.append("Seats booked: ");

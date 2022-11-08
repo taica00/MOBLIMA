@@ -1,10 +1,12 @@
 package main.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a cineplex company.
- * A cineplex has cinemas in multiple locations.
+ * Represents a cineplex branch of Shaw Theatres.
+ * A cineplex holds multiple cinema theatres.
+ * Certain cineplexes may only hold cinema theatres of certain cinema classes.
  * @author Tai Chen An
  * @version 1.0 
  * @since 2022-11-06 
@@ -14,28 +16,27 @@ public class Cineplex implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     
     /**
-     * The name of this cineplex company.
+     * The location of this cineplex.
      */
-    private String name;
+    private String location;
 
     /**
-     * The list of cinemas that belong to this cineplex.
+     * The list of cinema theatres at this cineplex.
      */
     private List<Cinema> cinemas;
 
     /**
-     * Creates a cineplex with the given name and list of cinemas.
-     * @param name
-     * @param cinemas
+     * Creates a cineplex with the given location.
+     * Initiates the list of cinemas.
+     * @param location location of cineplex.
      */
-    
-    public Cineplex(String name, List<Cinema> cinemas) {
-        this.name = name;
-        this.cinemas = cinemas;
+    public Cineplex(String location) {
+        this.location = location;
+        cinemas = new ArrayList<>();
     }
 
     /** 
-     * Adds a cinema to this cineplex.
+     * Adds a cinema theatre to this cineplex.
      * @param cinema
      */
     public void addCinema(Cinema cinema) {
@@ -43,7 +44,7 @@ public class Cineplex implements java.io.Serializable {
     }
 
     /** 
-     * @return List<Cinema>
+     * @return List of cinema theatres.
      */
     public List<Cinema> getCinemas() {
         return cinemas;
@@ -63,10 +64,10 @@ public class Cineplex implements java.io.Serializable {
     }
     
     /** 
-     * @return name of cineplex.
+     * @return location of cineplex.
      */
-    public String getName() {
-        return name;
+    public String getLocation() {
+        return location;
     }
     
 }
