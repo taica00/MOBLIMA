@@ -4,10 +4,6 @@ import main.models.CinemaClass;
 import main.models.Seating;
 
 public class SeatingTests {
-    
-    /** 
-     * @param args
-     */
     public static void main(String[] args) {
         for (CinemaClass cinemaClass : CinemaClass.values()) {
             Seating seating = new Seating(cinemaClass);

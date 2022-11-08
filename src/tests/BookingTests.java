@@ -10,10 +10,6 @@ import main.ui.MovieDetails;
 import main.ui.ShowTimes;
 
 public class BookingTests {
-    
-    /** 
-     * @param args
-     */
     public static void main(String[] args) {
         // configure end of showing and movie should not be listed for booking
 

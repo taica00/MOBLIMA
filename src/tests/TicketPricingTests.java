@@ -10,10 +10,6 @@ import main.models.MovieStatus;
 import main.models.Session;
 
 public class TicketPricingTests {
-    
-    /** 
-     * @param args
-     */
     public static void main(String[] args) {
         // initiate entities
         PricingController.loadHolidays();
