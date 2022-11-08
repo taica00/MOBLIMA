@@ -6,9 +6,18 @@ import main.controllers.PricingController;
 import main.controllers.TransactionsController;
 import main.ui.MainMenu;
 
+/**
+ * The class provides the main method to run the MOBLIMA application.
+ * The database is loaded before running the application and saved upon exit.
+ * @author Tai Chen An
+ * @version 1.0 
+ * @since 2022-11-08 
+ */
+
 public class MOBLIMA {
     
-    /** 
+    /**
+     * The main method to run the MOBLIMA application. 
      * @param args
      */
     public static void main(String[] args) {
@@ -17,6 +26,9 @@ public class MOBLIMA {
         saveState();
     }
 
+    /**
+     * Deserialises the database of entities.
+     */
     private static void loadState() {
         CineplexController.loadCineplexes();
         MovieController.loadMovies();
@@ -26,6 +38,9 @@ public class MOBLIMA {
         AdminController.loadAdminAccounts();
     }
 
+    /**
+     * Serialises the database of entities.
+     */
     private static void saveState() {
         CineplexController.saveCineplexes();
         MovieController.saveMovies();
