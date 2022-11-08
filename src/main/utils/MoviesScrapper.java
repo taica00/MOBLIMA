@@ -19,7 +19,7 @@ public class MoviesScrapper extends Populator {
     
     public static void main(String[] args) {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(java.util.logging.Level.OFF);
-        loadMovies("nowshowing.aspx", 40);
+        loadMovies("nowshowing.aspx", 45);
         loadMovies("comingsoon.aspx", 5);
         movies.sort((x, y)->x.getTitle().compareTo(y.getTitle()));
         serialize(movies, "movies.ser");
@@ -48,7 +48,7 @@ public class MoviesScrapper extends Populator {
                 final HtmlPage moviePage = client.getPage("https://www.cinemaonline.sg" + anchor.getHrefAttribute());
                 HtmlDivision movieDetails = (HtmlDivision)moviePage.getFirstByXPath("//div[@class='con-lg']");
                 String[] movieDetailsArr = movieDetails.asNormalizedText().split("\n");
-                String title = formatMovieTitle(movieDetailsArr[0]);
+                String title = formatString(movieDetailsArr[0]);
                 String sypnosis = movieDetailsArr[1];
                 String rating = movieDetailsArr[5].split(": ")[1].trim();
                 String cast = movieDetailsArr[10].substring(6);
@@ -63,11 +63,5 @@ public class MoviesScrapper extends Populator {
         } catch(Exception e) {
             e.printStackTrace();
         } 
-    }
-
-    private static String formatMovieTitle(String movieTitle) {
-        if (movieTitle.endsWith(")"))
-            return movieTitle.substring(0, movieTitle.indexOf("(")-1);
-        return movieTitle;
     }
 }
