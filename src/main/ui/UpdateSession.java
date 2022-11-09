@@ -29,11 +29,19 @@ public class UpdateSession extends UI {
                 return;
             switch(choice) {
                 case "cinema": 
-                    String cinema = InputController.getString("Enter cinema location, e.g Funan: ");
-                    if (SessionController.updateCinema(session, cinema))
-                        System.out.println("Successfully updated cinema.");
-                    else
-                        System.out.println("Cinema not found. Cinema not updated.");
+                    String cinema = InputController.getString("Enter cinema class, e.g lumiere: ");
+                    int cinemaNumber = InputController.getInt(0, 8, "Enter cinema number: ");
+                    try {
+                        if (SessionController.updateCinema(session, cinema, cinemaNumber))
+                            System.out.println("Successfully updated cinema.");
+                        else
+                            System.out.println("Cinema not found. Cinema not updated.");
+                    } catch (IllegalArgumentException e) {
+                        System.out.print("Invalid cinema class. Valid cinema classes: ");
+                        for (CinemaClass cc : CinemaClass.values())
+                            System.out.print(cc + ", ");
+                        System.out.println("\n Returning to admin menu.");
+                    }
                     break;
                 case "movie": 
                     String movie = InputController.getString("Enter title of movie, e.g Black Adam: ");
@@ -58,18 +66,6 @@ public class UpdateSession extends UI {
                         System.out.println("Successfully updated session time.");
                     } catch (DateTimeParseException e) {
                         System.out.println("Invalid time format. Time not updated.");
-                    }
-                    break;
-                case "cinema class":
-                    String cinemaClass = InputController.getString("Enter cinema class, replace spaces with underscores: ");
-                    try {
-                        session.setCinemaClass(CinemaClass.valueOf(cinemaClass.toUpperCase()));
-                        System.out.println("Successfully updated cinema class.");
-                    } catch (IllegalArgumentException e) {
-                        System.out.print("Invalid cinema class. Valid cinema classes: ");
-                        for (CinemaClass cc : CinemaClass.values())
-                            System.out.print(cc + ", ");
-                        System.out.println("\nCinema class not updated.");
                     }
                     break;
                 case "3D Screening": 

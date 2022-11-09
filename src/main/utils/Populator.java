@@ -11,7 +11,7 @@ public abstract class Populator {
         throw new IllegalStateException("Utility class");
     }
 
-    protected static <T> T loadData(String fileName) {
+    protected static <T> T deserialise(String fileName) {
         try {
             FileInputStream fileIn = new FileInputStream("src/main/data/" + fileName);
             ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -39,5 +39,11 @@ public abstract class Populator {
         } catch (IOException i) {
             i.printStackTrace();
         } 
+    }
+
+    protected static String formatString(String movieTitle) {
+        if (movieTitle.endsWith(")"))
+            return movieTitle.substring(0, movieTitle.indexOf("(")-1);
+        return movieTitle;
     }
 }

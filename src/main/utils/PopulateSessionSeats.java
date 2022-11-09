@@ -10,34 +10,38 @@ import main.models.Cineplex;
 import main.models.Seating;
 import main.models.Session;
 
-public class PopulateSessions extends Populator {  
+public class PopulateSessionSeats extends Populator {  
     public static void main(String[] args) {
         TransactionsController.loadTicketSales();
         PricingController.loadHolidays();
-        List<Cineplex> cineplexes = loadData("cineplexes.ser");
+        List<Cineplex> cineplexes = deserialise("cineplexes.ser");
+        int count = 0;
         for (Cineplex cineplex : cineplexes) {
             for (Cinema cinema : cineplex.getCinemas()) {
-                for (Session session : cinema.getSessions())
+                for (Session session : cinema.getSessions()) {
                     helper(session);
+                    count++;
+                }
             }
         }
-        serialize(cineplexes, "cineplexes.ser");
-        TransactionsController.saveTicketSales();
+        System.out.println(count);
+        //serialize(cineplexes, "cineplexes.ser");
+        //TransactionsController.saveTicketSales();
     }
 
     private static void helper(Session session) {
         Random rd = new Random();
-        Seating seating = session.getSeating();
+        Seating seating = session.getCinema().getSeating();
         int rows = seating.getNumRows();
         int cols = seating.getNumCols();
-        int numSeatsToBook = rd.nextInt(cols * rows * 3/4);
+        int numSeatsToBook = rd.nextInt(cols * rows * 1/2);
         int actualSeatsBooked = 0;
         for (int i = 0; i < numSeatsToBook; i++) {
             char row = (char)('A' + rd.nextInt(rows));
-            int col = rd.nextInt(cols-1) + 1;
-            if (seating.bookSeat(row, col))
-                actualSeatsBooked++;
+            int col = rd.nextInt(cols) + 1;
+            if (seating.bookSeat(row, col));
+                actualSeatsBooked++;     
         }
-        TransactionsController.addTicketSales(session.getMovie(), actualSeatsBooked);
+        //TransactionsController.addTicketSales(session.getMovie(), actualSeatsBooked);
     }
 }

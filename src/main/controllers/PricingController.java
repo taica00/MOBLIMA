@@ -34,7 +34,7 @@ public class PricingController extends Controller {
      * @return price of all tickets booked for the given session.
      */
     public static double getTicketsPrice(Session session, int numTickets, int seniors, int students) {
-        double[] pricing = session.getCinemaClass().ticketPrices();
+        double[] pricing = session.getCinema().getCinemaClass().ticketPrices();
         double total = 0;
         total += calculateAndPrintPrice(pricing[0], "Senior Citizen", seniors);
         total += calculateAndPrintPrice(pricing[1], "Student", students);

@@ -10,6 +10,7 @@ import main.controllers.InputController;
 import main.controllers.SessionController;
 import main.models.Cinema;
 import main.models.CinemaClass;
+import main.models.Cineplex;
 import main.models.Movie;
 import main.models.MovieStatus;
 import main.models.Session;
@@ -18,14 +19,15 @@ import main.models.Session;
  * This class provides the UI to display session showtimes.
  * Showtimes can be viewed for a particular movie, or for a particular cinema.
  * @author Tai Chen An
- * @version 1.0 
- * @since 2022-11-08 
+ * @version 1.1 
+ * @since 2022-11-09
  */
 
 public class ShowTimes extends UI {
     private static final String RETURN_HOME = "Returning to homepage.";
     private static final String RETURN_ADMIN = "Returning to admin menu.";
     private static final String NO_SESSION = "Session not found.";
+    private static final String INVALID_DATETIME = "Invalid date or time format.";
     private static final String THIN_DIVIDER = "\n-------------------------------------------------------------";
     private static final String THICK_DIVIDER = "\n=============================================================";
 
@@ -35,22 +37,22 @@ public class ShowTimes extends UI {
      * Calls {@link SessionController} to handle seats selection for requested session.
      * @param movieSessions list of sessions for a particular movie.
      */
-    public static void view(List<List<Session>> movieSessions) { 
+    public static void view(Movie movie) { 
+        List<List<Session>> movieSessions = CineplexController.getSessions(movie);
         if (movieSessions.isEmpty()) {
             System.out.println("No showtimes available for this movie");
             return;
         }
-        for (List<Session> cinemaSessions : movieSessions) {
+        int rowCount = 0;
+        for (List<Session> cineplexSessions : movieSessions) {
             LocalDate date = null;
             CinemaClass cinemaClass = null;
             System.out.println(THICK_DIVIDER);
-            Cinema cinema = cinemaSessions.get(0).getCinema();      
-            System.out.print(cinema + " (" + cinema.getCinemaCode() + ")");
-            int rowCount = 0;
-            for (Session session : cinemaSessions) {
+            System.out.print(cineplexSessions.get(0).getCinema().getCineplex().getLocation());
+            for (Session session : cineplexSessions) {
                 LocalDateTime dateTime = session.getDateTime();
                 LocalDate sessionDate = dateTime.toLocalDate();
-                CinemaClass sessionClass = session.getCinemaClass();
+                CinemaClass sessionClass = session.getCinema().getCinemaClass();
                 if (date == null || !sessionDate.isEqual(date)) {
                     System.out.println(THIN_DIVIDER);
                     date = sessionDate;
@@ -64,9 +66,8 @@ public class ShowTimes extends UI {
                 }
                 System.out.print(dateTime.toLocalTime());
                 if (session.is3D())
-                    System.out.print("(3D) ");
-                else
-                    System.out.print(" ");
+                    System.out.print("(3D)");
+                System.out.print(" ");
                 if (++rowCount == 10) {
                     System.out.println();
                     rowCount = 0;
@@ -76,14 +77,14 @@ public class ShowTimes extends UI {
         System.out.println(THIN_DIVIDER);
         if (!bookTickets())
             return;
-        String cinemaCode = InputController.getString("Enter cinema code, e.g. for JCube (SJC), SJC is the cinema code: ");
+        String cineplexString = InputController.getString("Enter cineplex e.g. JCube : ");
         String[] sessionInfo = getSessionInfo();
         System.out.println();
         try {
-            if (!SessionController.viewSeating(movieSessions, cinemaCode, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]))
+            if (!SessionController.viewSeating(movieSessions, cineplexString, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]))
                 System.out.println(NO_SESSION + " " + RETURN_HOME);
         } catch (DateTimeParseException e) {
-            System.out.println("Invalid date or time format. " + RETURN_HOME);
+            System.out.println(INVALID_DATETIME + " " + RETURN_HOME);
         } catch (IllegalArgumentException e) {
             System.out.print("Invalid cinema class. Valid cinema classes: ");
             for (CinemaClass cc : CinemaClass.values())
@@ -100,21 +101,23 @@ public class ShowTimes extends UI {
      * @param cinema 
      * @param sessions
      */
-    public static void view(Cinema cinema, boolean admin) { // view sessions for a particular cinema
-        List<Session> sessions = cinema.getSessions();
+    public static void view(Cineplex cineplex) { 
+        List<Session> sessions = CineplexController.getSessions(cineplex);
+        if (sessions.isEmpty()) {
+            System.out.println("No showtimes available for this cinema.");
+            return;
+        }
         LocalDate date = null;
         CinemaClass cinemaClass = null;
         Movie movie = null;
         int rowCount = 0;
-        boolean hasSession = false;
         for (Session session: sessions) {
             MovieStatus movieStatus = session.getMovie().getShowingStatus();
             if (movieStatus.equals(MovieStatus.COMING_SOON) || movieStatus.equals(MovieStatus.END_OF_SHOWING))
                 continue;
-            hasSession = true;
             LocalDateTime dateTime = session.getDateTime();
             LocalDate sessionDate = dateTime.toLocalDate();
-            CinemaClass sessionClass = session.getCinemaClass();
+            CinemaClass sessionClass = session.getCinema().getCinemaClass();
             if (movie == null || session.getMovie() != movie) {
                 System.out.println("\n" + THICK_DIVIDER);
                 movie = session.getMovie();
@@ -142,76 +145,63 @@ public class ShowTimes extends UI {
                 rowCount = 0;
             }
         }
-        if (!hasSession) {
-            System.out.println("No showtimes available for this cinema.");
-            return;
-        }
         System.out.println(THIN_DIVIDER);
-        if (!admin)
-            movieGoerOptions(cinema);
-        else
-            adminOptions(cinema);
-         
-    }   
-
-    
-    /**
-     * Asks if movie-goer wants to book tickets.
-     * Gets information of requested session.
-     * Calls {@link SessionController} to handle seats selection for requested session.
-     * @param cinema
-     */
-    private static void movieGoerOptions(Cinema cinema) {
         if (!bookTickets())
             return;
         String sessionMovie = InputController.getString("Enter movie title: ");
         String[] sessionInfo = getSessionInfo();
         System.out.println();
         try {
-            if (!SessionController.viewSeating(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]))
+            if (!SessionController.viewSeating(cineplex, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]))
                 System.out.println(NO_SESSION + " " + RETURN_HOME);
         } catch (DateTimeParseException e) {
-            System.out.println("Invalid date or time format. " + RETURN_HOME);
+            System.out.println(INVALID_DATETIME + " " + RETURN_HOME);
         } catch (IllegalArgumentException e) {
             System.out.print("Invalid input. " + RETURN_HOME);
-        }
-    }
-
+        } 
+    }   
     
     /**
-     * Displays admin options for configuring of session. 
-     * @param cinema
+     * Displays all sessions of the given cinema.
+     * @param cinema cinema screeening the sessions.
      */
-    private static void adminOptions(Cinema cinema) {
+    public static void view(Cinema cinema) {
+        List<Session> sessions = cinema.getSessions();
+        int i = 1;
+        for (Session session : sessions) {
+            System.out.println((i++) + ". " + session.getDateTime() + " " + session.getMovie().getTitle());
+        }
         System.out.println("\n1. Create showtime | 2. Update showtime | 3. Remove showtime | 4. Return to admin menu\n");
         int choice = InputController.getInt(1, 4, "Enter your option: ");
         if (choice == 4)
             return;
-        System.out.println("Enter showtime details.");
-        String sessionMovie = InputController.getString("Enter movie title: ");
-        String[] sessionInfo = getSessionInfo();
-        try {
-            switch(choice) {
-                case 1: 
-                    boolean is3D = InputController.getBoolean("Is this a 3D showing?(Y/N): ", 'Y', 'N');
-                    CineplexController.addSession(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2], is3D);
+        switch(choice) {
+            case 1:
+                System.out.println("Enter showtime details.");
+                String movie = InputController.getString("Enter movie title: ");
+                String date = InputController.getNumericString("Enter date in ddMMyy format, e.g. 251022: ", 6, 6);
+                String time = InputController.getNumericString("Enter time in HHmm format, e.g. 1620: ", 4, 4); 
+                boolean is3D = InputController.getBoolean("Is this a 3D showing?(Y/N): ", 'Y', 'N');
+                try {
+                    CineplexController.addSession(cinema, movie, date, time, is3D);
                     System.out.println("Cinema showtime added. " + RETURN_ADMIN);
-                    break;
-                case 2: 
-                    if (!CineplexController.updateSession(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]))
-                        System.out.println(NO_SESSION + " " + RETURN_ADMIN);
-                    break;
-                case 3: 
-                    CineplexController.removeSession(cinema, sessionMovie, sessionInfo[0], sessionInfo[1].toUpperCase(), sessionInfo[2]);
-                    System.out.println("Cinema showtime removed. " + RETURN_ADMIN);
-                    break;
-                default: System.out.println("Something weird happened.");
-            }
-        } catch (DateTimeParseException e) {
-            System.out.println("Invalid date or time format. " + RETURN_HOME);
-        } catch (IllegalArgumentException e) {
-            System.out.print("Invalid input. " + RETURN_HOME);
-        }
+                } catch (DateTimeParseException e) {
+                    System.out.println(INVALID_DATETIME + " " + RETURN_HOME);
+                } catch (IllegalArgumentException e) {
+                    System.out.print("Invalid input. " + RETURN_HOME);
+                }
+                break;
+            case 2: 
+                choice = InputController.getInt(1, sessions.size(), "Enter index of session to update");
+                UpdateSession.view(sessions.get(choice-1));
+                break;
+            case 3: 
+                choice = InputController.getInt(1, sessions.size(), "Enter index of session to remove");
+                sessions.remove(choice-1);
+                System.out.println("Cinema showtime removed. " + RETURN_ADMIN);
+                break;
+            default: System.out.println("Something weird happened.");
+        } 
     }   
 
     /** 
@@ -230,7 +220,7 @@ public class ShowTimes extends UI {
      */
     private static String[] getSessionInfo() {
         String date = InputController.getNumericString("Enter date in ddMMyy format, e.g. 251022: ", 6, 6);
-        String cinemaClass = InputController.getString("Enter cinemaClass(non case-sensitive, please input '_' for spaces), e.g. gold_class_express: ");
+        String cinemaClass = InputController.getString("Enter cinemaClass, e.g. imax: ");
         String time = InputController.getNumericString("Enter time in HHmm format, e.g. 1620: ", 4, 4);
         return new String[]{date, cinemaClass, time};
     }

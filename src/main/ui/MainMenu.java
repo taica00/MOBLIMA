@@ -1,6 +1,5 @@
 package main.ui;
 
-import main.controllers.CineplexController;
 import main.controllers.InputController;
 import main.controllers.MovieController;
 
@@ -35,7 +34,7 @@ public class MainMenu extends UI {
             switch(choice) {
                 case 1: MovieController.listMovies(false); break;
                 case 2: MovieController.searchMovies(); break;
-                case 3: CineplexController.displayCinemas(false); break;
+                case 3: CineplexList.view(false); break;
                 case 4: BookingHistory.view(); break;
                 case 5: MovieController.rankMovies(true, false); break;
                 case 6: MovieController.rankMovies(false, false); break; 

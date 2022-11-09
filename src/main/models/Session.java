@@ -29,16 +29,6 @@ public class Session implements java.io.Serializable {
     private LocalDateTime dateTime;
 
     /**
-     * The cinema class of this session.
-     */
-    private CinemaClass cinemaClass;
-
-    /**
-     * The seating layout of this session, determined by its cinema class.
-     */
-    private Seating seating;
-
-    /**
      * Indicates whether the session is a 3D screening.
      */
     private boolean is3D;
@@ -49,17 +39,14 @@ public class Session implements java.io.Serializable {
      * @param cinema
      * @param movie
      * @param dateTime
-     * @param cinemaClass
      * @param is3D
      */
-    public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, String cinemaClass, boolean is3D) {
+    public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, boolean is3D) {
         if (cinema == null || movie == null || dateTime == null)
             throw new IllegalArgumentException("Fields cannot be null");
         this.cinema = cinema;
         this.movie = movie;
         this.dateTime = dateTime;
-        this.cinemaClass = CinemaClass.valueOf(cinemaClass);
-        seating = new Seating(this.cinemaClass);
         this.is3D = is3D;
     }
 
@@ -73,7 +60,6 @@ public class Session implements java.io.Serializable {
         sb.append("\nMovie: " + movie.getTitle());
         sb.append("\nDate: " + dateTime.toLocalDate());
         sb.append("\nTime: " + dateTime.toLocalTime());
-        sb.append("\nCinema class: " + cinemaClass);
         sb.append("\n3D Screening: " + is3D);
         return sb.toString();
     }
@@ -124,27 +110,6 @@ public class Session implements java.io.Serializable {
         if (dateTime == null)
             throw new IllegalArgumentException("dateTime cannot be null.");
         this.dateTime = dateTime;
-    }
-
-    /** 
-     * @return cinema class of this session.
-     */
-    public CinemaClass getCinemaClass() {
-        return cinemaClass;
-    }
-
-    /** 
-     * @param cinemaClass cinema class of this session.
-     */
-    public void setCinemaClass(CinemaClass cinemaClass) {
-        this.cinemaClass = cinemaClass;
-    }
-
-    /** 
-     * @return seating layout of this session
-     */
-    public Seating getSeating() {
-        return seating;
     }
 
     /** 

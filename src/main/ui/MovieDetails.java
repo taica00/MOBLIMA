@@ -1,6 +1,5 @@
 package main.ui;
 
-import main.controllers.CineplexController;
 import main.controllers.InputController;
 import main.models.Movie;
 
@@ -42,7 +41,7 @@ public class MovieDetails extends UI {
         switch(choice) {
             case 1: return;
             case 2: ReviewsList.view(movie); break;
-            case 3: CineplexController.viewShowTimes(movie); break; 
+            case 3: ShowTimes.view(movie); break; 
             default: System.out.println("Something weird happened");
         }
     }

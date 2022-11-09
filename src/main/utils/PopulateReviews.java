@@ -16,7 +16,7 @@ public class PopulateReviews extends Populator {
     
     public static void main(String[] args) {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(java.util.logging.Level.OFF);
-        List<Movie> movies = loadData("movies.ser");
+        List<Movie> movies = deserialise("movies.ser");
         for (Movie movie : movies) {
             if (movie.getShowingStatus().equals(MovieStatus.COMING_SOON))
                 continue;

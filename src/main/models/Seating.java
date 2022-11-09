@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Represents the seating layout of a showtime session.
+ * Represents the seating layout of a cinema theatre.
  * 
  * @author Tai Chen An
  * @version 1.0 
@@ -17,7 +17,7 @@ public class Seating implements java.io.Serializable {
     private static final long serialVersionUID = 5L;
     
     /**
-     * The seats of this seating represented in a 2D array.
+     * The seats of this theatre represented in a 2D array.
      */
     private int[][] seats;
 

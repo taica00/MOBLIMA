@@ -22,7 +22,7 @@ public class SeatsSelection extends UI {
      * @param session 
      */
     public static void view(Session session) {
-        Seating seating = session.getSeating();
+        Seating seating = session.getCinema().getSeating();
         System.out.println(seating);
         String seats = InputController.getString("Enter seat IDs to book, separated by spaces, e.g. F1 F2 F3:\n");
         SessionController.bookSeats(session, seats.split(" "));  
