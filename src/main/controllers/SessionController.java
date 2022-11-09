@@ -44,7 +44,7 @@ public class SessionController extends Controller {
             if (!cinema.getCineplex().getLocation().equalsIgnoreCase(cineplexString))
                 continue;
             for (Session session : cineplexSessions) {
-                if (dateTime.isEqual(session.getDateTime()) && cinema.getCinemaClass().equals(CinemaClass.valueOf(cinemaClass.toUpperCase()))) {
+                if (dateTime.isEqual(session.getDateTime()) && session.getCinema().getCinemaClass().equals(CinemaClass.valueOf(cinemaClass))) {
                     SeatsSelection.view(session);
                     return true;
                 }
@@ -119,8 +119,8 @@ public class SessionController extends Controller {
      * @param cinemaString
      * @return true if cinema can be found.
      */
-    public static boolean updateCinema(Session session, CinemaClass cinemaClass, int cinemaNumber) {
-        Cinema cinema = session.getCinema().getCineplex().getCinema(cinemaClass, cinemaNumber);
+    public static boolean updateCinema(Session session, String cinemaClass, int cinemaNumber) {
+        Cinema cinema = session.getCinema().getCineplex().getCinema(CinemaClass.valueOf(cinemaClass), cinemaNumber);
         if (cinema == null)
             return false;
         session.setCinema(cinema);

@@ -12,9 +12,7 @@ import main.models.Cineplex;
 import main.models.Movie;
 import main.models.MovieStatus;
 import main.models.Session;
-import main.ui.CineplexList;
 import main.ui.ShowTimes;
-import main.ui.UpdateSession;
 
 /**
  * This class manages user actions pertaining to the {@link Cineplex} and {@link Cinema} class.
@@ -36,8 +34,9 @@ public class CineplexController extends Controller {
      * Search all cinemas for sessions screening the given movie.
      * Calls {@link ShowTimes} to display these sessions.
      * @param movie
+     * @return List of list of sessions. Each list in the list represents sessions of a cineplex.
      */
-    public static void viewShowTimes(Movie movie) {
+    public static List<List<Session>> getSessions(Movie movie) {
         List<List<Session>> movieSessions = new ArrayList<>();
         for (Cineplex cineplex : cineplexes) {
             List<Session> cineplexSessions = new ArrayList<>();
@@ -65,10 +64,10 @@ public class CineplexController extends Controller {
             });
             movieSessions.add(cineplexSessions);
         }
-        ShowTimes.view(movieSessions);
+        return movieSessions;
     }
 
-    public static void viewShowTimes(Cineplex cineplex, boolean admin) {
+    public static List<Session> getSessions(Cineplex cineplex) {
         List<Session> sessions = new ArrayList<>();
         for (Cinema cinema : cineplex.getCinemas()) {
             for (Session session : cinema.getSessions()) {
@@ -93,15 +92,15 @@ public class CineplexController extends Controller {
                 return s1DateTime.compareTo(s2DateTime);
             }
         });
-        ShowTimes.view(sessions, admin);
+        return sessions;
     }
 
     /**
-     * Calls {@link CineplexList} to display all cinemas. 
-     * @param admin
+     * 
+     * @return
      */
-    public static void displayCineplexes(boolean admin) {
-        CineplexList.view(cineplexes, admin);
+    public static List<Cineplex> getCineplexes() {
+        return cineplexes;
     }
 
     /** 
@@ -118,25 +117,6 @@ public class CineplexController extends Controller {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(PATTERN);
         LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
         cinema.addSession(new Session(cinema, movie, dateTime, is3D));
-    }
- 
-    /**
-     * This method is called when an admin wishes to update the details of a session.
-     * {@link searchSession} is first called to search the given cinema for a session that matches the given inputs.
-     * Then {@link UpdateSession} is called to receive user inputs.
-     * @param cinema
-     * @param movie
-     * @param date
-     * @param cinemaClass
-     * @param time
-     * @return true if session is found, false if session is not found.
-     */
-    public static boolean updateSession(Cineplex cineplex, String movie, String date, String cinemaClass, String time) {
-        Session session = searchSession(cineplex, movie, date, cinemaClass, time);
-        if (session == null)
-            return false;
-        UpdateSession.view(session);
-        return true;
     }
 
     /**

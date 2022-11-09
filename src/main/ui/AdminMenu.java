@@ -1,7 +1,6 @@
 package main.ui;
 
 import main.controllers.AdminController;
-import main.controllers.CineplexController;
 import main.controllers.InputController;
 import main.controllers.MovieController;
 import main.controllers.PricingController;
@@ -37,7 +36,7 @@ public class AdminMenu extends UI {
             
             switch(choice) {
                 case 1: MovieController.listMovies(true); break;
-                case 2: CineplexController.displayCineplexes(false); break;
+                case 2: CineplexList.view(true);; break;
                 case 3: systemSettings(admin); break;
                 case 4: MovieController.rankMovies(true, true); break;
                 case 5: MovieController.rankMovies(false, true); break;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import main.controllers.CineplexController;
 import main.controllers.InputController;
+import main.models.Cinema;
 import main.models.Cineplex;
 
 /**
@@ -21,7 +22,8 @@ public class CineplexList extends UI {
      * @param cinemas list of cinemas to display.
      * @param admin if user is admin or movie-goer.
      */
-    public static void view(List<Cineplex> cineplexes, boolean admin) {
+    public static void view(boolean admin) {
+        List<Cineplex> cineplexes = CineplexController.getCineplexes();
         System.out.println("Cineplex list: \n");
         int i = 1;
         for (Cineplex cineplex : cineplexes) {
@@ -29,7 +31,24 @@ public class CineplexList extends UI {
             System.out.println(cineplex.getLocation());
         }
         System.out.println();
-        int choice  = InputController.getInt(1, cineplexes.size(), "Select index of cinema to view showtimes: ");
-        CineplexController.viewShowTimes(cineplexes.get(choice-1), admin);
+        if (admin) {
+            int choice = InputController.getInt(1, cineplexes.size(), "Select index of cineplex to view cinemas: ");
+            viewCinemas(cineplexes.get(choice-1));
+        }
+        else {
+            int choice = InputController.getInt(1, cineplexes.size(), "Select index of cineplex to view showtimes: ");
+            ShowTimes.view(cineplexes.get(choice-1));
+        }
+    }
+
+    private static void viewCinemas(Cineplex cineplex) {
+        int i = 1;
+        List<Cinema> cinemas = cineplex.getCinemas();
+        for (Cinema cinema : cinemas) {
+            System.out.print((i++) + ". ");
+            System.out.println(cinema.getCinemaClass() + " " + cinema.getCinemaNumber());
+        }
+        int choice = InputController.getInt(1, cinemas.size(), "Select index of cinema to view sessions.");
+        ShowTimes.view(cinemas.get(choice-1));
     }
 }
