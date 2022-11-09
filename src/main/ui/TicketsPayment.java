@@ -44,7 +44,7 @@ public class TicketsPayment extends UI {
             students = InputController.getInt(0, numTickets-seniors, "Enter number of students: ");
         }
         // print out tickets price
-        System.out.println("\n" + session.getCinemaClass());
+        System.out.println("\n" + session.getCinema().getCinemaClass());
         double price = PricingController.getTicketsPrice(session, numTickets, seniors, students);
         System.out.printf("Grand Total: $%.2f%n%n", price);
         // get user email, name, phone number

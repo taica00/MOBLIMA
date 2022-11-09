@@ -49,10 +49,14 @@ public class SessionsScrapper extends Populator{
                 if (movieDiv.asNormalizedText().length() < 51)
                     continue;
                 HtmlAnchor movieTitleAnchor = movieDiv.getFirstByXPath(".//a");
-                String movieTitle = formatString(movieTitleAnchor.asNormalizedText());
+                String movieTitle = movieTitleAnchor.asNormalizedText();
+                if (movieTitle.endsWith(")"))
+                    continue;
                 Movie movie = MovieController.searchMovie(movieTitle);
                 List<HtmlAnchor> showTimes = movieDiv.getByXPath(".//a[@class='shawticketing']");
                 for (HtmlAnchor showTimeAnchor : showTimes) {
+                    if (showTimeAnchor.asNormalizedText().trim().endsWith(")"))
+                        continue;
                     String seatingCode = formatLink(showTimeAnchor.getHrefAttribute());
                     final HtmlPage seatingPage = client.getPage("https://shaw.sg/seat-selection/" + seatingCode);
                     HtmlParagraph theatre = seatingPage.getFirstByXPath("//p[contains(text(), 'Shaw Theatres')]");

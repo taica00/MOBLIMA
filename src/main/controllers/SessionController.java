@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import main.models.Cinema;
 import main.models.CinemaClass;
+import main.models.Cineplex;
 import main.models.Movie;
 import main.models.Session;
 import main.ui.TicketsPayment;
@@ -28,21 +29,22 @@ public class SessionController extends Controller {
     /**
      * Searches the given list of sessions for a session that matches the given fields.
      * Passes the session to {@link SeatsSelection}. 
-     * @param movieSessions
-     * @param cinemaCode
-     * @param date
-     * @param cinemaClass
-     * @param time
+     * @param movieSessions list of sessions of the movie
+     * @param cineplexString location of the cineplex 
+     * @param date date of session
+     * @param cinemaClass class of cinema screening the session
+     * @param time time of session
      * @return true if session that matches the given fields can be found.
      */
-    public static boolean viewSeating(List<List<Session>> movieSessions, String cinemaCode, String date, String cinemaClass, String time) {
+    public static boolean viewSeating(List<List<Session>> movieSessions, String cineplexString, String date, String cinemaClass, String time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyHHmm");
         LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
-        for (List<Session> cinemaSessions : movieSessions) {
-            for (Session session : cinemaSessions) {
-                if (!session.getCinema().getCinemaCode().equals(cinemaCode))
-                    break;
-                if (dateTime.isEqual(session.getDateTime()) && CinemaClass.valueOf(cinemaClass).equals(session.getCinemaClass())) {
+        for (List<Session> cineplexSessions : movieSessions) {
+            Cinema cinema = cineplexSessions.get(0).getCinema();
+            if (!cinema.getCineplex().getLocation().equalsIgnoreCase(cineplexString))
+                continue;
+            for (Session session : cineplexSessions) {
+                if (dateTime.isEqual(session.getDateTime()) && cinema.getCinemaClass().equals(CinemaClass.valueOf(cinemaClass.toUpperCase()))) {
                     SeatsSelection.view(session);
                     return true;
                 }
@@ -61,8 +63,8 @@ public class SessionController extends Controller {
      * @param time
      * @return true if session that matches the given fields can be found.
      */
-    public static boolean viewSeating(Cinema cinema, String movie, String date, String cinemaClass, String time) {
-        Session session = CineplexController.searchSession(cinema, movie, date, cinemaClass, time);
+    public static boolean viewSeating(Cineplex cineplex, String movie, String date, String cinemaClass, String time) {
+        Session session = CineplexController.searchSession(cineplex, movie, date, cinemaClass, time);
         if (session == null) 
             return false;
         SeatsSelection.view(session);
@@ -81,7 +83,7 @@ public class SessionController extends Controller {
         for (String seat : seats) {
             char row = seat.charAt(0);
             String col = seat.substring(1);
-            if (!Character.isUpperCase(row) || !StringUtils.isNumeric(col) || Integer.parseInt(col) == 0 || Integer.parseInt(col) > session.getSeating().getNumCols()) 
+            if (!Character.isUpperCase(row) || !StringUtils.isNumeric(col) || Integer.parseInt(col) == 0 || Integer.parseInt(col) > session.getCinema().getSeating().getNumCols()) 
                 System.out.println(seat + " is not a valid selection.");
             else if (!session.getCinema().getSeating().bookSeat(row, Integer.parseInt(col))) 
                 System.out.println("Seat " + seat + " is occupied");
@@ -111,14 +113,14 @@ public class SessionController extends Controller {
  
     /**
      * This method is called when user requests to change the cinema for a session. 
-     * First search for a cinema matching the given string.
+     * First search for a cinema in the same cineplex matching the given string
      * If a cinema is found, update the given session with the new cinema.
      * @param session
      * @param cinemaString
      * @return true if cinema can be found.
      */
-    public static boolean updateCinema(Session session, String cinemaString) {
-        Cinema cinema = CineplexController.searchCinema(cinemaString);
+    public static boolean updateCinema(Session session, CinemaClass cinemaClass, int cinemaNumber) {
+        Cinema cinema = session.getCinema().getCineplex().getCinema(cinemaClass, cinemaNumber);
         if (cinema == null)
             return false;
         session.setCinema(cinema);

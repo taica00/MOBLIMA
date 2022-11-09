@@ -110,16 +110,15 @@ public class Cinema implements java.io.Serializable {
 
     /**
      * Generates the cinema code for this cinema.
-     * First letter is from the cineplex, next two are from the cinema class.
+     * First letter is from the cineplex.
+     * Second letter is from the cinema class.
+     * Last letter is from the cinema number.
      */
     private void generateCinemaCode() {
         StringBuilder sb = new StringBuilder();
-        sb.append(cineplex.getLocation().charAt(0));
-        String[] locationWords = cinemaClass.toString().split(" ");
-        if (locationWords.length == 2)
-            sb.append(locationWords[0].charAt(0) + "" + locationWords[1].charAt(0));
-        else
-            sb.append(locationWords[0].substring(0, 2).toUpperCase());
+        sb.append(cineplex.getLocation().toUpperCase().charAt(0));
+        sb.append(cinemaClass.toString().toUpperCase().charAt(0));
+        sb.append((char)(cinemaNumber + '@'));
         cinemaCode = sb.toString();
     }
 

@@ -37,7 +37,7 @@ public class AdminMenu extends UI {
             
             switch(choice) {
                 case 1: MovieController.listMovies(true); break;
-                case 2: CineplexController.displayCinemas(true); break;
+                case 2: CineplexController.displayCineplexes(false); break;
                 case 3: systemSettings(admin); break;
                 case 4: MovieController.rankMovies(true, true); break;
                 case 5: MovieController.rankMovies(false, true); break;
