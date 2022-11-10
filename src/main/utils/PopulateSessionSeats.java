@@ -20,6 +20,7 @@ public class PopulateSessionSeats extends Populator {
             }
         }
         serialize(cineplexes, "cineplexes.ser");
+        TransactionsController.saveTicketSales();
     }
 
     private static void helper(Session session) {
@@ -27,6 +28,7 @@ public class PopulateSessionSeats extends Populator {
         Seating seating = session.getSeating();
         int rows = seating.getNumRows();
         int cols = seating.getNumCols();
+        unBookAllSeats(session, rows, cols);
         int numSeatsToBook = rd.nextInt(cols * rows * 1/2);
         int actualSeatsBooked = 0;
         for (int i = 0; i < numSeatsToBook; i++) {
@@ -36,5 +38,14 @@ public class PopulateSessionSeats extends Populator {
                 actualSeatsBooked++;     
         }
         TransactionsController.addTicketSales(session.getMovie(), actualSeatsBooked);
+    }
+
+    private static void unBookAllSeats(Session session, int rows, int cols) {
+        Seating seating = session.getSeating();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 1; j <= cols; j++) {
+                seating.unBookSeat((char)('A' + i), j);
+            }
+        }
     }
 }
