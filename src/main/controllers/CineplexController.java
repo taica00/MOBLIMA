@@ -68,9 +68,10 @@ public class CineplexController extends Controller {
     }
 
     /**
-     * 
-     * @param cineplex
-     * @return
+     * Search the given cineplex for all sessions in its cinemas.
+     * Sorts the sessions according to movie title, then date, then cinema class, then time.
+     * @param cineplex cineplex to search sessions for.
+     * @return list of sessions in the given cineplex.
      */
     public static List<Session> getSessions(Cineplex cineplex) {
         List<Session> sessions = new ArrayList<>();
@@ -101,8 +102,7 @@ public class CineplexController extends Controller {
     }
 
     /**
-     * 
-     * @return
+     * @return list of all cineplexes.
      */
     public static List<Cineplex> getCineplexes() {
         return cineplexes;
@@ -110,12 +110,12 @@ public class CineplexController extends Controller {
 
     /** 
      * Adds a new session to the given cinema with the given fields.
-     * @param cinema
-     * @param movieTitle
-     * @param date
-     * @param cinemaClass
-     * @param time
-     * @param is3D
+     * @param cinema cinema to add session to.
+     * @param movieTitle title of movie that the session is screening.
+     * @param date date of session.
+     * @param cinemaClass class of cinema screening the session.
+     * @param time time of session.
+     * @param is3D if session is a 3D screening.
      */
     public static void addSession(Cinema cinema, String movieTitle, String date, String time, boolean is3D) {
         Movie movie = MovieController.searchMovie(movieTitle);
@@ -129,7 +129,7 @@ public class CineplexController extends Controller {
      * @param cinema cinema hosting the session.
      * @param movie movie that session is screening.
      * @param date date of session.
-     * @param cinemaClass class of cinema hosting the session.
+     * @param cinemaClass class of cinema screening the session.
      * @param time time of session.
      */
     public static void removeSession(Cinema cinema, String movie, String date, String cinemaClass, String time) {
@@ -140,7 +140,7 @@ public class CineplexController extends Controller {
     }
 
     /** 
-     * Searches the given cinema for a session matching the given inputs.
+     * Searches the given cineplex for a session matching the given inputs.
      * @param cineplex cineplex of session to search for.
      * @param movie movie that session is screening.
      * @param date date of session to search for.

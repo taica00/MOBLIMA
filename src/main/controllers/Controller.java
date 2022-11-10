@@ -24,7 +24,7 @@ public abstract class Controller {
 
     /**
      * Deserialises the object from the given filepath. 
-     * @param filePath
+     * @param filePath path to load serialised object from.
      * @return object loaded from data file.
      */
     protected static <T> T loadData(String filePath) {
@@ -47,7 +47,7 @@ public abstract class Controller {
     /**
      * Serialises the given object at the given filepath. 
      * @param element object to be serialised.
-     * @param filePath
+     * @param filePath path to store serialised object.
      */
     protected static <T> void saveData(T element, String filePath) {
         try {

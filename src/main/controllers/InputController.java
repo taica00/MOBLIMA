@@ -22,9 +22,9 @@ public class InputController extends Controller {
      * Prints the given message and takes an integer input from the user.
      * Input must be between(inclusive) the given start and end fields.
      * Continues to prompt the user for a input if previous input is invaid. 
-     * @param start
-     * @param end
-     * @param message
+     * @param start smallest valid integer input.
+     * @param end largest valid integer input
+     * @param message message to display to user.
      * @return int input from user.
      */
     public static int getInt(int start, int end, String message) {
@@ -42,7 +42,7 @@ public class InputController extends Controller {
 
     /**
      * Prints the given message and takes a string input from the user.
-     * @param message
+     * @param message message to display to user.
      * @return String input from user
      */
     public static String getString(String message) {
@@ -55,9 +55,9 @@ public class InputController extends Controller {
      * Prints the given message and takes a numeric string input from the user.
      * Length of input must be between(inclusive) the given lo and hi fields. 
      * Continues to prompt the user for a input if previous input is invaid. 
-     * @param message
-     * @param lo
-     * @param hi
+     * @param message message to display to user.
+     * @param lo shortest valid length of string.
+     * @param hi longest valid length of string.
      * @return numeric string input from user.
      */
     public static String getNumericString(String message, int lo, int hi) {
@@ -75,9 +75,9 @@ public class InputController extends Controller {
      * Prints the given message and takes a character input from the user.
      * Input must be either of T or F.
      * Continues to prompt the user for a input if previous input is invaid.  
-     * @param message
-     * @param T
-     * @param F
+     * @param message message to display to user.
+     * @param T character representing the true value.
+     * @param F character representing the false value.
      * @return user input as a boolean value.
      */
     public static boolean getBoolean(String message, char T, char F) {
@@ -98,8 +98,8 @@ public class InputController extends Controller {
     /**
      * Prints the given message and takes a double input from the user.
      * Continues to prompt the user for a input if previous input is not a double. 
-     * @param message
-     * @return double
+     * @param message message to display to user.
+     * @return double input from user.
      */
     public static double getDouble(String message) {
         while (true) {
@@ -116,7 +116,7 @@ public class InputController extends Controller {
      * Takes inputs for name and mobile number from the user.
      * Verifies the input with the given movieGoer. 
      * Continues to prompt the user for inputs if previous input is invalid.
-     * @param movieGoer
+     * @param movieGoer movie-goer to verify identity.
      * @return true if user input matches the given movieGoer details.
      */
     public static boolean confirmIdentity(MovieGoer movieGoer) {
@@ -133,6 +133,9 @@ public class InputController extends Controller {
         }
     }
 
+    /**
+     * Reinitialises the Scanner object.
+     */
     private static void clear() {
         scan = new Scanner(System.in);
     }
