@@ -21,8 +21,8 @@ public class AdminController extends Controller {
 
     /**
      * Search the list of admin accounts for an account with the given userId. 
-     * @param userId
-     * @return Admin
+     * @param userId userId of admin acccount.
+     * @return admin account.
      */
     public static Admin searchUserId(String userId) {
         for (Admin account : adminAccounts) {
@@ -34,17 +34,23 @@ public class AdminController extends Controller {
     
     /** 
      * Adds an admin account to the list of admin accounts.
-     * @param userId
-     * @param password
+     * @param userId userId of admin account to add.
+     * @param password password of admin account to add.
      */
     public static void addAdmin(String userId, String password) {
         adminAccounts.add(new Admin(userId, password));
     }
 
+    /**
+     * Deserialises the list of admin accounts.
+     */
     public static void loadAdminAccounts() {
         adminAccounts = loadData(FILEPATH);
     }
 
+    /**
+     * Serialises the list of admin accounts.
+     */
     public static void saveAdminAccounts() {
         saveData(adminAccounts, FILEPATH);
     }
