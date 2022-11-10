@@ -32,7 +32,8 @@ public class ShowTimes extends UI {
     private static final String THICK_DIVIDER = "\n=============================================================";
 
     /** 
-     * Displays all sessions of a particular movie across all cinemas, given in a list.
+     * Displays all sessions of a particular movie across all cinemas
+     * List of cineplexes lists of sessions is retrieved from {@link CineplexController}.
      * Movie-goer enters session info to book tickets for the session.
      * Calls {@link SessionController} to handle seats selection for requested session.
      * @param movieSessions list of sessions for a particular movie.
@@ -92,14 +93,13 @@ public class ShowTimes extends UI {
             System.out.println("\n" + RETURN_HOME);
         }
     }
-
     
     /**
-     * Displays all sessions of the given cinema.
-     * User enters session info to retrieve the session from database.
-     * Displays different options depending on whether user is admin or movie-goer.
-     * @param cinema 
-     * @param sessions
+     * Displays all sessions of the given cineplex.
+     * Retrieves list of sessions from {@link CineplexController}.
+     * Movie-goer enters session info to book tickets for the session.
+     * Calls {@link SessionController} to handle seats selection for requested session.
+     * @param cineplex cineplex to view showtimes of
      */
     public static void view(Cineplex cineplex) { 
         List<Session> sessions = CineplexController.getSessions(cineplex);
@@ -163,6 +163,7 @@ public class ShowTimes extends UI {
     
     /**
      * Displays all sessions of the given cinema.
+     * Admin chooses a session to configure its details.
      * @param cinema cinema screeening the sessions.
      */
     public static void view(Cinema cinema) {

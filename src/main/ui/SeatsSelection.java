@@ -19,7 +19,7 @@ public class SeatsSelection extends UI {
      * Movie-goers can see which seats are available and which are booked.
      * Movie-goers to enter seat IDs they request to book.
      * Session and seats to book are passed to {@link SessionController}.
-     * @param session 
+     * @param session session to view seats selection
      */
     public static void view(Session session) {
         Seating seating = session.getCinema().getSeating();

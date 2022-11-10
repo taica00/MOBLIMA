@@ -19,7 +19,7 @@ public class ReviewsList extends UI {
     /**
      * Displays all reviews of the given movie.
      * Movie-goer can choose to add a new review for the given movie. 
-     * @param movie 
+     * @param movie movie to view reviews of
      */
     public static void view(Movie movie) {
         List<Review> reviews = movie.getReviews();

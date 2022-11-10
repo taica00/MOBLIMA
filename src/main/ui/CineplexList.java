@@ -10,17 +10,17 @@ import main.models.Cineplex;
 /**
  * This class provides the UI to display the list of cinemas in the database.
  * @author Tai Chen An
- * @version 1.0 
- * @since 2022-11-08 
+ * @version 1.1 
+ * @since 2022-11-09
  */
 
 public class CineplexList extends UI {
 
     /**
-     * Displays the given list of cineplexes
-     * User chooses a cineplex to view showtimes
-     * @param cinemas list of cinemas to display.
-     * @param admin if user is admin or movie-goer.
+     * Retrieves all cineplexes from {@link CineplexController} and displays them.
+     * Movie-goer chooses a cineplex to view showtimes.
+     * Admin chooses a cineplex to view cinemas.
+     * @param admin if user is admin or movie-goer
      */
     public static void view(boolean admin) {
         List<Cineplex> cineplexes = CineplexController.getCineplexes();
@@ -41,6 +41,11 @@ public class CineplexList extends UI {
         }
     }
 
+    /**
+     * Displays all cinemas of the cineplex to an admin.
+     * Admin chooses a cinema to view its sessions.
+     * @param cineplex cineplex to display cinemas
+     */
     private static void viewCinemas(Cineplex cineplex) {
         int i = 1;
         List<Cinema> cinemas = cineplex.getCinemas();

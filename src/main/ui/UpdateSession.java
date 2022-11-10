@@ -10,8 +10,8 @@ import main.models.Session;
 /**
  * This class provides the UI for an admin to update session details.
  * @author Tai Chen An
- * @version 1.0 
- * @since 2022-11-08 
+ * @version 1.1 
+ * @since 2022-11-09 
  */
 
 public class UpdateSession extends UI {

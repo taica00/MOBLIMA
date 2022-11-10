@@ -15,7 +15,7 @@ public class MovieDetails extends UI {
     /**
      * Displays the details of the given movie. 
      * The user can choose to view the sessions or reviews of the given movie.
-     * @param movie
+     * @param movie movie to view details of
      */
     public static void view(Movie movie) {
         System.out.println(movie);

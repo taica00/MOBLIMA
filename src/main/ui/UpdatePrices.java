@@ -16,7 +16,7 @@ public class UpdatePrices extends UI {
      * If cinema class is valid, then prompts user for pricing category to update.
      */
     public static void view() {
-        String cinemaClassString = InputController.getString("Enter cinema class (replace space with underscore): ");
+        String cinemaClassString = InputController.getString("Enter cinema class: ");
         CinemaClass cinemaClass;
         try {
             cinemaClass = CinemaClass.valueOf(cinemaClassString.toUpperCase());
