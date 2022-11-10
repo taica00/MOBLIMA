@@ -3,7 +3,6 @@ package main.controllers;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import main.models.Cinema;
@@ -48,19 +47,16 @@ public class CineplexController extends Controller {
             }
             if (cineplexSessions.isEmpty()) 
                 continue;
-            cineplexSessions.sort(new Comparator<Session>() {
-                @Override
-                public int compare(Session s1, Session s2) {
-                    LocalDateTime s1DateTime = s1.getDateTime();
-                    LocalDateTime s2DateTime = s2.getDateTime();
-                    if (!s1DateTime.toLocalDate().equals(s2DateTime.toLocalDate()))
-                        return s1DateTime.compareTo(s2DateTime);
-                    CinemaClass s1CinemaClass = s1.getCinema().getCinemaClass();
-                    CinemaClass s2CinemaClass = s2.getCinema().getCinemaClass();
-                    if (s1CinemaClass != s2CinemaClass)
-                        return s1CinemaClass.compareTo(s2CinemaClass);
-                    return s1DateTime.compareTo(s2DateTime);
-                }
+            cineplexSessions.sort((x, y)->{
+                LocalDateTime xDateTime = x.getDateTime();
+                LocalDateTime yDateTime = y.getDateTime();
+                if (!xDateTime.toLocalDate().equals(yDateTime.toLocalDate()))
+                    return xDateTime.compareTo(yDateTime);
+                CinemaClass xCinemaClass = x.getCinema().getCinemaClass();
+                CinemaClass yCinemaClass = y.getCinema().getCinemaClass();
+                if (xCinemaClass != yCinemaClass)
+                    return xCinemaClass.compareTo(yCinemaClass);
+                return xDateTime.compareTo(yDateTime);
             });
             movieSessions.add(cineplexSessions);
         }
@@ -82,21 +78,18 @@ public class CineplexController extends Controller {
                     sessions.add(session);
             }
         }
-        sessions.sort(new Comparator<Session>() {
-            @Override
-            public int compare(Session s1, Session s2) {
-                if (!s1.getMovie().equals(s2.getMovie()))
-                    return s1.getMovie().getTitle().compareTo(s2.getMovie().getTitle());
-                LocalDateTime s1DateTime = s1.getDateTime();
-                LocalDateTime s2DateTime = s2.getDateTime();
-                if (!s1DateTime.toLocalDate().equals(s2DateTime.toLocalDate()))
-                    return s1DateTime.compareTo(s2DateTime);
-                CinemaClass s1CinemaClass = s1.getCinema().getCinemaClass();
-                CinemaClass s2CinemaClass = s2.getCinema().getCinemaClass();
-                if (s1CinemaClass != s2CinemaClass)
-                    return s1CinemaClass.compareTo(s2CinemaClass);
-                return s1DateTime.compareTo(s2DateTime);
-            }
+        sessions.sort((x,y)->{
+            if (!x.getMovie().equals(y.getMovie()))
+                return x.getMovie().getTitle().compareTo(y.getMovie().getTitle());
+            LocalDateTime xDateTime = x.getDateTime();
+            LocalDateTime yDateTime = y.getDateTime();
+            if (xDateTime.toLocalDate().equals(yDateTime.toLocalDate()))
+                return xDateTime.compareTo(yDateTime);
+            CinemaClass xCinemaClass = x.getCinema().getCinemaClass();
+            CinemaClass yCinemaClass = y.getCinema().getCinemaClass();
+            if (xCinemaClass != yCinemaClass)
+                return xCinemaClass.compareTo(yCinemaClass);
+            return xDateTime.compareTo(yDateTime);
         });
         return sessions;
     }

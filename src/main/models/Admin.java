@@ -25,8 +25,8 @@ public class Admin implements java.io.Serializable{
     /**
      * Creates a new admin account with the given userId and password.
      * The password is then hashed for security purposes.
-     * @param userId
-     * @param password
+     * @param userId userId of account to be created
+     * @param password password of account to be created.
      */
     public Admin(String userId, String password) {
         if (userId == null || userId.isBlank() || password == null || password.isEmpty())
@@ -36,7 +36,7 @@ public class Admin implements java.io.Serializable{
     }
 
     /** 
-     * @param password
+     * @param password password of account
      * @return true if input password matches the stored password.
      */
     public boolean verifyPassword(String password) {

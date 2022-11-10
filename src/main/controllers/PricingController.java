@@ -27,7 +27,7 @@ public class PricingController extends Controller {
      * Calculates the price of the given number of tickets for the given session.
      * Price of ticket is dependent on cinema class, date and time of the given session.
      * A 3D movie costs an additional $2 for each ticket. 
-     * @param session 
+     * @param session session of tickets booked.
      * @param numTickets total number of tickets to be booked.
      * @param seniors number of senior citizens.
      * @param students number of students.
@@ -51,15 +51,16 @@ public class PricingController extends Controller {
 
     /**
      * This method is called when an admin requests to configure the holiday dates.
-     * Calls {@link ConfigureHolidays}.
+     * Passes the set of holiday dates to {@link ConfigureHolidays}.
      */
     public static void configureHolidays() {
         ConfigureHolidays.view(holidays);
     }
 
     /**
-     * Adds a date to the list of holiday dates. 
-     * @param dateString
+     * Adds a date to the set of holiday dates. 
+     * Parses the given string into a {@link LocalDate}.
+     * @param dateString string value of date to be added to the set of holiday dates.
      */
     public static void addHolidayDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
@@ -69,7 +70,7 @@ public class PricingController extends Controller {
     
     /** 
      * Removes a date from the list of holiday dates.
-     * @param date
+     * @param date date to remove from the set of holidays.
      */
     public static void removeHolidayDate(LocalDate date) {
         holidays.remove(date);
@@ -78,7 +79,7 @@ public class PricingController extends Controller {
     /**
      * Determines if given date and time is eligible for senior citizen or student pricing.
      * Senior citizen or student pricing is only eligible from Monday to Friday, before 6pm.
-     * @param dateTime
+     * @param dateTime date and time of session.
      * @return true if the given date and time is eligible for senior citizen or student pricing.
      */
     public static boolean eligibleForConcession(LocalDateTime dateTime) {
@@ -90,9 +91,9 @@ public class PricingController extends Controller {
      * Calculates the total price for the given quantity of the given price category of 
      * tickets each costing the given ticket price.
      * Prints out the calculation details.
-     * @param ticketPrice
-     * @param priceCat
-     * @param quantity
+     * @param ticketPrice price of each ticket.
+     * @param priceCat pricing category of the ticket.
+     * @param quantity number of tickets.
      * @return total price for the tickets.
      */
     private static double calculateAndPrintPrice(double ticketPrice, String priceCat, int quantity) {
@@ -106,17 +107,23 @@ public class PricingController extends Controller {
     /**
      * Determine if the given date is a peak date.
      * Friday to Sunday and holidays are peak dates.
-     * @param date
+     * @param date date of session.
      * @return true if given date is a peak date.
      */
     private static boolean isPeakPricing(LocalDate date) {
         return date.getDayOfWeek().getValue() >= 5 || holidays.contains(date);
     }
 
+    /**
+     * Deserialises the set of holiday dates.
+     */
     public static void loadHolidays() {
         holidays = loadData(FILEPATH);
     }
 
+    /**
+     * Serialises the set of holiday dates.
+     */
     public static void saveHolidays() {
         saveData(holidays, FILEPATH);
     }

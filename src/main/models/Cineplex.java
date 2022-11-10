@@ -37,7 +37,7 @@ public class Cineplex implements java.io.Serializable {
 
     /** 
      * Adds a cinema theatre to this cineplex.
-     * @param cinema
+     * @param cinema cinema to be added to this cineplex
      */
     public void addCinema(Cinema cinema) {
         cinemas.add(cinema);
@@ -51,9 +51,10 @@ public class Cineplex implements java.io.Serializable {
     }
 
     /** 
-     * Searches the list of cinemas for the cinema at the given location.
-     * @param location 
-     * @return Cinema
+     * Searches the list of cinemas for a cinema with the given cinema class and number.
+     * @param cinemaClass class of the cinema to search for
+     * @param cinemaNumber number of the cinema to search for
+     * @return Cinema found or null if not found
      */
     public Cinema getCinema(CinemaClass cinemaClass, int cinemaNumber) {
         for (Cinema cinema : cinemas) {

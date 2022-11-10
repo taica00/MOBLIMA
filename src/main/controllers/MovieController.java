@@ -72,7 +72,7 @@ public class MovieController extends Controller {
 
     /**
      * Search for a movie that contains the given string. 
-     * @param movieTitle
+     * @param movieTitle movie title to search for.
      * @return Movie containing the given string.
      */
     public static Movie searchMovie(String movieTitle) {
@@ -85,12 +85,12 @@ public class MovieController extends Controller {
 
     /**
      * Creates a new Movie with the given fields and then adds it to the list of movies. 
-     * @param title
-     * @param rating
-     * @param showingStatus
-     * @param director
-     * @param casts
-     * @param sypnosis
+     * @param title title of movie
+     * @param rating rating of movie
+     * @param showingStatus showing status of movie
+     * @param director director of movie
+     * @param casts casts of movie
+     * @param sypnosis sypnosis of movie
      */
     public static void addMovie(String title, String rating, String showingStatus, String director, String casts, String sypnosis) {
         Movie movie = new Movie(title, rating, MovieStatus.valueOf(showingStatus), sypnosis, director, casts);
@@ -99,17 +99,23 @@ public class MovieController extends Controller {
     }
 
     /**
-     * removes a movie from the list at the given index. 
-     * @param index
+     * Removes a movie from the list at the given index. 
+     * @param index index of movie to remove.
      */
     public static void removeMovie(int index) {
         movies.remove(index);
     }
 
+    /**
+     * Deserialises the list of movies.
+     */
     public static void loadMovies() {
         movies = loadData(FILEPATH + "movies.ser");
     }
 
+    /**
+     * Serialises the list of movies.
+     */
     public static void saveMovies() {
         saveData(movies, FILEPATH + "movies.ser");
     }

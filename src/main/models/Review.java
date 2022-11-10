@@ -29,9 +29,9 @@ public class Review implements java.io.Serializable{
     /**
      * Creates a new Review with the given fields.
      * A review may have only the rating of the movie and no text content.
-     * @param reviewerName
-     * @param reviewContent
-     * @param rating
+     * @param reviewerName name of reviewer
+     * @param reviewContent content of review
+     * @param rating reviewer rating for movie
      */
     public Review(String reviewerName, String reviewContent, int rating) {
         if (rating < 1 || rating > 5)

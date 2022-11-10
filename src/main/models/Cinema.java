@@ -65,13 +65,9 @@ public class Cinema implements java.io.Serializable {
         generateCinemaCode();
     }
 
-    /** 
-     * Creates a showtime {@link Session} with the given inputs.
-     * The session is then added to this cinema.
-     * @param movie
-     * @param dateTime
-     * @param cinemaClass
-     * @param is3D
+    /**
+     * Adds the given session to this cinema.
+     * @param session session to be added
      */
     public void addSession(Session session) {
         sessions.add(session);
@@ -93,15 +89,15 @@ public class Cinema implements java.io.Serializable {
     }
 
     /**
-     * Removes the given session from the list of sessions. 
-     * @param session
+     * Removes the given session from this cinema.
+     * @param session session to be removed
      */
     public void removeSession(Session session) {
         sessions.remove(session);
     }
 
     /**
-     * @return string of cineplex location and cinema class of this cinema.
+     * @return string of cineplex location, cinema class and number of this cinema.
      */
     @Override
     public String toString() {
@@ -123,40 +119,43 @@ public class Cinema implements java.io.Serializable {
     }
 
     /**
-     * @return class of cinema.
+     * @return class of this cinema
      */
     public CinemaClass getCinemaClass() {
         return cinemaClass;
     }
 
     /** 
-     * @return List<Session>
+     * @return list of sessions for this cinema
      */
     public List<Session> getSessions() {
         return sessions;
     }
 
     /** 
-     * @return cinemaCode of cinema.
+     * @return cinemaCode of this cinema
      */
     public String getCinemaCode() {
         return cinemaCode;
     }
 
     /** 
-     * @return Cineplex that the cinema is at.
+     * @return Cineplex that this cinema is at
      */
     public Cineplex getCineplex() {
         return cineplex;
     }
 
     /** 
-     * @return seating layout of this session
+     * @return seating layout of this cinema
      */
     public Seating getSeating() {
         return seating;
     }
 
+    /**
+     * @return number of this cinema
+     */
     public int getCinemaNumber() {
         return cinemaNumber;
     }

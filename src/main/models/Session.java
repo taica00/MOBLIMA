@@ -36,10 +36,10 @@ public class Session implements java.io.Serializable {
     /**
      * Creates a new Session with the given fields.
      * The seating layout is determined by the given cinema class.
-     * @param cinema
-     * @param movie
-     * @param dateTime
-     * @param is3D
+     * @param cinema cinema that is hosting the session
+     * @param movie movie that the session is screening
+     * @param dateTime date and time of the session
+     * @param is3D if session is a 3D screening
      */
     public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, boolean is3D) {
         if (cinema == null || movie == null || dateTime == null)

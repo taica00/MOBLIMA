@@ -29,7 +29,7 @@ public class Seating implements java.io.Serializable {
     /**
      * Creates a new Seating with the given cinemaClass.
      * The fields for this seating are provided by methods in {@link CinemaClass}.
-     * @param cinemaClass
+     * @param cinemaClass class of the cinema
      */
     public Seating(CinemaClass cinemaClass) {
         int rows = cinemaClass.rows();
@@ -40,8 +40,8 @@ public class Seating implements java.io.Serializable {
 
     /**
      * Books a seat with the given row and column indexes. 
-     * @param row
-     * @param col
+     * @param row index of row
+     * @param col index of column
      * @return true if seat is not taken.
      */
     public boolean bookSeat(char row, int col) {
@@ -53,8 +53,8 @@ public class Seating implements java.io.Serializable {
 
     /**
      * Unbooks a seat in the case where movie-goer does not complete payment. 
-     * @param row
-     * @param col
+     * @param row index of row
+     * @param col index of column
      */
     public void unBookSeat(char row, int col) {
         seats[row-'A'][col-1] = 0;

@@ -47,10 +47,10 @@ public class MovieGoer implements java.io.Serializable {
      * None of the fields should be empty.
      * The mobile number must be 8 to 15 digits long.
      * The card number must be 8 to 19 digits long.
-     * @param name
-     * @param mobile
-     * @param email
-     * @param cardNumber
+     * @param name name of movie-goer
+     * @param mobile mobile number of movie-goer
+     * @param email email address of movie-goer
+     * @param cardNumber card number of movie-goer
      */
     public MovieGoer(String name, String mobile, String email, String cardNumber) {
         if (name == null || name.isBlank() || mobile == null || email == null || email.isBlank() || cardNumber == null)
@@ -81,14 +81,12 @@ public class MovieGoer implements java.io.Serializable {
         return name;
     }
 
-    
     /** 
      * @return mobile number of this movie-goer.
      */
     public String getMobile() {
         return mobile;
     }
-
     
     /** 
      * @return email address of this movie-goer.
@@ -97,7 +95,6 @@ public class MovieGoer implements java.io.Serializable {
         return email;
     }
 
-    
     /** 
      * @return masked card number of this movie-goer.
      */
@@ -105,7 +102,6 @@ public class MovieGoer implements java.io.Serializable {
         return "*" + cardNumber.substring(cardNumber.length()-4);
     }
 
-    
     /** 
      * @return list of transactions of this movie-goer.
      */

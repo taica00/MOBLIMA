@@ -4,8 +4,8 @@ package main.models;
  * Cinema classes for showtime sessions.
  * Each class has different seating layouts and ticket prices.
  * @author Tai Chen An
- * @version 1.0 
- * @since 2022-11-06 
+ * @version 1.1 
+ * @since 2022-11-09 
  */
 
 public enum CinemaClass implements SeatingLayout {
@@ -44,11 +44,11 @@ public enum CinemaClass implements SeatingLayout {
 
     /**
      * Creates a CinemaClass value with the given fields.
-     * @param name
-     * @param rows
-     * @param columns
-     * @param aisles
-     * @param ticketPrices
+     * @param name name of class
+     * @param rows rows of seats
+     * @param columns columns of seats
+     * @param aisles index of aisles
+     * @param ticketPrices ticket prices for each pricing category
      */
     CinemaClass(String name, int rows, int columns, int[] aisles, double[] ticketPrices) {
         this.name = name;
@@ -66,18 +66,33 @@ public enum CinemaClass implements SeatingLayout {
         ticketPrices[index] = price;
     }
 
+    /**
+     * @return number of rows
+     */
     @Override
     public int rows() {return rows;}
 
+    /**
+     * @return number of columns
+     */
     @Override
     public int columns() {return columns;}
 
+    /**
+     * @return index values of aisles
+     */
     @Override
     public int[] aisles() {return aisles;}
 
+    /**
+     * @return ticket prices for each pricing category
+     */
     @Override
     public double[] ticketPrices() {return ticketPrices;}
 
+    /**
+     * @return name of cinema class
+     */
     @Override
     public String toString() {return name;}
 }

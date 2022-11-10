@@ -54,12 +54,12 @@ public class Movie implements java.io.Serializable {
     /**
      * Creates a movie with the given attributes.
      * None of the fields should be blank.
-     * @param title
-     * @param rating
-     * @param showingStatus
-     * @param sypnopsis
-     * @param director
-     * @param casts
+     * @param title title of moive
+     * @param rating rating of movie
+     * @param showingStatus showing status of movie
+     * @param sypnopsis sypnosis of movie
+     * @param director director of movie
+     * @param casts casts of movie
      */
     public Movie(String title, String rating, MovieStatus showingStatus, String sypnopsis, String director, String casts) {
         if (title == null || sypnopsis == null || director == null || casts == null)
@@ -97,7 +97,7 @@ public class Movie implements java.io.Serializable {
     
     /**
      * Adds a {@link Review} to the list of reviews for this movie.
-     * @param review
+     * @param review review to be added
      */
     public void addReview(Review review) {
         reviews.add(review);

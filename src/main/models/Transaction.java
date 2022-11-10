@@ -37,9 +37,9 @@ public class Transaction implements java.io.Serializable {
     /**
      * Creates a new Transaction with the given fields.
      * The transaction ID is then generated. 
-     * @param session
-     * @param seats
-     * @param price
+     * @param session session where the given seats are booked
+     * @param seats list of seats booked
+     * @param price price of all seats booked
      */
     public Transaction(Session session, List<String> seats, double price) {
         if (session == null || seats == null)
