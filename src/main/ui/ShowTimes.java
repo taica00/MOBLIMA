@@ -168,6 +168,7 @@ public class ShowTimes extends UI {
     public static void view(Cinema cinema) {
         List<Session> sessions = cinema.getSessions();
         int i = 1;
+        System.out.println();
         for (Session session : sessions) {
             System.out.println((i++) + ". " + session.getDateTime() + " " + session.getMovie().getTitle());
         }

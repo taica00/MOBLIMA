@@ -48,7 +48,8 @@ public class CineplexList extends UI {
             System.out.print((i++) + ". ");
             System.out.println(cinema.getCinemaClass() + " " + cinema.getCinemaNumber());
         }
-        int choice = InputController.getInt(1, cinemas.size(), "Select index of cinema to view sessions.");
+        System.out.println();
+        int choice = InputController.getInt(1, cinemas.size(), "Select index of cinema to view sessions: ");
         ShowTimes.view(cinemas.get(choice-1));
     }
 }
