@@ -87,6 +87,11 @@ public class Movie implements java.io.Serializable {
         sb.append("Director: " + director + "\n");
         sb.append("Cast: " + casts + "\n");
         sb.append("Sypnopsis: " + sypnopsis + "\n");
+        sb.append("Reviewer Rating: ");
+        if (reviews.size() <= 1)
+            sb.append("NA\n");
+        else
+            sb.append(getReviewerRating() + "\n");
         return sb.toString();
     }
     
