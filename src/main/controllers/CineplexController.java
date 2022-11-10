@@ -12,7 +12,6 @@ import main.models.Cineplex;
 import main.models.Movie;
 import main.models.MovieStatus;
 import main.models.Session;
-import main.ui.ShowTimes;
 
 /**
  * This class manages user actions pertaining to the {@link Cineplex} and {@link Cinema} class.
@@ -32,8 +31,9 @@ public class CineplexController extends Controller {
 
     /** 
      * Search all cinemas for sessions screening the given movie.
-     * Calls {@link ShowTimes} to display these sessions.
-     * @param movie
+     * Initialise a list to store lists of sessions for each cineplex.
+     * Within each cineplex sessions, sort sessions according to date, then cinema class, then time.
+     * @param movie movie to search session screenings for.
      * @return List of list of sessions. Each list in the list represents sessions of a cineplex.
      */
     public static List<List<Session>> getSessions(Movie movie) {
@@ -67,6 +67,11 @@ public class CineplexController extends Controller {
         return movieSessions;
     }
 
+    /**
+     * 
+     * @param cineplex
+     * @return
+     */
     public static List<Session> getSessions(Cineplex cineplex) {
         List<Session> sessions = new ArrayList<>();
         for (Cinema cinema : cineplex.getCinemas()) {
@@ -153,25 +158,17 @@ public class CineplexController extends Controller {
         }
         return null;
     }
-    
-    /**
-     * Searches the list of cineplexes for a cinema that matches the given fields.
-     * @param cinemaString
-     * @return Cinema that matches the given inputs or null if cinema is not found.
-     */
-    public static Cinema searchCinema(CinemaClass cinemaClass, int cinemaNumber) {
-        for (Cineplex cineplex : cineplexes) {
-            Cinema cinema = cineplex.getCinema(cinemaClass, cinemaNumber);
-            if (cinema != null)
-                return cinema;
-        }
-        return null;
-    }
 
+    /**
+     * Deserialises the list of cineplexes.
+     */
     public static void loadCineplexes() {
         cineplexes = loadData(FILEPATH);
     }
 
+    /**
+     * Serialises the list of cineplexes.
+     */
     public static void saveCineplexes() {
         saveData(cineplexes, FILEPATH);
     }
