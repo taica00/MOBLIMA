@@ -1,5 +1,6 @@
 package main.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,11 +37,6 @@ public class Cinema implements java.io.Serializable {
     private CinemaClass cinemaClass;
 
     /**
-     * The seating layout of this cinema, determined by its cinema class.
-     */
-    private Seating seating;
-
-    /**
      * A list of showtime sessions that is held at this cinema.
      */
     private List<Session> sessions;
@@ -61,16 +57,18 @@ public class Cinema implements java.io.Serializable {
         this.cinemaNumber = cinemaNumber;
         this.cinemaClass = cinemaClass;
         sessions = new ArrayList<>();  
-        seating = new Seating(this.cinemaClass);
         generateCinemaCode();
     }
 
     /**
-     * Adds the given session to this cinema.
-     * @param session session to be added
+     * Adds a session with the given fields to the list of sessions for this cinema.
+     * A new Seating is generate with this cinema class.
+     * @param movie movie of session
+     * @param dateTime date and time of session
+     * @param is3D if session is 3D screening
      */
-    public void addSession(Session session) {
-        sessions.add(session);
+    public void addSession(Movie movie, LocalDateTime dateTime, boolean is3D) {
+        sessions.add(new Session(this, movie, dateTime, new Seating(cinemaClass), is3D));
     }
 
     /**
@@ -144,13 +142,6 @@ public class Cinema implements java.io.Serializable {
      */
     public Cineplex getCineplex() {
         return cineplex;
-    }
-
-    /** 
-     * @return seating layout of this cinema
-     */
-    public Seating getSeating() {
-        return seating;
     }
 
     /**

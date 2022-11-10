@@ -18,7 +18,6 @@ import main.models.Cinema;
 import main.models.CinemaClass;
 import main.models.Cineplex;
 import main.models.Movie;
-import main.models.Session;
 
 public class SessionsScrapper extends Populator{
     private static List<Cineplex> cineplexes;
@@ -93,7 +92,7 @@ public class SessionsScrapper extends Populator{
         if (cinema == null)
             System.out.println(cinemaTheatre);
         System.out.println(dateTime + " " + movie.getTitle() + " " + cinema);
-        cinema.addSession(new Session(cinema, movie, dateTime, false));
+        cinema.addSession(movie, dateTime, false);
     }
 
     private static String formatLink(String link) {

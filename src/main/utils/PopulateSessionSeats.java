@@ -25,7 +25,7 @@ public class PopulateSessionSeats extends Populator {
 
     private static void helper(Session session) {
         Random rd = new Random();
-        Seating seating = session.getCinema().getSeating();
+        Seating seating = session.getSeating();
         int rows = seating.getNumRows();
         int cols = seating.getNumCols();
         int numSeatsToBook = rd.nextInt(cols * rows * 1/2);

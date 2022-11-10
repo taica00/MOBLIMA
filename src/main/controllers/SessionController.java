@@ -83,9 +83,9 @@ public class SessionController extends Controller {
         for (String seat : seats) {
             char row = seat.charAt(0);
             String col = seat.substring(1);
-            if (!Character.isUpperCase(row) || !StringUtils.isNumeric(col) || Integer.parseInt(col) == 0 || Integer.parseInt(col) > session.getCinema().getSeating().getNumCols()) 
+            if (!Character.isUpperCase(row) || !StringUtils.isNumeric(col) || Integer.parseInt(col) == 0 || Integer.parseInt(col) > session.getSeating().getNumCols()) 
                 System.out.println(seat + " is not a valid selection.");
-            else if (!session.getCinema().getSeating().bookSeat(row, Integer.parseInt(col))) 
+            else if (!session.getSeating().bookSeat(row, Integer.parseInt(col))) 
                 System.out.println("Seat " + seat + " is occupied");
             else
                 bookedSeats.add(seat);
@@ -107,7 +107,7 @@ public class SessionController extends Controller {
         for (String seat : seats) {
             char row = seat.charAt(0);
             int col = Integer.parseInt(seat.substring(1));
-            session.getCinema().getSeating().unBookSeat(row, col);
+            session.getSeating().unBookSeat(row, col);
         }
     }
  

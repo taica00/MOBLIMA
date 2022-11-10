@@ -9,6 +9,7 @@ import main.models.CinemaClass;
 import main.models.Cineplex;
 import main.models.Movie;
 import main.models.MovieStatus;
+import main.models.Seating;
 import main.models.Session;
 
 public class TicketPricingTests {
@@ -23,7 +24,7 @@ public class TicketPricingTests {
         
         // configure holiday date and ticket price shown correctly
         LocalDateTime dateTime = LocalDateTime.parse("0211221200", formatter);
-        Session testSession = new Session(standardCinema, testMovie, dateTime, false);
+        Session testSession = new Session(standardCinema, testMovie, dateTime, new Seating(CinemaClass.STANDARD),false);
         System.out.println("Before configuring as holiday:");
         PricingController.getTicketsPrice(testSession, 1, 0, 0);
         PricingController.addHolidayDate("021122"); 
@@ -32,9 +33,9 @@ public class TicketPricingTests {
 
         // booking on different days of the week
         LocalDateTime nonPeakDateTime = LocalDateTime.parse("0311221200", formatter);
-        Session nonPeakSession = new Session(standardCinema, testMovie, nonPeakDateTime, false);
+        Session nonPeakSession = new Session(standardCinema, testMovie, nonPeakDateTime, new Seating(CinemaClass.STANDARD),false);
         LocalDateTime peakDateTime = LocalDateTime.parse("0511221200", formatter);
-        Session peakSession = new Session(standardCinema, testMovie, peakDateTime, false);
+        Session peakSession = new Session(standardCinema, testMovie, peakDateTime, new Seating(CinemaClass.STANDARD), false);
         System.out.println("\nMon-Thurs pricing:");
         PricingController.getTicketsPrice(nonPeakSession, 1, 0, 0);
         System.out.println("\nFri-Sun pricing:");
@@ -42,8 +43,8 @@ public class TicketPricingTests {
 
         // booking different suites of cinema
         Session standardSession = nonPeakSession;
-        Session premiereSession = new Session(premiereCinema, testMovie, nonPeakDateTime, false);
-        Session imaxSession = new Session(imaxCinema, testMovie, nonPeakDateTime, false);
+        Session premiereSession = new Session(premiereCinema, testMovie, nonPeakDateTime, new Seating(CinemaClass.PREMIERE),false);
+        Session imaxSession = new Session(imaxCinema, testMovie, nonPeakDateTime, new Seating(CinemaClass.IMAX),false);
         System.out.println("\nStandard session:");
         PricingController.getTicketsPrice(standardSession, 1, 0, 0);
         System.out.println("\npremiere session:");

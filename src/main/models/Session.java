@@ -29,6 +29,11 @@ public class Session implements java.io.Serializable {
     private LocalDateTime dateTime;
 
     /**
+     * Seating plan for the session.
+     */
+    private Seating seating;
+
+    /**
      * Indicates whether the session is a 3D screening.
      */
     private boolean is3D;
@@ -39,14 +44,16 @@ public class Session implements java.io.Serializable {
      * @param cinema cinema that is hosting the session
      * @param movie movie that the session is screening
      * @param dateTime date and time of the session
+     * @param seating seating plan for the session
      * @param is3D if session is a 3D screening
      */
-    public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, boolean is3D) {
+    public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, Seating seating, boolean is3D) {
         if (cinema == null || movie == null || dateTime == null)
             throw new IllegalArgumentException("Fields cannot be null");
         this.cinema = cinema;
         this.movie = movie;
         this.dateTime = dateTime;
+        this.seating = seating;
         this.is3D = is3D;
     }
 
@@ -97,14 +104,21 @@ public class Session implements java.io.Serializable {
     }
 
     /** 
-     * @return date and time of this session.
+     * @return date and time of this session
      */
     public LocalDateTime getDateTime() {
         return dateTime;
     }
+
+    /**
+     * @return seating plan for the session
+     */
+    public Seating getSeating() {
+        return seating;
+    }
   
     /** 
-     * @param dateTime date and time of this session.
+     * @param dateTime date and time of this session
      */
     public void setDateTime(LocalDateTime dateTime) {
         if (dateTime == null)

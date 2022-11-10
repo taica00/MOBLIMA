@@ -114,7 +114,7 @@ public class CineplexController extends Controller {
         Movie movie = MovieController.searchMovie(movieTitle);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(PATTERN);
         LocalDateTime dateTime = LocalDateTime.parse(date+time, formatter);
-        cinema.addSession(new Session(cinema, movie, dateTime, is3D));
+        cinema.addSession(movie, dateTime, is3D);
     }
 
     /**
