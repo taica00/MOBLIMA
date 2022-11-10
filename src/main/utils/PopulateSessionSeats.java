@@ -1,10 +1,10 @@
 package main.utils;
 
+import java.util.List;
 import java.util.Random;
 
-import main.controllers.CineplexController;
-import main.controllers.PricingController;
 import main.controllers.TransactionsController;
+import main.models.Cinema;
 import main.models.Cineplex;
 import main.models.Seating;
 import main.models.Session;
@@ -12,15 +12,14 @@ import main.models.Session;
 public class PopulateSessionSeats extends Populator {  
     public static void main(String[] args) {
         TransactionsController.loadTicketSales();
-        PricingController.loadHolidays();
-        CineplexController.loadCineplexes();
-        for (Cineplex cineplex : CineplexController.getCineplexes()) {
-            for (Session session : CineplexController.getSessions(cineplex)) {
-                helper(session);
+        List<Cineplex> cineplexes = deserialise("cineplexes.ser");
+        for (Cineplex cineplex : cineplexes) {
+            for (Cinema cinema : cineplex.getCinemas()) {
+                for (Session session : cinema.getSessions())
+                    helper(session);
             }
         }
-        CineplexController.saveCineplexes();
-        TransactionsController.saveTicketSales();
+        serialize(cineplexes, "cineplexes.ser");
     }
 
     private static void helper(Session session) {
