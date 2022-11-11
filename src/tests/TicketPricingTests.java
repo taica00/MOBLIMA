@@ -9,7 +9,6 @@ import main.models.CinemaClass;
 import main.models.Cineplex;
 import main.models.Movie;
 import main.models.MovieStatus;
-import main.models.Seating;
 import main.models.Session;
 
 public class TicketPricingTests {
