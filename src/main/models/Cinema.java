@@ -62,7 +62,6 @@ public class Cinema implements java.io.Serializable {
 
     /**
      * Adds a session with the given fields to the list of sessions for this cinema.
-     * A new Seating is generate with this cinema class.
      * @param movie movie of session
      * @param dateTime date and time of session
      * @param is3D if session is 3D screening

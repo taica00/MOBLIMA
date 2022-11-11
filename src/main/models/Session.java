@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
  * Represents a showtime session of a movie.
  * A session can only be screening one movie.
  * @author Tai Chen An
- * @version 1.0 
- * @since 2022-11-06 
+ * @version 1.1 
+ * @since 2022-11-11 
  */
 
 public class Session implements java.io.Serializable {
@@ -40,7 +40,7 @@ public class Session implements java.io.Serializable {
 
     /**
      * Creates a new Session with the given fields.
-     * The seating layout is determined by the given cinema class.
+     * A new Seating object is created with the given cinema's cinema class.
      * @param cinema cinema that is hosting the session
      * @param movie movie that the session is screening
      * @param dateTime date and time of the session
