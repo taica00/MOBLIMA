@@ -44,16 +44,15 @@ public class Session implements java.io.Serializable {
      * @param cinema cinema that is hosting the session
      * @param movie movie that the session is screening
      * @param dateTime date and time of the session
-     * @param seating seating plan for the session
      * @param is3D if session is a 3D screening
      */
-    public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, Seating seating, boolean is3D) {
+    public Session(Cinema cinema, Movie movie, LocalDateTime dateTime, boolean is3D) {
         if (cinema == null || movie == null || dateTime == null)
             throw new IllegalArgumentException("Fields cannot be null");
         this.cinema = cinema;
         this.movie = movie;
         this.dateTime = dateTime;
-        this.seating = seating;
+        this.seating = new Seating(cinema.getCinemaClass());
         this.is3D = is3D;
     }
 

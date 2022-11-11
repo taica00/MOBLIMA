@@ -68,7 +68,7 @@ public class Cinema implements java.io.Serializable {
      * @param is3D if session is 3D screening
      */
     public void addSession(Movie movie, LocalDateTime dateTime, boolean is3D) {
-        sessions.add(new Session(this, movie, dateTime, new Seating(cinemaClass), is3D));
+        sessions.add(new Session(this, movie, dateTime, is3D));
     }
 
     /**
