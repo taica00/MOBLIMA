@@ -173,6 +173,8 @@ public class ShowTimes extends UI {
         for (Session session : sessions) {
             System.out.println((i++) + ". " + session.getDateTime() + " " + session.getMovie().getTitle());
         }
+        if (sessions.isEmpty())
+            System.out.println("No sessions for this cinema.\n");
         System.out.println("\n1. Create showtime | 2. Update showtime | 3. Remove showtime | 4. Return to admin menu\n");
         int choice = InputController.getInt(1, 4, "Enter your option: ");
         if (choice == 4)
@@ -194,11 +196,11 @@ public class ShowTimes extends UI {
                 }
                 break;
             case 2: 
-                choice = InputController.getInt(1, sessions.size(), "Enter index of session to update");
+                choice = InputController.getInt(1, sessions.size(), "Enter index of session to update: ");
                 UpdateSession.view(sessions.get(choice-1));
                 break;
             case 3: 
-                choice = InputController.getInt(1, sessions.size(), "Enter index of session to remove");
+                choice = InputController.getInt(1, sessions.size(), "Enter index of session to remove: ");
                 sessions.remove(choice-1);
                 System.out.println("Cinema showtime removed. " + RETURN_ADMIN);
                 break;

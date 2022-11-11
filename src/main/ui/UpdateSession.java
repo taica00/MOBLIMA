@@ -62,7 +62,7 @@ public class UpdateSession extends UI {
                 case "time": 
                     String time = InputController.getNumericString("Enter time in HHmm format: ", 4, 4);
                     try {
-                        SessionController.updateDate(session, time);
+                        SessionController.updateTime(session, time);
                         System.out.println("Successfully updated session time.");
                     } catch (DateTimeParseException e) {
                         System.out.println("Invalid time format. Time not updated.");
