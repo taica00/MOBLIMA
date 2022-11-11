@@ -105,6 +105,14 @@ public class MovieController extends Controller {
     public static void removeMovie(int index) {
         movies.remove(index);
     }
+    
+    /**
+     * Removes the given movie from the list of movies
+     * @param movie movie to remove.
+     */
+    public static void removeMovie(Movie movie) {
+        movies.remove(movie);
+    }
 
     /**
      * Deserialises the list of movies.

@@ -58,7 +58,7 @@ public class MovieRanking extends MovieList {
                 break;
             case 2: 
                 listIndex = InputController.getInt(1, movies.size(), "Enter list number of movie to remove: "); 
-                MovieController.removeMovie(listIndex-1);
+                MovieController.removeMovie(movies.get(listIndex-1));
                 System.out.println("Movie listing removed. Returning to admin menu.");
                 break;
             case 3: break;
