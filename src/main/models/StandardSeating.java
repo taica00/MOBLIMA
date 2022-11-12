@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Represents the seating layout of a cinema theatre.
+ * Represents a standard seating of a cinema theatre.
  * 
  * @author Tai Chen An
  * @version 1.1 

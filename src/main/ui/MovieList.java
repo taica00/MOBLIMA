@@ -26,7 +26,7 @@ public class MovieList extends UI {
         System.out.println("List of movies:");
         int i = 1;
         for (Movie movie : movies) 
-            System.out.println((i++) + ". " + movie.getTitle());
+            System.out.println((i++) + ". " + movie.getTitle() + " (" + movie.getRating() + ")");
         if (admin) 
             adminOptions(movies);
         else 
