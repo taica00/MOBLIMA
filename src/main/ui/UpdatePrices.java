@@ -28,10 +28,10 @@ public class UpdatePrices extends UI {
             return;
         }
         System.out.println("\nSelect pricing category to change: ");
-        System.out.println("1. Senior Citizen (Mon-Fri before 6pm)");
-        System.out.println("2. Student (Mon-Fri before 6pm)");
-        System.out.println("3. Non-peak (Mon-Thurs)");
-        System.out.println("4. Peak (Fri-Sun/PH)");
+        System.out.println("1. Senior Citizen (Mon-Fri before 6pm): $" + cinemaClass.ticketPrices()[0]);
+        System.out.println("2. Student (Mon-Fri before 6pm): $" + cinemaClass.ticketPrices()[1]);
+        System.out.println("3. Non-peak (Mon-Thurs): $" + cinemaClass.ticketPrices()[2]);
+        System.out.println("4. Peak (Fri-Sun/PH): $" + cinemaClass.ticketPrices()[3]);
         int choice = InputController.getInt(1, 4, "\nSelect an option: ");
         double price = InputController.getDouble("Enter new price: ");
         cinemaClass.setPrice(choice-1, price);
