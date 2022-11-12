@@ -32,7 +32,7 @@ public enum CinemaClass implements SeatingLayout {
 
     /**
      * An array holding the column indexes of where aisles would be.
-     * Used for printing {@link Seating}.
+     * Used for printing {@link StandardSeating}.
      */
     private int[] aisles;
 

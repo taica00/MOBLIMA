@@ -52,7 +52,7 @@ public class Session implements java.io.Serializable {
         this.cinema = cinema;
         this.movie = movie;
         this.dateTime = dateTime;
-        this.seating = new Seating(cinema.getCinemaClass());
+        this.seating = new StandardSeating(cinema.getCinemaClass());
         this.is3D = is3D;
     }
 

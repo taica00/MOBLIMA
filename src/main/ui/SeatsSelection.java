@@ -23,7 +23,7 @@ public class SeatsSelection extends UI {
      */
     public static void view(Session session) {
         Seating seating = session.getSeating();
-        System.out.println(seating);
+        seating.displaySeating();
         String seats = InputController.getString("Enter seat IDs to book, separated by spaces, e.g. F1 F2 F3:\n");
         SessionController.bookSeats(session, seats.split(" "));  
     }
