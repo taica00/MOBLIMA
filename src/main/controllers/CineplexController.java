@@ -158,6 +158,11 @@ public class CineplexController extends Controller {
      */
     public static void loadCineplexes() {
         cineplexes = loadData(FILEPATH);
+        for (Cineplex cineplex : cineplexes) {
+            for (Cinema cinema : cineplex.getCinemas()) 
+                for (Session session : cinema.getSessions())
+                    session.setMovie(MovieController.searchMovie(session.getMovie().getTitle()));
+        }
     }
 
     /**

@@ -104,7 +104,7 @@ public class ShowTimes extends UI {
     public static void view(Cineplex cineplex) { 
         List<Session> sessions = CineplexController.getSessions(cineplex);
         if (sessions.isEmpty()) {
-            System.out.println("No showtimes available for this cinema.");
+            System.out.println("No showtimes available for this cineplex.");
             return;
         }
         LocalDate date = null;

@@ -30,8 +30,8 @@ public class MOBLIMA {
      * Deserialises the database of entities.
      */
     private static void loadState() {
-        CineplexController.loadCineplexes();
         MovieController.loadMovies();
+        CineplexController.loadCineplexes();
         TransactionsController.loadMovieGoers();
         TransactionsController.loadTicketSales();
         PricingController.loadHolidays();
@@ -42,8 +42,8 @@ public class MOBLIMA {
      * Serialises the database of entities.
      */
     private static void saveState() {
-        CineplexController.saveCineplexes();
         MovieController.saveMovies();
+        CineplexController.saveCineplexes();
         TransactionsController.saveMovieGoers();
         TransactionsController.saveTicketSales();
         PricingController.saveHolidays();
