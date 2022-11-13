@@ -1,5 +1,6 @@
 package main.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -81,15 +82,15 @@ public class CineplexController extends Controller {
         sessions.sort((x,y)->{
             if (!x.getMovie().equals(y.getMovie()))
                 return x.getMovie().getTitle().compareTo(y.getMovie().getTitle());
-            LocalDateTime xDateTime = x.getDateTime();
-            LocalDateTime yDateTime = y.getDateTime();
-            if (xDateTime.toLocalDate().equals(yDateTime.toLocalDate()))
-                return xDateTime.compareTo(yDateTime);
+            LocalDate xDate = x.getDateTime().toLocalDate();
+            LocalDate yDate = y.getDateTime().toLocalDate();
+            if (!xDate.equals(yDate))
+                return xDate.compareTo(yDate);
             CinemaClass xCinemaClass = x.getCinema().getCinemaClass();
             CinemaClass yCinemaClass = y.getCinema().getCinemaClass();
-            if (xCinemaClass != yCinemaClass)
+            if (!xCinemaClass.equals(yCinemaClass))
                 return xCinemaClass.compareTo(yCinemaClass);
-            return xDateTime.compareTo(yDateTime);
+            return x.getDateTime().toLocalTime().compareTo(y.getDateTime().toLocalTime());
         });
         return sessions;
     }
