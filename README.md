@@ -5,5 +5,5 @@ MOBLIMA is an application to computerize the processes of making online booking 
 Run [MOBLIMA.java](src/main/MOBLIMA.java) in [src/main](src/main)
 
 ## Credentials for Admin module
-userId: admin
-password: admin
+- userId: admin
+- password: admin
